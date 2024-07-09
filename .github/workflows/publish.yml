@@ -1,0 +1,32 @@
+name: Publish package
+
+# asume any tag to be a release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: [self-hosted, linux]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Make package
+      env:
+        PYPI_USER: ${{ secrets.PYPI_USER }}
+        PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        PYPI_URL: ${{ vars.PYPI_URL }}
+      run: |
+        make publish REPO=$PYPI_URL USER=$PYPI_USER PASSWORD=$PYPI_PASSWORD
+    - name: Upload package
+      uses: actions/upload-artifact@v3
+      with:
+        name: weheat_backend_client
+        path: |
+          build/*
+        if-no-files-found: error

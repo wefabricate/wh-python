@@ -21,7 +21,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "weheat_backend_client"
-VERSION = "2024.06.19"
+VERSION = "2024.06.19rc1"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
@@ -36,14 +36,14 @@ setup(
     description="Weheat Backend client",
     author="Jesper Raemaekers",
     author_email="jesper.raemaekers@wefabricate.com",
-    url="https://github.com/wefabricate/wh-pubic-backend-client",
+    url="https://github.com/wefabricate/wh-public-backend-client",
     keywords=["OpenAPI", "OpenAPI-Generator", "Weheat Backend"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
     long_description="""\
-    This is the backend for the Weheat project
+    This is a client for the Weheat backend
     """,  # noqa: E501
     package_data={"weheat_backend_client": ["py.typed"]},
 )

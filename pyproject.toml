@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "weheat_backend_client"
-version = "2024.06.19"
+version = "2024.06.19rc1"
 description = "Weheat Backend"
 authors = ["Jesper Raemaekers <jesper.raemaekers@wefabricate.com>"]
 license = "NoLicense"
 readme = "README.md"
-repository = "https://github.com/wefabricate/wh-pubic-backend-client"
+repository = "https://github.com/wefabricate/wh-public-backend-client"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Weheat Backend"]
 include = ["weheat_backend_client/py.typed"]
 

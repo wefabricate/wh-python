@@ -1,0 +1,22 @@
+name: Build package
+
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "**"
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Make package
+      run: |
+        make build
