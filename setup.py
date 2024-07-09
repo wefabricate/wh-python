@@ -10,7 +10,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
+import pathlib
 
 from setuptools import setup, find_packages  # noqa: H301
 
@@ -21,13 +21,14 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "weheat_backend_client"
-VERSION = "2024.06.19rc1"
+VERSION = "2024.06.19rc2"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
     "pydantic >= 2",
     "typing-extensions >= 4.7.1",
+    "aiohttp >= 3.9.5"
 ]
 
 setup(
@@ -42,8 +43,6 @@ setup(
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
-    long_description="""\
-    This is a client for the Weheat backend
-    """,  # noqa: E501
+    long_description=pathlib.Path("README.md").read_text(),  # noqa: E501
     package_data={"weheat_backend_client": ["py.typed"]},
 )
