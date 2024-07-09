@@ -5,7 +5,7 @@ from weheat_backend_client.api_client import ApiClient
 from weheat_backend_client.api.heat_pump_api import HeatPumpApi
 
 
-class WeheatHeatPumpDiscovery:
+class HeatPumpDiscovery:
     @dataclass
     class HeatPump:
         uuid: str

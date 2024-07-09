@@ -1,0 +1,3 @@
+from weheat_backend_client.abstractions.auth import AbstractAuth
+from weheat_backend_client.abstractions.discovery import HeatPumpDiscovery
+from weheat_backend_client.abstractions.heat_pump import HeatPump
