@@ -14,29 +14,29 @@
 """  # noqa: E501
 
 
-__version__ = "2024.06.19"
+__version__ = "2024.07.08"
 
 # import apis into sdk package
-from weheat_backend_client.api.energy_log_api import EnergyLogApi
-from weheat_backend_client.api.heat_pump_api import HeatPumpApi
-from weheat_backend_client.api.heat_pump_log_api import HeatPumpLogApi
+from weheat.api.energy_log_api import EnergyLogApi
+from weheat.api.heat_pump_api import HeatPumpApi
+from weheat.api.heat_pump_log_api import HeatPumpLogApi
 
 # import ApiClient
-from weheat_backend_client.api_response import ApiResponse
-from weheat_backend_client.api_client import ApiClient
-from weheat_backend_client.configuration import Configuration
-from weheat_backend_client.exceptions import OpenApiException
-from weheat_backend_client.exceptions import ApiTypeError
-from weheat_backend_client.exceptions import ApiValueError
-from weheat_backend_client.exceptions import ApiKeyError
-from weheat_backend_client.exceptions import ApiAttributeError
-from weheat_backend_client.exceptions import ApiException
+from weheat.api_response import ApiResponse
+from weheat.api_client import ApiClient
+from weheat.configuration import Configuration
+from weheat.exceptions import OpenApiException
+from weheat.exceptions import ApiTypeError
+from weheat.exceptions import ApiValueError
+from weheat.exceptions import ApiKeyError
+from weheat.exceptions import ApiAttributeError
+from weheat.exceptions import ApiException
 
 # import models into sdk package
-from weheat_backend_client.models.device_state import DeviceState
-from weheat_backend_client.models.energy_view_dto import EnergyViewDto
-from weheat_backend_client.models.heat_pump_log_view_dto import HeatPumpLogViewDto
-from weheat_backend_client.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
-from weheat_backend_client.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
-from weheat_backend_client.models.read_heat_pump_dto import ReadHeatPumpDto
+from weheat.models.device_state import DeviceState
+from weheat.models.energy_view_dto import EnergyViewDto
+from weheat.models.heat_pump_log_view_dto import HeatPumpLogViewDto
+from weheat.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
+from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
+from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
 

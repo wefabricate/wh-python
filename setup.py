@@ -10,7 +10,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import pathlib
+
 
 from setuptools import setup, find_packages  # noqa: H301
 
@@ -20,15 +20,14 @@ from setuptools import setup, find_packages  # noqa: H301
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
-NAME = "weheat_backend_client"
-VERSION = "2024.06.19rc3"
+NAME = "weheat"
+VERSION = "2024.07.08rc1"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
-    "pydantic >= 2",
-    "typing-extensions >= 4.7.1",
-    "aiohttp >= 3.9.5"
+    "pydantic >= 1.10.5, < 2",
+    "aenum"
 ]
 
 setup(

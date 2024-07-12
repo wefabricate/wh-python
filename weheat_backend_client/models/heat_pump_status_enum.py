@@ -12,23 +12,18 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from enum import Enum
+from aenum import Enum, no_arg
 
 
 
-try:
-    from typing import Self
-except ImportError:
-    from typing_extensions import Self
 
 
 class HeatPumpStatusEnum(int, Enum):
     """
-    Last status of the heat pump from the last heat pump log   - Standby (40)   - Heating (70)   - Defrost (90)   - Cooling (130)   - DHW (150)   - Lionelle (160)   - SelfTest (170)
+    Last status of the heat pump from the last heat pump log   - Standby (40)   - Heating (70)   - Defrost (90)   - Cooling (130)   - DHW (150)   - Lionelle (160)   - SelfTest (170)  -  ManualControl (180)
     """
 
     """
@@ -38,42 +33,14 @@ class HeatPumpStatusEnum(int, Enum):
     NUMBER_70 = 70
     NUMBER_90 = 90
     NUMBER_130 = 130
-    NUMBER_131 = 131
-    NUMBER_132 = 132
-    NUMBER_133 = 133
-    NUMBER_134 = 134
     NUMBER_150 = 150
     NUMBER_160 = 160
     NUMBER_170 = 170
     NUMBER_180 = 180
-    NUMBER_200 = 200
-    NUMBER_201 = 201
-    NUMBER_202 = 202
-    NUMBER_203 = 203
-    NUMBER_204 = 204
-    NUMBER_205 = 205
-    NUMBER_206 = 206
-    NUMBER_207 = 207
-    NUMBER_208 = 208
-    NUMBER_209 = 209
-    NUMBER_210 = 210
-    NUMBER_220 = 220
-    NUMBER_221 = 221
-    NUMBER_222 = 222
-    NUMBER_223 = 223
-    NUMBER_224 = 224
-    NUMBER_225 = 225
-    NUMBER_226 = 226
-    NUMBER_227 = 227
-    NUMBER_228 = 228
-    NUMBER_229 = 229
-    NUMBER_230 = 230
-
-
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
+    def from_json(cls, json_str: str) -> HeatPumpStatusEnum:
         """Create an instance of HeatPumpStatusEnum from a JSON string"""
-        return cls(json.loads(json_str))
+        return HeatPumpStatusEnum(json.loads(json_str))
 
 

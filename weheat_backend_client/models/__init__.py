@@ -14,9 +14,9 @@
 
 
 # import models into model package
-from weheat_backend_client.models.device_state import DeviceState
-from weheat_backend_client.models.energy_view_dto import EnergyViewDto
-from weheat_backend_client.models.heat_pump_log_view_dto import HeatPumpLogViewDto
-from weheat_backend_client.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
-from weheat_backend_client.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
-from weheat_backend_client.models.read_heat_pump_dto import ReadHeatPumpDto
+from weheat.models.device_state import DeviceState
+from weheat.models.energy_view_dto import EnergyViewDto
+from weheat.models.heat_pump_log_view_dto import HeatPumpLogViewDto
+from weheat.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
+from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
+from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
