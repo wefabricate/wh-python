@@ -10,7 +10,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
+import pathlib
 
 from setuptools import setup, find_packages  # noqa: H301
 
