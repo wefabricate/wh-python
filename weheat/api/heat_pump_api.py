@@ -23,13 +23,9 @@ from pydantic import Field, StrictInt, StrictStr
 
 from typing import List, Optional
 
-from weheat.models.create_heat_pump_dto import CreateHeatPumpDto
 from weheat.models.device_state import DeviceState
 from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
 from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
-from weheat.models.read_heat_pump_settings_dto import ReadHeatPumpSettingsDto
-from weheat.models.swap_control_board_of_heat_pump_dto import SwapControlBoardOfHeatPumpDto
-from weheat.models.update_heat_pump_dto import UpdateHeatPumpDto
 
 from weheat.api_client import ApiClient
 from weheat.api_response import ApiResponse

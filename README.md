@@ -11,12 +11,13 @@ Python 3.7+
 You can install directly using:
 
 ```sh
-pip install weheat_backend_client
+pip install weheat
 ```
 
 Then import the package:
+
 ```python
-import weheat_backend_client
+import weheat
 ```
 
 
@@ -28,17 +29,17 @@ After installation, you can now use the client to interact with the Weheat backe
 ```python
 import datetime
 from keycloak import KeycloakOpenID  # install with pip install python-keycloak
-from weheat_backend_client import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi
+from weheat import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi
 
 # input your information here
 auth_url = 'https://auth.weheat.nl/auth/'
 api_url = 'https://api.weheat.nl'
 realm_name = 'Weheat'
-my_client_id = 'WeheatCommunityAPI' # client ID and secret provided by Weheat
+my_client_id = 'WeheatCommunityAPI'  # client ID and secret provided by Weheat
 my_client_secret = ''
-username = '' # username and password used for the online portal
+username = ''  # username and password used for the online portal
 password = ''
-my_heat_pump_id = '' # your heat pump UUID
+my_heat_pump_id = ''  # your heat pump UUID
 
 # Get the access token from keycloak
 keycloak_open_id = KeycloakOpenID(server_url=auth_url,
@@ -70,12 +71,15 @@ with ApiClient(configuration=config) as client:
     # Getting the energy logs of the heat pump in a specific period
     # interval can be  "Minute", "FiveMinute", "FifteenMinute", "Hour", "Day", "Week", "Month", "Year"
     response = EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=my_heat_pump_id,
-                                                                                 start_time=datetime.datetime(2024, 6,
-                                                                                                              22, 0, 0,
-                                                                                                              0),
-                                                                                 end_time=datetime.datetime(2024, 6, 22,
-                                                                                                            15, 0, 0),
-                                                                                 interval='Hour')
+                                                                                       start_time=datetime.datetime(
+                                                                                           2024, 6,
+                                                                                           22, 0, 0,
+                                                                                           0),
+                                                                                       end_time=datetime.datetime(2024,
+                                                                                                                  6, 22,
+                                                                                                                  15, 0,
+                                                                                                                  0),
+                                                                                       interval='Hour')
 
     if response.status_code == 200:
         print(f'My energy logs: {response.data}')

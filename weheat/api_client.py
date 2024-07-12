@@ -332,6 +332,13 @@ class ApiClient:
         if isinstance(klass, str):
             if klass.startswith('List['):
                 sub_kls = re.match(r'List\[(.*)]', klass).group(1)
+
+
+                try:
+                    data = data['data']
+                except:
+                    pass
+
                 return [self.__deserialize(sub_data, sub_kls)
                         for sub_data in data]
 

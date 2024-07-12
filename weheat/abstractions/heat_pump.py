@@ -1,7 +1,7 @@
 from enum import Enum, auto
-from weheat_backend_client.configuration import Configuration
-from weheat_backend_client.api_client import ApiClient
-from weheat_backend_client.api.heat_pump_log_api import HeatPumpLogApi
+from weheat.configuration import Configuration
+from weheat.api_client import ApiClient
+from weheat.api.heat_pump_log_api import HeatPumpLogApi
 
 
 class HeatPump:

@@ -43,5 +43,5 @@ setup(
     include_package_data=True,
     long_description_content_type='text/markdown',
     long_description=pathlib.Path("README.md").read_text(),  # noqa: E501
-    package_data={"weheat_backend_client": ["py.typed"]},
+    package_data={"weheat": ["py.typed"]},
 )

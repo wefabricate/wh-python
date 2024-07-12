@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from weheat_backend_client.configuration import Configuration
-from weheat_backend_client.api_client import ApiClient
-from weheat_backend_client.api.heat_pump_api import HeatPumpApi
+from weheat.configuration import Configuration
+from weheat.api_client import ApiClient
+from weheat.api.heat_pump_api import HeatPumpApi
 
 
 class HeatPumpDiscovery:
