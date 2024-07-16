@@ -2,3 +2,4 @@
 /weheat_backend_client.egg-info/
 /build/
 /.idea/
+*.pyc
