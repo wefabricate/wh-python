@@ -108,7 +108,7 @@ class Configuration:
         self.logger = {}
         """Logging Settings
         """
-        self.logger["package_logger"] = logging.getLogger("weheat_backend_client")
+        self.logger["package_logger"] = logging.getLogger("weheat")
         self.logger["urllib3_logger"] = logging.getLogger("urllib3")
         self.logger_format = '%(asctime)s %(levelname)s %(message)s'
         """Log format
@@ -376,7 +376,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: v1\n"\
-               "SDK Package Version: 2024.06.19".\
+               "SDK Package Version: 2024.07.08".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self):

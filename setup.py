@@ -10,7 +10,7 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
+import pathlib
 
 from setuptools import setup, find_packages  # noqa: H301
 
@@ -20,14 +20,14 @@ from setuptools import setup, find_packages  # noqa: H301
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
-NAME = "weheat_backend_client"
-VERSION = "2024.06.19"
+NAME = "weheat"
+VERSION = "2024.07.08"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
-    "pydantic >= 2",
-    "typing-extensions >= 4.7.1",
+    "pydantic >= 1.10.5, < 2",
+    "aenum"
 ]
 
 setup(
@@ -36,14 +36,12 @@ setup(
     description="Weheat Backend client",
     author="Jesper Raemaekers",
     author_email="jesper.raemaekers@wefabricate.com",
-    url="https://github.com/wefabricate/wh-pubic-backend-client",
+    url="https://github.com/wefabricate/wh-python",
     keywords=["OpenAPI", "OpenAPI-Generator", "Weheat Backend"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
-    long_description="""\
-    This is the backend for the Weheat project
-    """,  # noqa: E501
-    package_data={"weheat_backend_client": ["py.typed"]},
+    long_description=pathlib.Path("README.md").read_text(),  # noqa: E501
+    package_data={"weheat": ["py.typed"]},
 )

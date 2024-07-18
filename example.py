@@ -1,6 +1,6 @@
 import datetime
 from keycloak import KeycloakOpenID  # install with pip install python-keycloak
-from weheat_backend_client import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi
+from weheat import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi
 
 auth_url = 'https://auth.weheat.nl/auth/'
 api_url = 'https://api.weheat.nl'
