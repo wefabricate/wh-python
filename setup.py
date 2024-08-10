@@ -21,7 +21,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "weheat"
-VERSION = "2024.07.08"
+VERSION = "2024.08.10"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
@@ -44,4 +44,6 @@ setup(
     long_description_content_type='text/markdown',
     long_description=pathlib.Path("README.md").read_text(),  # noqa: E501
     package_data={"weheat": ["py.typed"]},
+    license="MIT",
+    license_files = ('LICENSE',),
 )
