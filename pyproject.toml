@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "weheat"
-version = "2024.07.08"
+version = "2024.08.10rc1"
 description = "Weheat Backend"
 authors = ["Jesper Raemaekers <jesper.raemaekers@wefabricate.com>", "Kjell van Straaten <kjell.van.straaten@wefabricate.com>"]
-license = "NoLicense"
+license = "MIT"
 readme = "README.md"
 repository = "https://github.com/wefabricate/wh-python"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Weheat Backend"]
