@@ -16,7 +16,7 @@ class HeatPumpDiscovery:
         has_dhw: bool = False
 
     @staticmethod
-    async def discover(api_url: str, access_token: str) -> list[HeatPumpInfo]:
+    async def discover_active(api_url: str, access_token: str) -> list[HeatPumpInfo]:
         discovered_pumps = []
 
         config = Configuration(host=api_url, access_token=access_token)
