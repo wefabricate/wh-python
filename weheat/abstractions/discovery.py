@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from weheat import DeviceState
 from weheat.configuration import Configuration
 from weheat.api_client import ApiClient
 from weheat.api.heat_pump_api import HeatPumpApi
@@ -15,14 +16,14 @@ class HeatPumpDiscovery:
         has_dhw: bool = False
 
     @staticmethod
-    def discover(api_url: str, access_token: str) -> list[HeatPumpInfo]:
+    async def discover_active(api_url: str, access_token: str) -> list[HeatPumpInfo]:
         discovered_pumps = []
 
         config = Configuration(host=api_url, access_token=access_token)
 
         with ApiClient(configuration=config) as client:
-            # try:
-            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info()
+
+            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 0, 1000, DeviceState.NUMBER_3 ,async_req=True).get()
             if response.status_code == 200:
                 for pump in response.data:
                     model_string = "BlackBird P80 heat pump"
