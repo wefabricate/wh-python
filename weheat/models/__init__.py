@@ -20,3 +20,5 @@ from weheat.models.heat_pump_log_view_dto import HeatPumpLogViewDto
 from weheat.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
 from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
 from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
+from weheat.models.read_user_dto import ReadUserDto
+from weheat.models.role import Role
