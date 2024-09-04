@@ -1,6 +1,6 @@
 import datetime
 from keycloak import KeycloakOpenID  # install with pip install python-keycloak
-from weheat import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi
+from weheat import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi, UserApi
 
 auth_url = 'https://auth.weheat.nl/auth/'
 api_url = 'https://api.weheat.nl'
@@ -22,6 +22,11 @@ keycloak_open_id.logout(token_response['refresh_token'])
 config = Configuration(host=api_url, access_token=token_response['access_token'])
 
 with ApiClient(configuration=config) as client:
+    response = UserApi(client).api_v1_users_me_get_with_http_info()
+
+    if response.status_code == 200:
+        print(f'My user: {response.data}')
+
     response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info()
 
     if response.status_code == 200:

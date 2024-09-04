@@ -97,6 +97,14 @@ class HeatPump:
         return self._if_available("cm_mass_power_out")
 
     @property
+    def dhw_top_temperature(self):
+        return self._if_available("t1")
+
+    @property
+    def dhw_bottom_temperature(self):
+        return self._if_available("t2")
+
+    @property
     def cop(self):
         """
         Returns the coefficient of performance of the heat pump.

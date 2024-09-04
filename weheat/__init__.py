@@ -20,6 +20,7 @@ __version__ = "2024.07.08"
 from weheat.api.energy_log_api import EnergyLogApi
 from weheat.api.heat_pump_api import HeatPumpApi
 from weheat.api.heat_pump_log_api import HeatPumpLogApi
+from weheat.api.user_api import UserApi
 
 # import ApiClient
 from weheat.api_response import ApiResponse
@@ -39,4 +40,6 @@ from weheat.models.heat_pump_log_view_dto import HeatPumpLogViewDto
 from weheat.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
 from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
 from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
+from weheat.models.read_user_dto import ReadUserDto
+from weheat.models.role import Role
 
