@@ -5,7 +5,7 @@ from weheat.api.heat_pump_log_api import HeatPumpLogApi
 from weheat.api.energy_log_api import EnergyLogApi
 from datetime import datetime, timedelta
 
-START_DATE = datetime(2024, 1, 11, 0, 0, 0)
+START_DATE = datetime(2024, 1, 1, 0, 0, 0)
 
 
 class HeatPump:
