@@ -55,7 +55,6 @@ class HeatPump:
                         self._energy_consumption += year.total_ein_heating_defrost
                         self._energy_consumption += year.total_ein_dhw
                         self._energy_consumption += year.total_ein_dhw_defrost
-                    print(f'Summed for {self._uuid}: {self._energy_consumption}')
 
 
 
