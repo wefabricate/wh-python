@@ -2,11 +2,14 @@ from enum import Enum, auto
 from weheat.configuration import Configuration
 from weheat.api_client import ApiClient
 from weheat.api.heat_pump_log_api import HeatPumpLogApi
+from weheat.api.energy_log_api import EnergyLogApi
+from datetime import datetime, timedelta
+
+START_DATE = datetime(2024, 1, 11, 0, 0, 0)
 
 
 class HeatPump:
     class State(Enum):
-        UNDEFINED = auto()
         STANDBY = auto()
         WATER_CHECK = auto()
         HEATING = auto()
@@ -21,6 +24,7 @@ class HeatPump:
         self._api_url = api_url
         self._uuid = uuid
         self._last_log = None
+        self._energy_consumption = None
 
     def get_status(self, access_token: str):
         try:
@@ -34,6 +38,27 @@ class HeatPump:
                 )
                 if response.status_code == 200:
                     self._last_log = response.data
+
+                # Also get all energy totals form past years and add them together
+                # As end time pick today + 1 day to avoid issues with timezones
+                response = EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid,
+                                                                                start_time=START_DATE,
+                                                                                end_time=datetime.now() + timedelta(days=1),
+                                                                                interval='Year')
+
+                if response.status_code == 200:
+                    # aggregate the energy consumption
+                    self._energy_consumption = 0
+                    for year in response.data:
+                        self._energy_consumption += year.total_ein_cooling
+                        self._energy_consumption += year.total_ein_heating
+                        self._energy_consumption += year.total_ein_heating_defrost
+                        self._energy_consumption += year.total_ein_dhw
+                        self._energy_consumption += year.total_ein_dhw_defrost
+                    print(f'Summed for {self._uuid}: {self._energy_consumption}')
+
+
+
         except Exception as e:
             self._last_log = None
             raise e
@@ -133,10 +158,10 @@ class HeatPump:
         return self._if_available("control_bridge_status_decoded_gas_boiler")
 
     @property
-    def heat_pump_state(self) -> State:
+    def heat_pump_state(self) -> State | None:
         numeric_state = self._if_available("state")
         if numeric_state is None:
-            return self.State.UNDEFINED
+            return None
 
         if numeric_state == 40:
             return self.State.STANDBY
@@ -154,5 +179,8 @@ class HeatPump:
             return self.State.MANUAL_CONTROL
         elif numeric_state == 200:
             return self.State.DEFROSTING
-        else:
-            return self.State.UNDEFINED
+        return None
+
+    @property
+    def energy_total(self):
+        return self._energy_consumption
