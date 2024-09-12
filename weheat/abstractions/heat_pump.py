@@ -1,3 +1,4 @@
+"""Weheat heat pump abstraction from the API."""
 from enum import Enum, auto
 from weheat.configuration import Configuration
 from weheat.api_client import ApiClient
@@ -9,6 +10,7 @@ START_DATE = datetime(2024, 1, 1, 0, 0, 0)
 
 
 class HeatPump:
+    """Heat pump class representing a Heat pump."""
     class State(Enum):
         STANDBY = auto()
         WATER_CHECK = auto()
@@ -27,6 +29,7 @@ class HeatPump:
         self._energy_consumption = None
 
     def get_status(self, access_token: str):
+        """Updates the HEatPump instance with data from the API."""
         try:
             config = Configuration(host=self._api_url, access_token=access_token)
 
@@ -60,12 +63,11 @@ class HeatPump:
 
         except Exception as e:
             self._last_log = None
+            self._energy_consumption = None
             raise e
 
-    def _update_properties(self):
-        pass
-
     def _if_available(self, key):
+        """Returns the value from the last logged value if available. None otherwise."""
         if self._last_log is not None and hasattr(self._last_log, key):
             return getattr(self._last_log, key)
         return None
@@ -78,54 +80,67 @@ class HeatPump:
 
     @property
     def water_inlet_temperature(self):
+        """The heat pump water inlet temperature."""
         return self._if_available("t_water_in")
 
     @property
     def water_outlet_temperature(self):
+        """The heat pump water outlet temperature."""
         return self._if_available("t_water_out")
 
     @property
     def water_house_in_temperature(self):
+        """The water house in temperature."""
         return self._if_available("t_water_house_in")
 
     @property
     def air_inlet_temperature(self):
+        """The heat pump air inlet temperature."""
         return self._if_available("t_air_in")
 
     @property
     def air_outlet_temperature(self):
+        """The heat pump air outlet temperature."""
         return self._if_available("t_air_out")
 
     @property
     def thermostat_water_setpoint(self):
+        """The  thermostat water setpoint."""
         return self._if_available("t_thermostat_setpoint")
 
     @property
     def thermostat_room_temperature(self):
+        """The thermostat current room temperature."""
         return self._if_available("t_room")
 
     @property
     def thermostat_room_temperature_setpoint(self):
+        """The thermostat room temperature setpoint."""
         return self._if_available("t_room_target")
 
     @property
     def thermostat_on_off_state(self):
+        """The thermostat on/off state."""
         return self._if_available("on_off_thermostat_state")
 
     @property
     def power_input(self):
+        """The heat pumps power input."""
         return self._if_available("cm_mass_power_in")
 
     @property
     def power_output(self):
+        """The heat pumps hydraulic output power."""
         return self._if_available("cm_mass_power_out")
 
     @property
     def dhw_top_temperature(self):
+        """The DHW vessel top temperature."""
         return self._if_available("t1")
 
     @property
     def dhw_bottom_temperature(self):
+        """The DHW vessel bottom temperature."""
         return self._if_available("t2")
 
     @property
@@ -142,22 +157,27 @@ class HeatPump:
 
     @property
     def inside_unit_water_pump_state(self):
+        """Decoded water pump state."""
         return self._if_available("control_bridge_status_decoded_water_pump")
 
     @property
     def inside_unit_auxilary_pump_state(self):
+        """Decoded auxilary pump state."""
         return self._if_available("control_bridge_status_decoded_water_pump2")
 
     @property
     def inside_unit_dhw_valve_or_pump_state(self):
+        """Decoded dhw valve or pump state."""
         return self._if_available("control_bridge_status_decoded_dhw_valve")
 
     @property
     def inside_unit_gas_boiler_state(self):
+        """Decoded gas boiler state."""
         return self._if_available("control_bridge_status_decoded_gas_boiler")
 
     @property
     def heat_pump_state(self) -> State | None:
+        """The heat pump state."""
         numeric_state = self._if_available("state")
         if numeric_state is None:
             return None
@@ -182,4 +202,5 @@ class HeatPump:
 
     @property
     def energy_total(self):
+        """The total used energy in kWh."""
         return self._energy_consumption
