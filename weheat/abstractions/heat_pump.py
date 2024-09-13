@@ -6,11 +6,12 @@ from weheat.api.heat_pump_log_api import HeatPumpLogApi
 from weheat.api.energy_log_api import EnergyLogApi
 from datetime import datetime, timedelta
 
-START_DATE = datetime(2024, 1, 1, 0, 0, 0)
+# before this date no energy logs are available, so start from this point onwards
+START_DATE = datetime(2023, 1, 1, 0, 0, 0)
 
 
 class HeatPump:
-    """Heat pump class representing a Heat pump."""
+    """Heat pump class representing a heat pump."""
     class State(Enum):
         STANDBY = auto()
         WATER_CHECK = auto()
@@ -202,5 +203,5 @@ class HeatPump:
 
     @property
     def energy_total(self):
-        """The total used energy in kWh."""
+        """The total used energy in kWh from 2023 to now."""
         return self._energy_consumption
