@@ -167,7 +167,7 @@ class HeatPump:
 
     @property
     def inside_unit_dhw_valve_or_pump_state(self):
-        """Decoded dhw valve or pump state."""
+        """Decoded DHW valve or pump state."""
         return self._if_available("control_bridge_status_decoded_dhw_valve")
 
     @property
