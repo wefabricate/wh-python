@@ -29,7 +29,7 @@ class HeatPump:
         self._energy_consumption = None
 
     def get_status(self, access_token: str):
-        """Updates the HEatPump instance with data from the API."""
+        """Updates the heat pump instance with data from the API."""
         try:
             config = Configuration(host=self._api_url, access_token=access_token)
 
