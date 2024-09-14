@@ -26,9 +26,9 @@ class HeatPumpDiscovery:
             response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 0, 1000, DeviceState.NUMBER_3 ,async_req=True).get()
             if response.status_code == 200:
                 for pump in response.data:
-                    model_string = "BlackBird P80 heat pump"
+                    model_string = "Blackbird P80 heat pump"
                     if pump.model == 1:
-                        model_string = "BlackBird P60 heat pump"
+                        model_string = "Blackbird P60 heat pump"
                     elif pump.model == 2:
                         model_string = "Sparrow P60 heat pump"
 
