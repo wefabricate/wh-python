@@ -23,7 +23,7 @@ from aenum import Enum, no_arg
 
 class HeatPumpModel(int, Enum):
     """
-    Model of the heat pump   - BlackBirdP80: BlackBird P80 heat pump (0)   - BlackBirdP60: BlackBird P60 heat pump (1)   - SparrowP60: Sparrow P60 heat pump (2)
+    Model of the heat pump   - BlackBirdP80: BlackBird P80 heat pump (0)   - BlackBirdP60: BlackBird P60 heat pump (1)   - SparrowP60Brown: Sparrow P60 heat pump, colour brown (default) (2)   - SparrowP60Green: Sparrow P60 heat pump, colour green (3)   - SparrowP60Grey: Sparrow P60 heat pump, colour grey (4)   - FlintP40: Flint P40 heat pump (5)
     """
 
     """
@@ -32,6 +32,9 @@ class HeatPumpModel(int, Enum):
     NUMBER_0 = 0
     NUMBER_1 = 1
     NUMBER_2 = 2
+    NUMBER_3 = 3
+    NUMBER_4 = 4
+    NUMBER_5 = 5
 
     @classmethod
     def from_json(cls, json_str: str) -> HeatPumpModel:
