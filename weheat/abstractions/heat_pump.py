@@ -177,6 +177,16 @@ class HeatPump:
         return self._if_available("control_bridge_status_decoded_gas_boiler")
 
     @property
+    def inside_unit_gas_electric_heater(self):
+        """Decoded electric heater state."""
+        return self._if_available("control_bridge_status_decoded_electric_heater")
+
+    @property
+    def compressor_rpm(self):
+        """Compressor RPM."""
+        return self._if_available("rpm")
+
+    @property
     def heat_pump_state(self) -> State | None:
         """The heat pump state."""
         numeric_state = self._if_available("state")
