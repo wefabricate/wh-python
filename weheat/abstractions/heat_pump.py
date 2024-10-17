@@ -28,6 +28,7 @@ class HeatPump:
         self._uuid = uuid
         self._last_log = None
         self._energy_consumption = None
+        self._energy_output = None
 
     def get_status(self, access_token: str):
         """Updates the heat pump instance with data from the API."""
@@ -53,12 +54,18 @@ class HeatPump:
                 if response.status_code == 200:
                     # aggregate the energy consumption
                     self._energy_consumption = 0
+                    self._energy_output = 0
                     for year in response.data:
                         self._energy_consumption += year.total_ein_cooling
                         self._energy_consumption += year.total_ein_heating
                         self._energy_consumption += year.total_ein_heating_defrost
                         self._energy_consumption += year.total_ein_dhw
                         self._energy_consumption += year.total_ein_dhw_defrost
+                        self._energy_output += year.total_e_out_cooling
+                        self._energy_output += year.total_e_out_heating
+                        self._energy_output += year.total_e_out_heating_defrost
+                        self._energy_output += year.total_e_out_dhw
+                        self._energy_output += year.total_e_out_dhw_defrost
 
 
 
@@ -205,3 +212,8 @@ class HeatPump:
     def energy_total(self):
         """The total used energy in kWh from 2023 to now."""
         return self._energy_consumption
+
+    @property
+    def energy_output(self):
+        """The total energy output in kWh from 2023 to now."""
+        return self._energy_output
