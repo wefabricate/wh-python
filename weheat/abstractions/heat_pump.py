@@ -1,5 +1,7 @@
 """Weheat heat pump abstraction from the API."""
 from enum import Enum, auto
+
+from weheat import HeatPumpApi
 from weheat.configuration import Configuration
 from weheat.api_client import ApiClient
 from weheat.api.heat_pump_log_api import HeatPumpLogApi
@@ -29,6 +31,7 @@ class HeatPump:
         self._last_log = None
         self._energy_consumption = None
         self._energy_output = None
+        self._nominal_max_power = None
 
     def get_status(self, access_token: str):
         """Updates the heat pump instance with data from the API."""
@@ -36,6 +39,14 @@ class HeatPump:
             config = Configuration(host=self._api_url, access_token=access_token)
 
             with ApiClient(configuration=config) as client:
+                # Set the max power once
+                if self._nominal_max_power is None:
+                    repsonse = HeatPumpApi(client).api_v1_heat_pumps_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid)
+
+                    if repsonse.status_code == 200:
+                        self._set_nominal_max_power_for_model(repsonse.data.model)
+
+
                 response = HeatPumpLogApi(
                     client
                 ).api_v1_heat_pumps_heat_pump_id_logs_latest_get_with_http_info(
@@ -79,6 +90,23 @@ class HeatPump:
         if self._last_log is not None and hasattr(self._last_log, key):
             return getattr(self._last_log, key)
         return None
+
+    def _set_nominal_max_power_for_model(self, model_id:int):
+        # These numbers are the rpm at 100% power in the portal
+        # RPM can go above 100% if the limit is increased in the portal.
+        # expect for the Flint, that cannot go above 100%.
+        if model_id == 1:
+            #BB60
+            self._nominal_max_power = 4500
+        elif 2 <= model_id <= 4:
+            #SP60
+            self._nominal_max_power = 4500
+        elif model_id == 5:
+            # Flint
+            self._nominal_max_power = 5400
+        else:
+            #BB80
+            self._nominal_max_power = 4500
 
     def __str__(self):
         return f"WeheatHeatPump(uuid={self._uuid}, last update={self._if_available('timestamp')})"
@@ -187,6 +215,14 @@ class HeatPump:
     def inside_unit_gas_electric_heater(self):
         """Decoded electric heater state."""
         return self._if_available("control_bridge_status_decoded_electric_heater")
+
+    @property
+    def compressor_percentage(self):
+        current_rpm = self._if_available("rpm")
+        if self._nominal_max_power is not None and current_rpm is not None:
+            # calculate percentage of rpm
+            return int((100 / self._nominal_max_power) * current_rpm)
+        return None
 
     @property
     def compressor_rpm(self):
