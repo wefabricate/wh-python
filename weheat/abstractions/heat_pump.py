@@ -192,27 +192,27 @@ class HeatPump:
             return output / input
 
     @property
-    def inside_unit_water_pump_state(self):
+    def indoor_unit_water_pump_state(self):
         """Decoded water pump state."""
         return self._if_available("control_bridge_status_decoded_water_pump")
 
     @property
-    def inside_unit_auxilary_pump_state(self):
-        """Decoded auxilary pump state."""
+    def indoor_unit_auxiliary_pump_state(self):
+        """Decoded auxiliary pump state."""
         return self._if_available("control_bridge_status_decoded_water_pump2")
 
     @property
-    def inside_unit_dhw_valve_or_pump_state(self):
+    def indoor_unit_dhw_valve_or_pump_state(self):
         """Decoded DHW valve or pump state."""
         return self._if_available("control_bridge_status_decoded_dhw_valve")
 
     @property
-    def inside_unit_gas_boiler_state(self):
+    def indoor_unit_gas_boiler_state(self):
         """Decoded gas boiler state."""
         return self._if_available("control_bridge_status_decoded_gas_boiler")
 
     @property
-    def inside_unit_electric_heater_state(self):
+    def indoor_unit_electric_heater_state(self):
         """Decoded electric heater state."""
         return self._if_available("control_bridge_status_decoded_electric_heater")
 
