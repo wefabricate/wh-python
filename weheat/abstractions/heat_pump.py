@@ -94,13 +94,13 @@ class HeatPump:
     def _set_nominal_max_power_for_model(self, model_id:int):
         # These numbers are the rpm at 100% power in the portal
         # RPM can go above 100% if the limit is increased in the portal.
-        # expect for the Flint, that cannot go above 100%.
+        # except for the Flint, that cannot go above 100%.
         if model_id == 1:
             #BB60
-            self._nominal_max_power = 4500
+            self._nominal_max_power = 5280
         elif 2 <= model_id <= 4:
             #SP60
-            self._nominal_max_power = 4500
+            self._nominal_max_power = 5280
         elif model_id == 5:
             # Flint
             self._nominal_max_power = 5400
