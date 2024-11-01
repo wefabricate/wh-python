@@ -212,7 +212,7 @@ class HeatPump:
         return self._if_available("control_bridge_status_decoded_gas_boiler")
 
     @property
-    def inside_unit_electric_heater(self):
+    def inside_unit_electric_heater_state(self):
         """Decoded electric heater state."""
         return self._if_available("control_bridge_status_decoded_electric_heater")
 
