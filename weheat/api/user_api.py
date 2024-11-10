@@ -17,9 +17,9 @@ import io
 import warnings
 
 try:
-    from pydantic.v1 import validate_arguments, Field, StrictInt, StrictStr
+    from pydantic.v1 import validate_arguments, Field, StrictStr
 except ImportError:
-    from pydantic import validate_arguments, Field, StrictInt, StrictStr
+    from pydantic import validate_arguments, Field, StrictStr
 
 from typing_extensions import Annotated
 
