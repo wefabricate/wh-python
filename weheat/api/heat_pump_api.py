@@ -16,10 +16,12 @@ import re  # noqa: F401
 import io
 import warnings
 
-from pydantic import validate_arguments, ValidationError
+try:
+    from pydantic.v1 import validate_arguments, Field, StrictInt, StrictStr
+except ImportError:
+    from pydantic import validate_arguments, Field, StrictInt, StrictStr
 
 from typing_extensions import Annotated
-from pydantic import Field, StrictInt, StrictStr
 
 from typing import List, Optional
 
