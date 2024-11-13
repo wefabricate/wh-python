@@ -19,7 +19,10 @@ import json
 
 from datetime import datetime
 from typing import Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+try:
+    from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+except ImportError:
+    from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class HeatPumpLogViewDto(BaseModel):
     """

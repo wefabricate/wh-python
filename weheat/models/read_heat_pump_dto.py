@@ -19,7 +19,10 @@ import json
 
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, Field, StrictStr, constr
+try:
+    from pydantic.v1 import BaseModel, Field, StrictStr, constr
+except ImportError:
+    from pydantic import BaseModel, Field, StrictStr, constr
 from weheat.models.boiler_type import BoilerType
 from weheat.models.device_state import DeviceState
 from weheat.models.dhw_type import DhwType
