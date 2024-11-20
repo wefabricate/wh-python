@@ -250,7 +250,7 @@ class HeatPump:
             return self.State.SELF_TEST
         elif numeric_state == 180:
             return self.State.MANUAL_CONTROL
-        elif numeric_state == 200:
+        elif numeric_state >= 200 and numeric_state <= 240:
             return self.State.DEFROSTING
         return None
 
