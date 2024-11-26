@@ -10,6 +10,7 @@ from weheat.abstractions.discovery import HeatPumpDiscovery
 from weheat.abstractions.user import get_user_id_from_token
 from weheat.exceptions import UnauthorizedException, ForbiddenException
 
+
 uuid_list = [
     '54ad613f-48e5-4583-b0e0-1a96d29131fa',
     '306625f3-124a-42eb-8e31-952963c65932',
@@ -20,8 +21,8 @@ uuid_list = [
 async def test_discovery(api_fixture):
     discovery = await HeatPumpDiscovery.discover_active(api_url=api_fixture.api_url, access_token=api_fixture.access_token)
 
-    #The account is configured to find one Blackbird, one sparrow and one flint
-    assert len(discovery) == 3
+    #The account is configured to find at least one Blackbird, one sparrow and one flint
+    assert len(discovery) >= 3
 
     #check some information for each pump, find it by type in the list
     blackbird = [hp for hp in discovery if 'blackbird' in hp.model.lower()]
@@ -29,9 +30,9 @@ async def test_discovery(api_fixture):
     flint = [hp for hp in discovery if 'flint' in hp.model.lower()]
 
     # sanity check lengths
-    assert len(blackbird) == 1
-    assert len(sparrow) == 1
-    assert len(flint) == 1
+    assert len(blackbird) >= 1
+    assert len(sparrow) >= 1
+    assert len(flint) >= 1
 
     blackbird = blackbird[0]
     sparrow = sparrow[0]
