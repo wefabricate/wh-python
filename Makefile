@@ -5,6 +5,7 @@ BUILD_DIR = $(ROOT_DIR)/build
 
 clean:
 	@rm -rf $(BUILD_DIR)
+	@make -C tests clean
 
 venv/bin/python:
 	@python3 -m venv venv
@@ -16,6 +17,9 @@ build: venv/bin/python
 
 publish: build
 	. venv/bin/activate &&twine upload --repository-url ${REPO} -u ${USER} -p ${PASSWORD} build/*
+
+tests: build
+	make -C tests tests
 
 help:
 	@echo "The following targets are available:"
