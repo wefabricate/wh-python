@@ -20,3 +20,21 @@ jobs:
     - name: Make package
       run: |
         make build
+    - name: Test
+      env:
+        API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+        API_CLIENT_SECRET: ${{ secrets.API_CLIENT_SECRET }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
+        API_USER: ${{ secrets.API_USER }}
+        API_URL: ${{ vars.API_URL }}
+        AUTH_URL: ${{ vars.AUTH_URL }}
+      run: |
+        make tests API_URL=$API_URL AUTH_URL=$AUTH_URL API_CLIENT_ID=$API_CLIENT_ID API_CLIENT_SECRET=$API_CLIENT_SECRET API_USER=$API_USER API_PASSWORD=$API_PASSWORD
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      id: test-results
+      if: always()
+      with:
+        files: |
+          tests/out/*.xml
+
