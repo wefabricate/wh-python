@@ -23,7 +23,7 @@ class HeatPumpDiscovery:
 
         with ApiClient(configuration=config) as client:
 
-            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 0, 1000, DeviceState.NUMBER_3 ,async_req=True).get()
+            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3 ,async_req=True).get()
             if response.status_code == 200:
                 for pump in response.data:
                     # Model of the heat pump
