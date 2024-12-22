@@ -60,7 +60,7 @@ class HeatPump:
                 response = EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid,
                                                                                 start_time=START_DATE,
                                                                                 end_time=datetime.now() + timedelta(days=1),
-                                                                                interval='Year')
+                                                                                interval='Month')
 
                 if response.status_code == 200:
                     # aggregate the energy consumption
