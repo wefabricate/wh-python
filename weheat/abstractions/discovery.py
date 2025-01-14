@@ -1,3 +1,4 @@
+import asyncio
 from dataclasses import dataclass
 
 from weheat import DeviceState
@@ -16,14 +17,17 @@ class HeatPumpDiscovery:
         has_dhw: bool = False
 
     @staticmethod
-    async def discover_active(api_url: str, access_token: str) -> list[HeatPumpInfo]:
+    async def async_discover_active(api_url: str, access_token: str) -> list[HeatPumpInfo]:
         discovered_pumps = []
 
         config = Configuration(host=api_url, access_token=access_token)
 
         with ApiClient(configuration=config) as client:
 
-            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3 ,async_req=True).get()
+            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3 ,async_req=True)
+
+            response = await asyncio.to_thread(response.get)
+
             if response.status_code == 200:
                 for pump in response.data:
                     # Model of the heat pump

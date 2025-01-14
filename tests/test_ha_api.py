@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from weheat.abstractions.heat_pump import HeatPump
 
 from weheat.abstractions.discovery import HeatPumpDiscovery
-from weheat.abstractions.user import get_user_id_from_token
+from weheat.abstractions.user import async_get_user_id_from_token
 from weheat.exceptions import UnauthorizedException, ForbiddenException
 
 
@@ -16,7 +16,7 @@ uuid_list = [
 
 @pytest.mark.asyncio
 async def test_discovery(api_fixture):
-    discovery = await HeatPumpDiscovery.discover_active(api_url=api_fixture.api_url, access_token=api_fixture.access_token)
+    discovery = await HeatPumpDiscovery.async_discover_active(api_url=api_fixture.api_url, access_token=api_fixture.access_token)
 
     #The account is configured to find at least one Blackbird, one sparrow and one flint
     assert len(discovery) >= 3
@@ -47,7 +47,7 @@ async def test_discovery(api_fixture):
 
 @pytest.mark.asyncio
 async def test_user(api_fixture):
-    user = await get_user_id_from_token(api_fixture.api_url, api_fixture.access_token)
+    user = await async_get_user_id_from_token(api_fixture.api_url, api_fixture.access_token)
 
     #check we got a UUID
     assert len(user) == 36
@@ -59,7 +59,7 @@ async def test_hp_log(api_fixture, uuid):
 
     # if the API is changed, this call will fail on a python validation error
     try:
-        heatpump.get_status(api_fixture.access_token)
+        await heatpump.async_get_status(api_fixture.access_token)
     except ValidationError as e:
         print(f'Validation unsuccessful: {e}')
         pytest.fail('Validation failed')
