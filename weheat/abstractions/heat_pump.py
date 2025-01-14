@@ -1,4 +1,5 @@
 """Weheat heat pump abstraction from the API."""
+import asyncio
 from enum import Enum, auto
 
 from weheat import HeatPumpApi
@@ -33,7 +34,7 @@ class HeatPump:
         self._energy_output = None
         self._nominal_max_power = None
 
-    def get_status(self, access_token: str):
+    async def async_get_status(self, access_token: str):
         """Updates the heat pump instance with data from the API."""
         try:
             config = Configuration(host=self._api_url, access_token=access_token)
@@ -41,17 +42,22 @@ class HeatPump:
             with ApiClient(configuration=config) as client:
                 # Set the max power once
                 if self._nominal_max_power is None:
-                    repsonse = HeatPumpApi(client).api_v1_heat_pumps_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid)
+                    response = HeatPumpApi(client).api_v1_heat_pumps_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid, async_req=True)
 
-                    if repsonse.status_code == 200:
-                        self._set_nominal_max_power_for_model(repsonse.data.model)
+                    response = await asyncio.to_thread(response.get)
+
+                    if response.status_code == 200:
+                        self._set_nominal_max_power_for_model(response.data.model)
 
 
                 response = HeatPumpLogApi(
                     client
                 ).api_v1_heat_pumps_heat_pump_id_logs_latest_get_with_http_info(
-                    heat_pump_id=self._uuid
+                    heat_pump_id=self._uuid, async_req=True
                 )
+
+                response = await asyncio.to_thread(response.get)
+
                 if response.status_code == 200:
                     self._last_log = response.data
 
@@ -60,7 +66,9 @@ class HeatPump:
                 response = EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid,
                                                                                 start_time=START_DATE,
                                                                                 end_time=datetime.now() + timedelta(days=1),
-                                                                                interval='Month')
+                                                                                interval='Month', async_req=True)
+
+                response = await asyncio.to_thread(response.get)
 
                 if response.status_code == 200:
                     # aggregate the energy consumption
