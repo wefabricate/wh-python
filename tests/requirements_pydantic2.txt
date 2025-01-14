@@ -1,0 +1,5 @@
+pydantic > 2,  < 3
+pytest
+pytest-asyncio
+pytest-html
+python-keycloak

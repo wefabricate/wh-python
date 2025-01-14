@@ -1,0 +1,5 @@
+pydantic >= 1.10.5, < 2
+pytest
+pytest-asyncio
+pytest-html
+python-keycloak
