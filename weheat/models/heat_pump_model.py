@@ -12,13 +12,18 @@
 """  # noqa: E501
 
 
+from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from enum import Enum
 
 
 
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 
 class HeatPumpModel(int, Enum):
@@ -37,8 +42,8 @@ class HeatPumpModel(int, Enum):
     NUMBER_5 = 5
 
     @classmethod
-    def from_json(cls, json_str: str) -> HeatPumpModel:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of HeatPumpModel from a JSON string"""
-        return HeatPumpModel(json.loads(json_str))
+        return cls(json.loads(json_str))
 
 

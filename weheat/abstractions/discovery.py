@@ -22,11 +22,9 @@ class HeatPumpDiscovery:
 
         config = Configuration(host=api_url, access_token=access_token)
 
-        with ApiClient(configuration=config) as client:
+        async with ApiClient(configuration=config) as client:
 
-            response = HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3 ,async_req=True)
-
-            response = await asyncio.to_thread(response.get)
+            response = await  HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3)
 
             if response.status_code == 200:
                 for pump in response.data:

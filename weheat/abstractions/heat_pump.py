@@ -39,36 +39,29 @@ class HeatPump:
         try:
             config = Configuration(host=self._api_url, access_token=access_token)
 
-            with ApiClient(configuration=config) as client:
+            async with ApiClient(configuration=config) as client:
                 # Set the max power once
                 if self._nominal_max_power is None:
-                    response = HeatPumpApi(client).api_v1_heat_pumps_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid, async_req=True)
-
-                    response = await asyncio.to_thread(response.get)
+                    response = await HeatPumpApi(client).api_v1_heat_pumps_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid)
 
                     if response.status_code == 200:
                         self._set_nominal_max_power_for_model(response.data.model)
 
 
-                response = HeatPumpLogApi(
+                response = await HeatPumpLogApi(
                     client
                 ).api_v1_heat_pumps_heat_pump_id_logs_latest_get_with_http_info(
-                    heat_pump_id=self._uuid, async_req=True
-                )
-
-                response = await asyncio.to_thread(response.get)
+                    heat_pump_id=self._uuid                )
 
                 if response.status_code == 200:
                     self._last_log = response.data
 
                 # Also get all energy totals form past years and add them together
                 # As end time pick today + 1 day to avoid issues with timezones
-                response = EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid,
+                response = await EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid,
                                                                                 start_time=START_DATE,
                                                                                 end_time=datetime.now() + timedelta(days=1),
-                                                                                interval='Month', async_req=True)
-
-                response = await asyncio.to_thread(response.get)
+                                                                                interval='Month')
 
                 if response.status_code == 200:
                     # aggregate the energy consumption
