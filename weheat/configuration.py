@@ -15,6 +15,8 @@
 import copy
 import logging
 import sys
+
+import aiohttp
 import urllib3
 
 import http.client as httplib
@@ -51,6 +53,7 @@ class Configuration:
       values before.
     :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
       in PEM format.
+    : param client_session: A aiohttp.ClientSession to use
 
     :Example:
     """
@@ -63,7 +66,7 @@ class Configuration:
                  access_token=None,
                  server_index=None, server_variables=None,
                  server_operation_index=None, server_operation_variables=None,
-                 ssl_ca_cert=None,
+                 ssl_ca_cert=None, client_session=None
                  ) -> None:
         """Constructor
         """
@@ -179,6 +182,8 @@ class Configuration:
         """date format
         """
 
+        self._client_session = client_session
+
     def __deepcopy__(self, memo):
         cls = self.__class__
         result = cls.__new__(cls)
@@ -195,6 +200,10 @@ class Configuration:
 
     def __setattr__(self, name, value):
         object.__setattr__(self, name, value)
+
+    @property
+    def client_session(self) -> aiohttp.ClientSession|None:
+        return self._client_session
 
     @classmethod
     def set_default(cls, default):

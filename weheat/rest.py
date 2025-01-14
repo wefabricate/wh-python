@@ -55,31 +55,36 @@ class RESTClientObject:
         # maxsize is number of requests to host that are allowed in parallel
         maxsize = configuration.connection_pool_maxsize
 
-        ssl_context = ssl.create_default_context(
-            cafile=configuration.ssl_ca_cert
-        )
-        if configuration.cert_file:
-            ssl_context.load_cert_chain(
-                configuration.cert_file, keyfile=configuration.key_file
+        self._client_session = configuration.client_session
+        # only setup SSL when the session is not provided. Otherwise, it will do disk access and HA will get mad.
+        if not configuration.client_session:
+            ssl_context = ssl.create_default_context(
+                cafile=configuration.ssl_ca_cert
+            )
+            if configuration.cert_file:
+                ssl_context.load_cert_chain(
+                    configuration.cert_file, keyfile=configuration.key_file
+                )
+
+            if not configuration.verify_ssl:
+                ssl_context.check_hostname = False
+                ssl_context.verify_mode = ssl.CERT_NONE
+
+            connector = aiohttp.TCPConnector(
+                limit=maxsize,
+                ssl=ssl_context
             )
 
-        if not configuration.verify_ssl:
-            ssl_context.check_hostname = False
-            ssl_context.verify_mode = ssl.CERT_NONE
-
-        connector = aiohttp.TCPConnector(
-            limit=maxsize,
-            ssl=ssl_context
-        )
+            # https pool manager
+            self.pool_manager = aiohttp.ClientSession(
+                connector=connector,
+                trust_env=True
+            )
+        else:
+            self.pool_manager = configuration.client_session
 
         self.proxy = configuration.proxy
         self.proxy_headers = configuration.proxy_headers
-
-        # https pool manager
-        self.pool_manager = aiohttp.ClientSession(
-            connector=connector,
-            trust_env=True
-        )
 
         retries = configuration.retries
         if retries is not None:
@@ -96,6 +101,9 @@ class RESTClientObject:
             self.retry_client = None
 
     async def close(self):
+        # do not close the session if provided via client_session
+        if self._client_session:
+            return
         await self.pool_manager.close()
         if self.retry_client is not None:
             await self.retry_client.close()

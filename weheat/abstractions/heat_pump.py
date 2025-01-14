@@ -2,6 +2,8 @@
 import asyncio
 from enum import Enum, auto
 
+import aiohttp
+
 from weheat import HeatPumpApi
 from weheat.configuration import Configuration
 from weheat.api_client import ApiClient
@@ -26,18 +28,19 @@ class HeatPump:
         SELF_TEST = auto()
         MANUAL_CONTROL = auto()
 
-    def __init__(self, api_url: str, uuid: str) -> None:
+    def __init__(self, api_url: str, uuid: str, client_session:aiohttp.ClientSession|None = None) -> None:
         self._api_url = api_url
         self._uuid = uuid
         self._last_log = None
         self._energy_consumption = None
         self._energy_output = None
         self._nominal_max_power = None
+        self._client = client_session
 
     async def async_get_status(self, access_token: str):
         """Updates the heat pump instance with data from the API."""
         try:
-            config = Configuration(host=self._api_url, access_token=access_token)
+            config = Configuration(host=self._api_url, access_token=access_token, client_session=self._client)
 
             async with ApiClient(configuration=config) as client:
                 # Set the max power once
