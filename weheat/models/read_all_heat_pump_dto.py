@@ -18,106 +18,122 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Optional
-try:
-    from pydantic.v1 import BaseModel, Field, StrictStr, constr
-except ImportError:
-    from pydantic import BaseModel, Field, StrictStr, constr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictStr
+from pydantic import Field
+from typing_extensions import Annotated
 from weheat.models.boiler_type import BoilerType
 from weheat.models.device_state import DeviceState
 from weheat.models.dhw_type import DhwType
 from weheat.models.heat_pump_model import HeatPumpModel
 from weheat.models.heat_pump_status_enum import HeatPumpStatusEnum
 from weheat.models.heat_pump_type import HeatPumpType
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class ReadAllHeatPumpDto(BaseModel):
     """
-    Heat Pump dto used for the GetAll operation where the firmware version is needed  # noqa: E501
-    """
-    id: StrictStr = Field(..., description="Identifier of the heat pump")
-    control_board_id: StrictStr = Field(..., alias="controlBoardId", description="Identifier of the control board that is connected to the heat pump")
-    serial_number: constr(strict=True, min_length=1) = Field(..., alias="serialNumber", description="Serial Number of this heat pump")
-    part_number: Optional[StrictStr] = Field(None, alias="partNumber", description="Part Number of this heat pump")
-    state: DeviceState = Field(...)
-    name: Optional[StrictStr] = Field(None, description="Internal nickname of this heat pump")
+    Heat Pump dto used for the GetAll operation where the firmware version is needed
+    """ # noqa: E501
+    id: StrictStr = Field(description="Identifier of the heat pump")
+    control_board_id: StrictStr = Field(description="Identifier of the control board that is connected to the heat pump", alias="controlBoardId")
+    serial_number: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Serial Number of this heat pump", alias="serialNumber")
+    part_number: Optional[StrictStr] = Field(default=None, description="Part Number of this heat pump", alias="partNumber")
+    state: DeviceState
+    name: Optional[StrictStr] = Field(default=None, description="Internal nickname of this heat pump")
     model: Optional[HeatPumpModel] = None
-    dhw_type: Optional[DhwType] = Field(None, alias="dhwType")
-    boiler_type: Optional[BoilerType] = Field(None, alias="boilerType")
+    dhw_type: Optional[DhwType] = Field(default=None, alias="dhwType")
+    boiler_type: Optional[BoilerType] = Field(default=None, alias="boilerType")
     status: Optional[HeatPumpStatusEnum] = None
     type: Optional[HeatPumpType] = None
-    commissioned_at: Optional[datetime] = Field(None, alias="commissionedAt", description="Date when the heat pump was last commissioned (decommissioning sets this to null)")
-    firmware_version: Optional[StrictStr] = Field(None, alias="firmwareVersion", description="Firmware version of control board connected to heat pump")
-    __properties = ["id", "controlBoardId", "serialNumber", "partNumber", "state", "name", "model", "dhwType", "boilerType", "status", "type", "commissionedAt", "firmwareVersion"]
+    commissioned_at: Optional[datetime] = Field(default=None, description="Date when the heat pump was last commissioned (decommissioning sets this to null)", alias="commissionedAt")
+    firmware_version: Optional[StrictStr] = Field(default=None, description="Firmware version of control board connected to heat pump", alias="firmwareVersion")
+    __properties: ClassVar[List[str]] = ["id", "controlBoardId", "serialNumber", "partNumber", "state", "name", "model", "dhwType", "boilerType", "status", "type", "commissionedAt", "firmwareVersion"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True,
+        "protected_namespaces": (),
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ReadAllHeatPumpDto:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of ReadAllHeatPumpDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+            },
+            exclude_none=True,
+        )
         # set to None if part_number (nullable) is None
-        # and __fields_set__ contains the field
-        if self.part_number is None and "part_number" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.part_number is None and "part_number" in self.model_fields_set:
             _dict['partNumber'] = None
 
         # set to None if name (nullable) is None
-        # and __fields_set__ contains the field
-        if self.name is None and "name" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
             _dict['name'] = None
 
         # set to None if commissioned_at (nullable) is None
-        # and __fields_set__ contains the field
-        if self.commissioned_at is None and "commissioned_at" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.commissioned_at is None and "commissioned_at" in self.model_fields_set:
             _dict['commissionedAt'] = None
 
         # set to None if firmware_version (nullable) is None
-        # and __fields_set__ contains the field
-        if self.firmware_version is None and "firmware_version" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.firmware_version is None and "firmware_version" in self.model_fields_set:
             _dict['firmwareVersion'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ReadAllHeatPumpDto:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of ReadAllHeatPumpDto from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ReadAllHeatPumpDto.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = ReadAllHeatPumpDto.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
-            "control_board_id": obj.get("controlBoardId"),
-            "serial_number": obj.get("serialNumber"),
-            "part_number": obj.get("partNumber"),
+            "controlBoardId": obj.get("controlBoardId"),
+            "serialNumber": obj.get("serialNumber"),
+            "partNumber": obj.get("partNumber"),
             "state": obj.get("state"),
             "name": obj.get("name"),
             "model": obj.get("model"),
-            "dhw_type": obj.get("dhwType"),
-            "boiler_type": obj.get("boilerType"),
+            "dhwType": obj.get("dhwType"),
+            "boilerType": obj.get("boilerType"),
             "status": obj.get("status"),
             "type": obj.get("type"),
-            "commissioned_at": obj.get("commissionedAt"),
-            "firmware_version": obj.get("firmwareVersion")
+            "commissionedAt": obj.get("commissionedAt"),
+            "firmwareVersion": obj.get("firmwareVersion")
         })
         return _obj
 

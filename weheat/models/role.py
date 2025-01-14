@@ -12,18 +12,23 @@
 """  # noqa: E501
 
 
+from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from enum import Enum
 
 
 
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 
 class Role(int, Enum):
     """
-    Roles that can be assigned to a user.\\  Roles enumeration include:  - Admin (0),  - Support (1),  - Logistics (2),  - Sales (3),  - DataScientist (4),  - Production (5),  - Installer (6),  - Consumer (7)
+    Roles that can be assigned to a user.\\  Roles enumeration include:  - Admin (0),  - Support (1),  - Factory (2),  - Sales (3),  - DataScientist (4),  - ProductionObsoleteRole (5),  - Installer (6),  - Consumer (7)  - Distributor (8)
     """
 
     """
@@ -37,10 +42,11 @@ class Role(int, Enum):
     NUMBER_5 = 5
     NUMBER_6 = 6
     NUMBER_7 = 7
+    NUMBER_8 = 8
 
     @classmethod
-    def from_json(cls, json_str: str) -> Role:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of Role from a JSON string"""
-        return Role(json.loads(json_str))
+        return cls(json.loads(json_str))
 
 

@@ -18,103 +18,118 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, StrictFloat, StrictInt, StrictStr
+from pydantic import Field
 try:
-    from pydantic.v1 import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+    from typing import Self
 except ImportError:
-    from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+    from typing_extensions import Self
 
 class EnergyViewDto(BaseModel):
     """
     EnergyViewDto
-    """
-    interval: Optional[StrictStr] = Field(None, description="Interval of this EnergyViewDto (Correct intervals include: \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\")")
-    time_bucket: Optional[datetime] = Field(None, alias="timeBucket")
-    total_ein_heating: Union[StrictFloat, StrictInt] = Field(..., alias="totalEInHeating", description="Total energy from electricity going into the heat pump for heating for this interval (in kwh)")
-    total_ein_dhw: Union[StrictFloat, StrictInt] = Field(..., alias="totalEInDhw", description="Total energy from electricity going into the heat pump for doing DHW for this interval (in kwh)")
-    total_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="totalEInHeatingDefrost", description="Total energy from electricity going into the heat pump for defrosting whilst heating for this interval (in kwh)")
-    total_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="totalEInDhwDefrost", description="Total energy from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kwh)")
-    total_ein_cooling: Union[StrictFloat, StrictInt] = Field(..., alias="totalEInCooling", description="Total energy from electricity going into the heat pump for cooling for this interval (in kwh)")
-    total_e_out_heating: Union[StrictFloat, StrictInt] = Field(..., alias="totalEOutHeating", description="Total energy from electricity going out of the heat pump for heating for this interval (in kwh)")
-    total_e_out_dhw: Union[StrictFloat, StrictInt] = Field(..., alias="totalEOutDhw", description="Total energy from electricity going out of the heat pump for doing DHW for this interval (in kwh)")
-    total_e_out_heating_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="totalEOutHeatingDefrost", description="Total energy from electricity going out of the heat pump for defrosting whilst heating for this interval (in kwh)")
-    total_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="totalEOutDhwDefrost", description="Total energy from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kwh)")
-    total_e_out_cooling: Union[StrictFloat, StrictInt] = Field(..., alias="totalEOutCooling", description="Total energy from electricity going out of the heat pump for cooling for this interval (in kwh)")
-    average_power_ein_heating: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEInHeating", description="Average power from electricity going into the heat pump for heating for this interval (in kW)")
-    average_power_ein_dhw: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEInDhw", description="Average power from electricity going into the heat pump for doing DHW for this interval (in kW)")
-    average_power_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEInHeatingDefrost", description="Average power from electricity going into the heat pump for defrosting whilst heating for this interval (in kW)")
-    average_power_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEInDhwDefrost", description="Average power from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kW)")
-    average_power_ein_cooling: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEInCooling", description="Average power from electricity going into the heat pump for cooling for this interval (in kW)")
-    average_power_e_out_heating: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEOutHeating", description="Average power from electricity going out of the heat pump for heating for this interval (in kW)")
-    average_power_e_out_dhw: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEOutDhw", description="Average power from electricity going out of the heat pump for doing DHW for this interval (in kW)")
-    average_power_e_out_heating_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEOutHeatingDefrost", description="Average power from electricity going out of the heat pump for defrosting whilst heating for this interval (in kW)")
-    average_power_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEOutDhwDefrost", description="Average power from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kW)")
-    average_power_e_out_cooling: Union[StrictFloat, StrictInt] = Field(..., alias="averagePowerEOutCooling", description="Average power from electricity going out of the heat pump for cooling for this interval (in kW)")
-    __properties = ["interval", "timeBucket", "totalEInHeating", "totalEInDhw", "totalEInHeatingDefrost", "totalEInDhwDefrost", "totalEInCooling", "totalEOutHeating", "totalEOutDhw", "totalEOutHeatingDefrost", "totalEOutDhwDefrost", "totalEOutCooling", "averagePowerEInHeating", "averagePowerEInDhw", "averagePowerEInHeatingDefrost", "averagePowerEInDhwDefrost", "averagePowerEInCooling", "averagePowerEOutHeating", "averagePowerEOutDhw", "averagePowerEOutHeatingDefrost", "averagePowerEOutDhwDefrost", "averagePowerEOutCooling"]
+    """ # noqa: E501
+    interval: Optional[StrictStr] = Field(default=None, description="Interval of this EnergyViewDto (Correct intervals include: \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\")")
+    time_bucket: Optional[datetime] = Field(default=None, alias="timeBucket")
+    total_ein_heating: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for heating for this interval (in kwh)", alias="totalEInHeating")
+    total_ein_dhw: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for doing DHW for this interval (in kwh)", alias="totalEInDhw")
+    total_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for defrosting whilst heating for this interval (in kwh)", alias="totalEInHeatingDefrost")
+    total_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kwh)", alias="totalEInDhwDefrost")
+    total_ein_cooling: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for cooling for this interval (in kwh)", alias="totalEInCooling")
+    total_e_out_heating: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for heating for this interval (in kwh)", alias="totalEOutHeating")
+    total_e_out_dhw: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for doing DHW for this interval (in kwh)", alias="totalEOutDhw")
+    total_e_out_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for defrosting whilst heating for this interval (in kwh)", alias="totalEOutHeatingDefrost")
+    total_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kwh)", alias="totalEOutDhwDefrost")
+    total_e_out_cooling: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for cooling for this interval (in kwh)", alias="totalEOutCooling")
+    average_power_ein_heating: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for heating for this interval (in kW)", alias="averagePowerEInHeating")
+    average_power_ein_dhw: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for doing DHW for this interval (in kW)", alias="averagePowerEInDhw")
+    average_power_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for defrosting whilst heating for this interval (in kW)", alias="averagePowerEInHeatingDefrost")
+    average_power_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kW)", alias="averagePowerEInDhwDefrost")
+    average_power_ein_cooling: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for cooling for this interval (in kW)", alias="averagePowerEInCooling")
+    average_power_e_out_heating: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for heating for this interval (in kW)", alias="averagePowerEOutHeating")
+    average_power_e_out_dhw: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for doing DHW for this interval (in kW)", alias="averagePowerEOutDhw")
+    average_power_e_out_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for defrosting whilst heating for this interval (in kW)", alias="averagePowerEOutHeatingDefrost")
+    average_power_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kW)", alias="averagePowerEOutDhwDefrost")
+    average_power_e_out_cooling: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for cooling for this interval (in kW)", alias="averagePowerEOutCooling")
+    __properties: ClassVar[List[str]] = ["interval", "timeBucket", "totalEInHeating", "totalEInDhw", "totalEInHeatingDefrost", "totalEInDhwDefrost", "totalEInCooling", "totalEOutHeating", "totalEOutDhw", "totalEOutHeatingDefrost", "totalEOutDhwDefrost", "totalEOutCooling", "averagePowerEInHeating", "averagePowerEInDhw", "averagePowerEInHeatingDefrost", "averagePowerEInDhwDefrost", "averagePowerEInCooling", "averagePowerEOutHeating", "averagePowerEOutDhw", "averagePowerEOutHeatingDefrost", "averagePowerEOutDhwDefrost", "averagePowerEOutCooling"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True,
+        "protected_namespaces": (),
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> EnergyViewDto:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of EnergyViewDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+            },
+            exclude_none=True,
+        )
         # set to None if interval (nullable) is None
-        # and __fields_set__ contains the field
-        if self.interval is None and "interval" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.interval is None and "interval" in self.model_fields_set:
             _dict['interval'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> EnergyViewDto:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of EnergyViewDto from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return EnergyViewDto.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = EnergyViewDto.parse_obj({
+        _obj = cls.model_validate({
             "interval": obj.get("interval"),
-            "time_bucket": obj.get("timeBucket"),
-            "total_ein_heating": obj.get("totalEInHeating"),
-            "total_ein_dhw": obj.get("totalEInDhw"),
-            "total_ein_heating_defrost": obj.get("totalEInHeatingDefrost"),
-            "total_ein_dhw_defrost": obj.get("totalEInDhwDefrost"),
-            "total_ein_cooling": obj.get("totalEInCooling"),
-            "total_e_out_heating": obj.get("totalEOutHeating"),
-            "total_e_out_dhw": obj.get("totalEOutDhw"),
-            "total_e_out_heating_defrost": obj.get("totalEOutHeatingDefrost"),
-            "total_e_out_dhw_defrost": obj.get("totalEOutDhwDefrost"),
-            "total_e_out_cooling": obj.get("totalEOutCooling"),
-            "average_power_ein_heating": obj.get("averagePowerEInHeating"),
-            "average_power_ein_dhw": obj.get("averagePowerEInDhw"),
-            "average_power_ein_heating_defrost": obj.get("averagePowerEInHeatingDefrost"),
-            "average_power_ein_dhw_defrost": obj.get("averagePowerEInDhwDefrost"),
-            "average_power_ein_cooling": obj.get("averagePowerEInCooling"),
-            "average_power_e_out_heating": obj.get("averagePowerEOutHeating"),
-            "average_power_e_out_dhw": obj.get("averagePowerEOutDhw"),
-            "average_power_e_out_heating_defrost": obj.get("averagePowerEOutHeatingDefrost"),
-            "average_power_e_out_dhw_defrost": obj.get("averagePowerEOutDhwDefrost"),
-            "average_power_e_out_cooling": obj.get("averagePowerEOutCooling")
+            "timeBucket": obj.get("timeBucket"),
+            "totalEInHeating": obj.get("totalEInHeating"),
+            "totalEInDhw": obj.get("totalEInDhw"),
+            "totalEInHeatingDefrost": obj.get("totalEInHeatingDefrost"),
+            "totalEInDhwDefrost": obj.get("totalEInDhwDefrost"),
+            "totalEInCooling": obj.get("totalEInCooling"),
+            "totalEOutHeating": obj.get("totalEOutHeating"),
+            "totalEOutDhw": obj.get("totalEOutDhw"),
+            "totalEOutHeatingDefrost": obj.get("totalEOutHeatingDefrost"),
+            "totalEOutDhwDefrost": obj.get("totalEOutDhwDefrost"),
+            "totalEOutCooling": obj.get("totalEOutCooling"),
+            "averagePowerEInHeating": obj.get("averagePowerEInHeating"),
+            "averagePowerEInDhw": obj.get("averagePowerEInDhw"),
+            "averagePowerEInHeatingDefrost": obj.get("averagePowerEInHeatingDefrost"),
+            "averagePowerEInDhwDefrost": obj.get("averagePowerEInDhwDefrost"),
+            "averagePowerEInCooling": obj.get("averagePowerEInCooling"),
+            "averagePowerEOutHeating": obj.get("averagePowerEOutHeating"),
+            "averagePowerEOutDhw": obj.get("averagePowerEOutDhw"),
+            "averagePowerEOutHeatingDefrost": obj.get("averagePowerEOutHeatingDefrost"),
+            "averagePowerEOutDhwDefrost": obj.get("averagePowerEOutDhwDefrost"),
+            "averagePowerEOutCooling": obj.get("averagePowerEOutCooling")
         })
         return _obj
 

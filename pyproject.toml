@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "weheat"
-version = "2025.1.14"
+version = "2025.1.15"
 description = "Weheat Backend"
 authors = ["Jesper Raemaekers <jesper.raemaekers@wefabricate.com>", "Kjell van Straaten <kjell.van.straaten@wefabricate.com>"]
 license = "MIT"
@@ -14,8 +14,10 @@ python = "^3.7"
 
 urllib3 = ">= 1.25.3"
 python-dateutil = ">=2.8.2"
-pydantic = ">=1.10.5, < 3"
-aenum = ">=3.1.11"
+aiohttp = ">= 3.8.4"
+aiohttp-retry = ">= 2.8.3"
+pydantic = ">=2"
+typing-extensions = ">=4.7.1"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=7.2.1"

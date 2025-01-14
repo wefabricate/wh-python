@@ -27,9 +27,9 @@ try:
 except ImportError:
     from typing_extensions import Self
 
-class ReadUserDto(BaseModel):
+class ReadUserMeDto(BaseModel):
     """
-    ReadUserDto
+    ReadUserMeDto
     """ # noqa: E501
     id: StrictStr = Field(description="Identifier of the user")
     first_name: Optional[StrictStr] = Field(default=None, description="First name of the user if available", alias="firstName")
@@ -38,7 +38,8 @@ class ReadUserDto(BaseModel):
     email: Optional[StrictStr] = Field(default=None, description="Email address of the user")
     updated_on: datetime = Field(description="Timestamp of the last update to the user entry", alias="updatedOn")
     created_on: datetime = Field(description="Timestamp of the creation of the user entry", alias="createdOn")
-    __properties: ClassVar[List[str]] = ["id", "firstName", "lastName", "role", "email", "updatedOn", "createdOn"]
+    language: Optional[StrictStr] = Field(default=None, description="The preferred language of the user (shortened version, e.g. 'EN', 'NL')")
+    __properties: ClassVar[List[str]] = ["id", "firstName", "lastName", "role", "email", "updatedOn", "createdOn", "language"]
 
     model_config = {
         "populate_by_name": True,
@@ -58,7 +59,7 @@ class ReadUserDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of ReadUserDto from a JSON string"""
+        """Create an instance of ReadUserMeDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -92,11 +93,16 @@ class ReadUserDto(BaseModel):
         if self.email is None and "email" in self.model_fields_set:
             _dict['email'] = None
 
+        # set to None if language (nullable) is None
+        # and model_fields_set contains the field
+        if self.language is None and "language" in self.model_fields_set:
+            _dict['language'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of ReadUserDto from a dict"""
+        """Create an instance of ReadUserMeDto from a dict"""
         if obj is None:
             return None
 
@@ -110,7 +116,8 @@ class ReadUserDto(BaseModel):
             "role": obj.get("role"),
             "email": obj.get("email"),
             "updatedOn": obj.get("updatedOn"),
-            "createdOn": obj.get("createdOn")
+            "createdOn": obj.get("createdOn"),
+            "language": obj.get("language")
         })
         return _obj
 

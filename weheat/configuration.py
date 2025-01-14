@@ -14,8 +14,9 @@
 
 import copy
 import logging
-import multiprocessing
 import sys
+
+import aiohttp
 import urllib3
 
 import http.client as httplib
@@ -52,6 +53,7 @@ class Configuration:
       values before.
     :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
       in PEM format.
+    : param client_session: A aiohttp.ClientSession to use
 
     :Example:
     """
@@ -64,7 +66,7 @@ class Configuration:
                  access_token=None,
                  server_index=None, server_variables=None,
                  server_operation_index=None, server_operation_variables=None,
-                 ssl_ca_cert=None,
+                 ssl_ca_cert=None, client_session=None
                  ) -> None:
         """Constructor
         """
@@ -148,12 +150,9 @@ class Configuration:
            Set this to the SNI value expected by the server.
         """
 
-        self.connection_pool_maxsize = multiprocessing.cpu_count() * 5
-        """urllib3 connection pool's maximum number of connections saved
-           per pool. urllib3 uses 1 connection as default value, but this is
-           not the best value when you are making a lot of possibly parallel
-           requests to the same host, which is often the case here.
-           cpu_count * 5 is used as default value to increase performance.
+        self.connection_pool_maxsize = 100
+        """This value is passed to the aiohttp to limit simultaneous connections.
+           Default values is 100, None means no-limit.
         """
 
         self.proxy = None
@@ -183,6 +182,8 @@ class Configuration:
         """date format
         """
 
+        self._client_session = client_session
+
     def __deepcopy__(self, memo):
         cls = self.__class__
         result = cls.__new__(cls)
@@ -199,6 +200,10 @@ class Configuration:
 
     def __setattr__(self, name, value):
         object.__setattr__(self, name, value)
+
+    @property
+    def client_session(self) -> aiohttp.ClientSession|None:
+        return self._client_session
 
     @classmethod
     def set_default(cls, default):
@@ -376,7 +381,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: v1\n"\
-               "SDK Package Version: 2024.07.08".\
+               "SDK Package Version: 2024.11.15".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self):

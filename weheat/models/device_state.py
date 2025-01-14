@@ -12,18 +12,23 @@
 """  # noqa: E501
 
 
+from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from aenum import Enum, no_arg
+from enum import Enum
 
 
 
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 
 class DeviceState(int, Enum):
     """
-    State of the device:   - Production (0),   - InStock (1),   - Sold (2),   - Active (3),   - Inactive (4),   - Broken (5),   - Test (6)   - Configured (7)  For now Production, InStock and Sold will only be applicable to Devices that can be actually installed in installation
+    State of the device:   - ProductionObsoleteState (0),   - InStock (1),   - Sold (2),   - Active (3),   - Inactive (4),   - Broken (5),   - Test (6)   - Configured (7)  For now Production, InStock and Sold will only be applicable to Devices that can be actually installed in installation
     """
 
     """
@@ -39,8 +44,8 @@ class DeviceState(int, Enum):
     NUMBER_7 = 7
 
     @classmethod
-    def from_json(cls, json_str: str) -> DeviceState:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of DeviceState from a JSON string"""
-        return DeviceState(json.loads(json_str))
+        return cls(json.loads(json_str))
 
 
