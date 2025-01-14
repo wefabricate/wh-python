@@ -1,6 +1,3 @@
-# Import pytest
-from itertools import batched
-
 import pytest
 from pydantic import ValidationError
 
