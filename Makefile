@@ -9,10 +9,12 @@ clean:
 
 venv/bin/python:
 	@python3 -m venv venv
-	@. venv/bin/activate && pip install --upgrade build twine
+	@. venv/bin/activate && pip install --upgrade build twine mypy
+	@. venv/bin/activate && mypy --install-types -y
 
 build: venv/bin/python
 	@mkdir -p $(BUILD_DIR)
+	@. venv/bin/activate &&mypy -p weheat.abstractions
 	@. venv/bin/activate &&python3 -m build -o $(BUILD_DIR)
 
 publish: build
