@@ -63,6 +63,19 @@ class HeatPump:
                 if response.status_code == 200:
                     self._last_log = response.data
 
+
+        except Exception as e:
+            self._last_log = None
+            self._energy_consumption = None
+            raise e
+
+
+    async def async_get_energy(self, access_token: str) -> None:
+        """Updates the heat pump instance with data from the API."""
+        try:
+            config = Configuration(host=self._api_url, access_token=access_token, client_session=self._client)
+
+            async with ApiClient(configuration=config) as client:
                 # Also get all energy totals form past years and add them together
                 # As end time pick today + 1 day to avoid issues with timezones
                 response = await EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(
@@ -87,12 +100,9 @@ class HeatPump:
                         self._energy_output += year.total_e_out_dhw
                         self._energy_output += year.total_e_out_dhw_defrost
 
-
-
         except Exception as e:
-            self._last_log = None
             self._energy_consumption = None
-            raise e
+
 
     def _if_available(self, key: str) -> Optional[T]:
         """Returns the value from the last logged value if available. None otherwise."""
