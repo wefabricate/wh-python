@@ -66,7 +66,6 @@ class HeatPump:
 
         except Exception as e:
             self._last_log = None
-            self._energy_consumption = None
             raise e
 
 
