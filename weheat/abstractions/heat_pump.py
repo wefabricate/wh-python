@@ -107,7 +107,7 @@ class HeatPump:
 
         except Exception as e:
             self._energy_consumption = None
-self._energy_output = 0
+            self._energy_output = 0
 
     def _if_available(self, key: str) -> Optional[T]:
         """Returns the value from the last logged value if available. None otherwise."""
