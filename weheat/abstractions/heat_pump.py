@@ -43,6 +43,12 @@ class HeatPump:
 
     async def async_get_status(self, access_token: str) -> None:
         """Updates the heat pump instance with data from the API."""
+        await self.async_get_logs(access_token)
+        await self.async_get_energy(access_token)
+        
+        
+    async def async_get_logs(self, access_token: str) -> None:
+        """Updates the heat pump instance with data from the API."""
         try:
             config = Configuration(host=self._api_url, access_token=access_token, client_session=self._client)
 
