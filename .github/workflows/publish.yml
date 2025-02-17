@@ -24,7 +24,7 @@ jobs:
       run: |
         make publish REPO=$PYPI_URL USER=$PYPI_USER PASSWORD=$PYPI_PASSWORD
     - name: Upload package
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: weheat
         path: |
