@@ -105,9 +105,9 @@ class ApiKeyError(OpenApiException, KeyError):
 class ApiException(OpenApiException):
 
     def __init__(
-        self, 
-        status=None, 
-        reason=None, 
+        self,
+        status=None,
+        reason=None,
         http_resp=None,
         *,
         body: Optional[str] = None,
@@ -133,10 +133,10 @@ class ApiException(OpenApiException):
 
     @classmethod
     def from_response(
-        cls, 
-        *, 
-        http_resp, 
-        body: Optional[str], 
+        cls,
+        *,
+        http_resp,
+        body: Optional[str],
         data: Optional[Any],
     ) -> Self:
         if http_resp.status == 400:
@@ -150,6 +150,9 @@ class ApiException(OpenApiException):
 
         if http_resp.status == 404:
             raise NotFoundException(http_resp=http_resp, body=body, data=data)
+
+        if http_resp.status == 429:
+            raise TooManyRequestsException(http_resp=http_resp, body=body, data=data)
 
         if 500 <= http_resp.status <= 599:
             raise ServiceException(http_resp=http_resp, body=body, data=data)
@@ -186,6 +189,10 @@ class ForbiddenException(ApiException):
 
 
 class ServiceException(ApiException):
+    pass
+
+
+class TooManyRequestsException(ApiException):
     pass
 
 
