@@ -288,12 +288,16 @@ class HeatPump:
     @staticmethod
     def _pwm_to_volume(pwm: float, max: float) -> Union[float, None]:
         """Calculate PWM to Volume in m3/h based on the max available volume"""
-        if pwm < 1 or pwm > 100:
+
+        # 0 or > 75 are abnormal states. 255 = Off
+        if pwm < 1 or pwm > 75:
             return None
 
-        if pwm < 5 or pwm > 75:
+        # 2 = standby
+        if pwm <= 5:
             return 0
 
+        # 5-75 is linear from 0 to max
         return ((pwm - 5) / 70) * max
     
     @property
