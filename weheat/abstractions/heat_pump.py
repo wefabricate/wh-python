@@ -285,6 +285,34 @@ class HeatPump:
             return self.State.DEFROSTING
         return None
 
+    def _pwm_to_volume(pwm: float, max: float) -> Union[float, None]:
+        """Calculate PWM to Volume in m3/h based on the max available volume"""
+        if pwm < 1 or pwm > 100:
+            return None
+
+        if pwm < 5 or pwm > 75:
+            return 0
+
+        return ((pwm - 5) / 70) * max
+    
+    @property
+    def dhw_flow_volume(self) -> Union[float, None]:
+        """The DHW Flow in m3/h."""
+        pwm = pwm=self._if_available("dhw_flow")
+        if pwm is None:
+            return None
+        
+        return self._pwm_to_volume(pwm, max=2.1)
+
+    @property
+    def central_heating_flow_volume(self) -> Union[float, None]:
+        """The Central Heating Flow in m3/h."""
+        pwm = pwm=self._if_available("central_heating_flow")
+        if pwm is None:
+            return None
+        
+        return self._pwm_to_volume(pwm, max=2.1)
+    
     @property
     def energy_total(self) -> Union[float, None]:
         """The total used energy in kWh from 2023 to now."""
