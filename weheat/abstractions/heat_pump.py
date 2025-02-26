@@ -285,6 +285,7 @@ class HeatPump:
             return self.State.DEFROSTING
         return None
 
+    @staticmethod
     def _pwm_to_volume(pwm: float, max: float) -> Union[float, None]:
         """Calculate PWM to Volume in m3/h based on the max available volume"""
         if pwm < 1 or pwm > 100:
