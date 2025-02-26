@@ -13,7 +13,7 @@ class HeatPumpDiscovery:
     @dataclass
     class HeatPumpInfo:
         uuid: str
-        name: str
+        device_name: str
         model: str
         sn : str
         has_dhw: bool = False
@@ -53,7 +53,7 @@ class HeatPumpDiscovery:
                     discovered_pumps.append(
                         HeatPumpDiscovery.HeatPumpInfo(
                             uuid=pump.id,
-                            name=pump.name,
+                            device_name=pump.name,
                             model=model_string,
                             sn=pump.serial_number,
                             has_dhw=dhw,
