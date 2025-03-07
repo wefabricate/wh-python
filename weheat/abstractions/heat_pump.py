@@ -121,10 +121,10 @@ class HeatPump:
         # except for the Flint, that cannot go above 100%.
         if model_id == 1:
             # BB60
-            self._nominal_max_power = 5280
+            self._nominal_max_power = 5520
         elif 2 <= model_id <= 4:
             # SP60
-            self._nominal_max_power = 5280
+            self._nominal_max_power = 5520
         elif model_id == 5:
             # Flint
             self._nominal_max_power = 5400
