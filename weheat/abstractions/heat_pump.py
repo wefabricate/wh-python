@@ -271,7 +271,7 @@ class HeatPump:
             return self.State.STANDBY
         elif numeric_state == 70:
             return self.State.HEATING
-        elif numeric_state == 130:
+        elif numeric_state >= 130 and numeric_state < 140:
             return self.State.COOLING
         elif numeric_state == 150:
             return self.State.DHW
