@@ -218,9 +218,14 @@ class HeatPump:
         """
         input = self.power_input
         output = self.power_output
-        if input is not None and output is not None and input != 0:
+        # When either is not available, the calculation cannot be made.
+        if input is None or output is None:
+            return None
+
+        if input > 0:
             return output / input
-        return None
+
+        return 0
 
     @property
     def indoor_unit_water_pump_state(self) -> Union[bool, None]:
