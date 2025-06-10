@@ -24,7 +24,7 @@ NAME = "weheat"
 VERSION = "2025.4.29"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
-    "urllib3 >= 1.25.3",
+    "urllib3 >= 1.25.3, < 3.0.0",
     "python-dateutil",
     "aiohttp >= 3.0.0",
     "aiohttp-retry >= 2.8.3",
