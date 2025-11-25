@@ -26,10 +26,10 @@ class HeatPumpDiscovery:
 
         async with ApiClient(configuration=config) as client:
 
-            response = await  HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info('', 1, 1000, DeviceState.NUMBER_3)
+            response = await  HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info(1, 1000, state=DeviceState.NUMBER_3)
 
             if response.status_code == 200:
-                for pump in response.data:
+                for pump in response.data.data:
                     # Model of the heat pump
                     # - BlackBirdP80: BlackBird P80 heat pump (0)
                     # - BlackBirdP60: BlackBird P60 heat pump (1)

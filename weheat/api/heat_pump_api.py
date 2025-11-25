@@ -30,8 +30,9 @@ from pydantic import StrictInt, StrictStr
 from typing import List, Optional
 
 from weheat.models.device_state import DeviceState
-from weheat.models.read_all_heat_pump_dto import ReadAllHeatPumpDto
+from weheat.models.read_all_heat_pump_dto_paged_response import ReadAllHeatPumpDtoPagedResponse
 from weheat.models.read_heat_pump_dto import ReadHeatPumpDto
+from weheat.models.heat_pump_model import HeatPumpModel
 
 from weheat.api_client import ApiClient
 from weheat.api_response import ApiResponse
@@ -54,12 +55,14 @@ class HeatPumpApi:
     @validate_call
     async def api_v1_heat_pumps_get(
         self,
-        search: Annotated[Optional[StrictStr], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="The page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="The page size")] = None,
+        page: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page number")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page size")] = None,
+        model: Annotated[Optional[List[HeatPumpModel]], Field(description="Optional filter for which model(s) the heat pump are valid for this query")] = None,
+        organisation_id: Annotated[Optional[StrictStr], Field(description="An ID of the organisation which we want to filter on to get its stock")] = None,
+        search: Annotated[Optional[Annotated[str, Field(min_length=0, strict=True, max_length=100)]], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
         state: Annotated[Optional[DeviceState], Field(description="Filter for which device state the heat pump should be in using Device")] = None,
-        generic_model: Annotated[Optional[StrictStr], Field(description="Filter for which generic model the heat pump should have")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -72,22 +75,26 @@ class HeatPumpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[ReadAllHeatPumpDto]:
+    ) -> ReadAllHeatPumpDtoPagedResponse:
         """Gets all heat pumps (Paged, Searchable)
 
 
-        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
-        :type search: str
         :param page: The page number
         :type page: int
         :param page_size: The page size
         :type page_size: int
+        :param model: Optional filter for which model(s) the heat pump are valid for this query
+        :type model: List[HeatPumpModel]
+        :param organisation_id: An ID of the organisation which we want to filter on to get its stock
+        :type organisation_id: str
+        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
+        :type search: str
         :param state: Filter for which device state the heat pump should be in using Device
         :type state: DeviceState
-        :param generic_model: Filter for which generic model the heat pump should have
-        :type generic_model: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -111,12 +118,14 @@ class HeatPumpApi:
         """ # noqa: E501
 
         _param = self._api_v1_heat_pumps_get_serialize(
-            search=search,
             page=page,
             page_size=page_size,
+            model=model,
+            organisation_id=organisation_id,
+            search=search,
             state=state,
-            generic_model=generic_model,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -127,7 +136,8 @@ class HeatPumpApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "List[ReadAllHeatPumpDto]",
+            '400': "BadRequestCodesEnumeration",
+            '200': "ReadAllHeatPumpDtoPagedResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -143,12 +153,14 @@ class HeatPumpApi:
     @validate_call
     async def api_v1_heat_pumps_get_with_http_info(
         self,
-        search: Annotated[Optional[StrictStr], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="The page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="The page size")] = None,
+        page: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page number")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page size")] = None,
+        model: Annotated[Optional[List[HeatPumpModel]], Field(description="Optional filter for which model(s) the heat pump are valid for this query")] = None,
+        organisation_id: Annotated[Optional[StrictStr], Field(description="An ID of the organisation which we want to filter on to get its stock")] = None,
+        search: Annotated[Optional[Annotated[str, Field(min_length=0, strict=True, max_length=100)]], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
         state: Annotated[Optional[DeviceState], Field(description="Filter for which device state the heat pump should be in using Device")] = None,
-        generic_model: Annotated[Optional[StrictStr], Field(description="Filter for which generic model the heat pump should have")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -161,22 +173,26 @@ class HeatPumpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[ReadAllHeatPumpDto]]:
+    ) -> ApiResponse[ReadAllHeatPumpDtoPagedResponse]:
         """Gets all heat pumps (Paged, Searchable)
 
 
-        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
-        :type search: str
         :param page: The page number
         :type page: int
         :param page_size: The page size
         :type page_size: int
+        :param model: Optional filter for which model(s) the heat pump are valid for this query
+        :type model: List[HeatPumpModel]
+        :param organisation_id: An ID of the organisation which we want to filter on to get its stock
+        :type organisation_id: str
+        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
+        :type search: str
         :param state: Filter for which device state the heat pump should be in using Device
         :type state: DeviceState
-        :param generic_model: Filter for which generic model the heat pump should have
-        :type generic_model: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -200,12 +216,14 @@ class HeatPumpApi:
         """ # noqa: E501
 
         _param = self._api_v1_heat_pumps_get_serialize(
-            search=search,
             page=page,
             page_size=page_size,
+            model=model,
+            organisation_id=organisation_id,
+            search=search,
             state=state,
-            generic_model=generic_model,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -216,7 +234,8 @@ class HeatPumpApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "List[ReadAllHeatPumpDto]",
+            '400': "BadRequestCodesEnumeration",
+            '200': "ReadAllHeatPumpDtoPagedResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -232,12 +251,14 @@ class HeatPumpApi:
     @validate_call
     async def api_v1_heat_pumps_get_without_preload_content(
         self,
-        search: Annotated[Optional[StrictStr], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="The page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="The page size")] = None,
+        page: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page number")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=2147483647, strict=True, ge=1)]], Field(description="The page size")] = None,
+        model: Annotated[Optional[List[HeatPumpModel]], Field(description="Optional filter for which model(s) the heat pump are valid for this query")] = None,
+        organisation_id: Annotated[Optional[StrictStr], Field(description="An ID of the organisation which we want to filter on to get its stock")] = None,
+        search: Annotated[Optional[Annotated[str, Field(min_length=0, strict=True, max_length=100)]], Field(description="String with keywords (split by spaces) to search on SN, PN and Name of a heat pump")] = None,
         state: Annotated[Optional[DeviceState], Field(description="Filter for which device state the heat pump should be in using Device")] = None,
-        generic_model: Annotated[Optional[StrictStr], Field(description="Filter for which generic model the heat pump should have")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -254,18 +275,22 @@ class HeatPumpApi:
         """Gets all heat pumps (Paged, Searchable)
 
 
-        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
-        :type search: str
         :param page: The page number
         :type page: int
         :param page_size: The page size
         :type page_size: int
+        :param model: Optional filter for which model(s) the heat pump are valid for this query
+        :type model: List[HeatPumpModel]
+        :param organisation_id: An ID of the organisation which we want to filter on to get its stock
+        :type organisation_id: str
+        :param search: String with keywords (split by spaces) to search on SN, PN and Name of a heat pump
+        :type search: str
         :param state: Filter for which device state the heat pump should be in using Device
         :type state: DeviceState
-        :param generic_model: Filter for which generic model the heat pump should have
-        :type generic_model: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -289,12 +314,14 @@ class HeatPumpApi:
         """ # noqa: E501
 
         _param = self._api_v1_heat_pumps_get_serialize(
-            search=search,
             page=page,
             page_size=page_size,
+            model=model,
+            organisation_id=organisation_id,
+            search=search,
             state=state,
-            generic_model=generic_model,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -305,7 +332,8 @@ class HeatPumpApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "List[ReadAllHeatPumpDto]",
+            '400': "BadRequestCodesEnumeration",
+            '200': "ReadAllHeatPumpDtoPagedResponse",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -316,12 +344,14 @@ class HeatPumpApi:
 
     def _api_v1_heat_pumps_get_serialize(
         self,
-        search,
         page,
         page_size,
+        model,
+        organisation_id,
+        search,
         state,
-        generic_model,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -331,6 +361,7 @@ class HeatPumpApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'Model': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -342,10 +373,6 @@ class HeatPumpApi:
 
         # process the path parameters
         # process the query parameters
-        if search is not None:
-            
-            _query_params.append(('search', search))
-            
         if page is not None:
             
             _query_params.append(('page', page))
@@ -354,17 +381,27 @@ class HeatPumpApi:
             
             _query_params.append(('pageSize', page_size))
             
+        if model is not None:
+            
+            _query_params.append(('Model', model))
+            
+        if organisation_id is not None:
+            
+            _query_params.append(('OrganisationId', organisation_id))
+            
+        if search is not None:
+            
+            _query_params.append(('Search', search))
+            
         if state is not None:
             
-            _query_params.append(('state', state.value))
-            
-        if generic_model is not None:
-            
-            _query_params.append(('genericModel', generic_model))
+            _query_params.append(('State', state.value))
             
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 
@@ -405,6 +442,7 @@ class HeatPumpApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The heatPumpId of the heat pump you want to get")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,6 +463,8 @@ class HeatPumpApi:
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -450,6 +490,7 @@ class HeatPumpApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -479,6 +520,7 @@ class HeatPumpApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The heatPumpId of the heat pump you want to get")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -499,6 +541,8 @@ class HeatPumpApi:
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -524,6 +568,7 @@ class HeatPumpApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -553,6 +598,7 @@ class HeatPumpApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The heatPumpId of the heat pump you want to get")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -573,6 +619,8 @@ class HeatPumpApi:
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -598,6 +646,7 @@ class HeatPumpApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -622,6 +671,7 @@ class HeatPumpApi:
         self,
         heat_pump_id,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -647,6 +697,8 @@ class HeatPumpApi:
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 

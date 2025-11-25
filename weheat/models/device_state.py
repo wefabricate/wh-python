@@ -28,7 +28,7 @@ except ImportError:
 
 class DeviceState(int, Enum):
     """
-    State of the device:   - ProductionObsoleteState (0),   - InStock (1),   - Sold (2),   - Active (3),   - Inactive (4),   - Broken (5),   - Test (6)   - Configured (7)  For now Production, InStock and Sold will only be applicable to Devices that can be actually installed in installation
+    State of the device:   - ProductionObsoleteState (0),   - InStock (1),   - Sold (2),   - Active (3),   - Inactive (4),   - Broken (5),   - Test (6)  For now Production, InStock and Sold will only be applicable to Devices that can be actually installed in installation
     """
 
     """
@@ -41,7 +41,6 @@ class DeviceState(int, Enum):
     NUMBER_4 = 4
     NUMBER_5 = 5
     NUMBER_6 = 6
-    NUMBER_7 = 7
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

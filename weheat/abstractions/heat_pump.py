@@ -12,6 +12,8 @@ from weheat.api.energy_log_api import EnergyLogApi
 from datetime import datetime, timedelta
 from typing import TypeVar, Union, Optional
 
+from weheat.models import TotalEnergyAggregate
+
 # before this date no energy logs are available, so start from this point onwards
 START_DATE = datetime(2023, 1, 1, 0, 0, 0)
 
@@ -36,8 +38,7 @@ class HeatPump:
         self._api_url = api_url
         self._uuid = uuid
         self._last_log = None
-        self._energy_consumption: Union[float, None] = None
-        self._energy_output: Union[float, None] = None
+        self._energy_total: Union[TotalEnergyAggregate, None] = None
         self._nominal_max_power: Union[float, None] = None
         self._client = client_session
 
@@ -81,33 +82,21 @@ class HeatPump:
             config = Configuration(host=self._api_url, access_token=access_token, client_session=self._client)
 
             async with ApiClient(configuration=config) as client:
-                # Also get all energy totals form past years and add them together
-                # As end time pick today + 1 day to avoid issues with timezones
-                response = await EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(
-                    heat_pump_id=self._uuid,
-                    start_time=START_DATE,
-                    end_time=datetime.now() + timedelta(days=1),
-                    interval='Month')
+                response = await EnergyLogApi(client).total_heat_pump_id_get_with_http_info(heat_pump_id=self._uuid)
 
                 if response.status_code == 200:
                     # aggregate the energy consumption
-                    self._energy_consumption = 0
-                    self._energy_output = 0
-                    for year in response.data:
-                        self._energy_consumption += year.total_ein_cooling
-                        self._energy_consumption += year.total_ein_heating
-                        self._energy_consumption += year.total_ein_heating_defrost
-                        self._energy_consumption += year.total_ein_dhw
-                        self._energy_consumption += year.total_ein_dhw_defrost
-                        self._energy_output += year.total_e_out_cooling
-                        self._energy_output += year.total_e_out_heating
-                        self._energy_output += year.total_e_out_heating_defrost
-                        self._energy_output += year.total_e_out_dhw
-                        self._energy_output += year.total_e_out_dhw_defrost
+                    self._energy_total = response.data
 
         except Exception as e:
-            self._energy_consumption = None
-            self._energy_output = None
+            self._energy_total = None
+
+    def _if_available_and_valid(self, key:str) -> Optional[T]:
+        """Return the value from the last logged value if available and not -1. None otherwise."""
+        value = self._if_available(key)
+        if value is not None and value != -1:
+            return value
+        return None
 
     def _if_available(self, key: str) -> Optional[T]:
         """Returns the value from the last logged value if available. None otherwise."""
@@ -177,12 +166,12 @@ class HeatPump:
     @property
     def thermostat_room_temperature(self) -> Union[float, None]:
         """The thermostat current room temperature."""
-        return self._if_available("t_room")
+        return self._if_available_and_valid("t_room")
 
     @property
     def thermostat_room_temperature_setpoint(self) -> Union[float, None]:
         """The thermostat room temperature setpoint."""
-        return self._if_available("t_room_target")
+        return self._if_available_and_valid("t_room_target")
 
     @property
     def thermostat_on_off_state(self) -> Union[bool, None]:
@@ -324,11 +313,95 @@ class HeatPump:
         return self._pwm_to_volume(pwm, max=2.1)
     
     @property
-    def energy_total(self) -> Union[float, None]:
-        """The total used energy in kWh from 2023 to now."""
-        return self._energy_consumption
+    def energy_in_heating(self) -> Union[float, None]:
+        """The total used energy in heating mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_heating)
 
     @property
-    def energy_output(self) -> Union[float, None]:
-        """The total energy output in kWh from 2023 to now."""
-        return self._energy_output
+    def energy_in_dhw(self) -> Union[float, None]:
+        """The total used energy in DHW mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_dhw)
+
+    @property
+    def energy_in_defrost(self) -> Union[float, None]:
+        """The total used energy in defrost modes."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_heating_defrost + self._energy_total.total_ein_dhw_defrost)
+
+    @property
+    def energy_in_defrost_dhw(self) -> Union[float, None]:
+        """The total used energy in defrost from DHW mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_dhw_defrost)
+
+    @property
+    def energy_in_defrost_ch(self) -> Union[float, None]:
+        """The total used energy in defrost from CH mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_heating_defrost)
+
+    @property
+    def energy_in_cooling(self) -> Union[float, None]:
+        """The total used energy in cooling mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_cooling)
+
+    @property
+    def energy_out_heating(self) -> Union[float, None]:
+        """The total supplied energy in heating mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_heating)
+
+
+    @property
+    def energy_out_dhw(self) -> Union[float, None]:
+        """The total supplied energy in DHW mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_dhw)
+
+    @property
+    def energy_out_defrost(self) -> Union[float, None]:
+        """The total supplied energy in defrost modes.
+        Note that this energy value is negative as energy is removed from the water.
+        """
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_dhw_defrost + self._energy_total.total_e_out_heating_defrost)
+
+    @property
+    def energy_out_defrost_dhw(self) -> Union[float, None]:
+        """The total supplied energy in defrost DHW mode.
+        Note that this energy value is negative as energy is removed from the water.
+        """
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_dhw_defrost)
+
+
+    @property
+    def energy_out_defrost_ch(self) -> Union[float, None]:
+        """The total supplied energy in defrost CH mode.
+        Note that this energy value is negative as energy is removed from the water.
+        """
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_heating_defrost)
+
+    @property
+    def energy_out_cooling(self) -> Union[float, None]:
+        """The total supplied energy in cooling mode.
+        Note that this energy value is negative as energy is removed from the water.
+        """
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_cooling)

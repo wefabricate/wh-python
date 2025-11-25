@@ -86,7 +86,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/2024.11.15/python'
+        self.user_agent = 'OpenAPI-Generator/2025.11.24/python'
         self.client_side_validation = configuration.client_side_validation
 
     async def __aenter__(self):
@@ -406,11 +406,11 @@ class ApiClient:
         if isinstance(klass, str):
             if klass.startswith('List['):
                 sub_kls = re.match(r'List\[(.*)]', klass).group(1)
-                # when there is data present, the data is wrapped in a dict
-                try:
-                    data = data['data']
-                except:
-                    pass
+                # # when there is data present, the data is wrapped in a dict
+                # try:
+                #     data = data['data']
+                # except:
+                #     pass
                 return [self.__deserialize(sub_data, sub_kls)
                         for sub_data in data]
 

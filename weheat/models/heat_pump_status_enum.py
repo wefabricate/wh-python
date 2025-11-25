@@ -28,7 +28,7 @@ except ImportError:
 
 class HeatPumpStatusEnum(int, Enum):
     """
-    Last status of the heat pump from the last heat pump log   - Standby (40)   - Heating (70)   - Defrost (90)   - Cooling (130)   - DHW (150)   - Lionelle (160)   - SelfTest (170)  -  ManualControl (180)
+    Last status of the heat pump from the last heat pump log   - Standby (40)   - Heating (70)   - Defrost (90)   - Cooling (130)   - DHW (150)   - Lionelle (160)   - SelfTest (170)   - ManualControl (180)
     """
 
     """

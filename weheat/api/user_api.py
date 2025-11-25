@@ -52,6 +52,7 @@ class UserApi:
     async def api_v1_users_me_get(
         self,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -70,6 +71,8 @@ class UserApi:
 
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -94,6 +97,7 @@ class UserApi:
 
         _param = self._api_v1_users_me_get_serialize(
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -124,6 +128,7 @@ class UserApi:
     async def api_v1_users_me_get_with_http_info(
         self,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -142,6 +147,8 @@ class UserApi:
 
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -166,6 +173,7 @@ class UserApi:
 
         _param = self._api_v1_users_me_get_serialize(
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -196,6 +204,7 @@ class UserApi:
     async def api_v1_users_me_get_without_preload_content(
         self,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -214,6 +223,8 @@ class UserApi:
 
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -238,6 +249,7 @@ class UserApi:
 
         _param = self._api_v1_users_me_get_serialize(
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -263,6 +275,7 @@ class UserApi:
     def _api_v1_users_me_get_serialize(
         self,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -286,6 +299,8 @@ class UserApi:
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 
@@ -293,8 +308,8 @@ class UserApi:
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
-                'text/plain',
-                'application/json',
+                'text/plain', 
+                'application/json', 
                 'text/json'
             ]
         )
