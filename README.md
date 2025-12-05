@@ -28,59 +28,47 @@ After installation, you can now use the client to interact with the Weheat backe
 
 ```python
 import asyncio
-import datetime
 from keycloak import KeycloakOpenID  # install with pip install python-keycloak
-from weheat import ApiClient, Configuration, HeatPumpApi, HeatPumpLogApi, EnergyLogApi, UserApi
+from weheat.abstractions.heat_pump import HeatPump
 
+# connection information
 auth_url = 'https://auth.weheat.nl/auth/'
-api_url = 'https://api.weheat.nl'
+api_url = 'https://api.weheat.nl/third_party'
 realm_name = 'Weheat'
-my_client_id = 'WeheatCommunityAPI' # client ID and secret provided by Weheat
-my_client_secret = ''
-username = '' # username and password used for the online portal
+
+# client ID and secret provided by Weheat
+client_id = ''
+client_secret = ''
+
+# username and password used for the online portal
+username = ''
 password = ''
-my_heat_pump_id = '' # your heat pump UUID
+
+# your heat pump UUID
+my_heat_pump_id = ''
 
 
 async def demo():
+    # login into keycloak and get an access token
     keycloak_open_id = KeycloakOpenID(server_url=auth_url,
-                                      client_id=my_client_id,
+                                      client_id=client_id,
                                       realm_name=realm_name,
-                                      client_secret_key=my_client_secret)
+                                      client_secret_key=client_secret)
 
     token_response = keycloak_open_id.token(username, password)
+    # The access token is valid for its lifetime even after logging out
     keycloak_open_id.logout(token_response['refresh_token'])
 
-    config = Configuration(host=api_url, access_token=token_response['access_token'])
-    async with ApiClient(configuration=config) as client:
-        response = await UserApi(client).api_v1_users_me_get_with_http_info()
+    # construct the heat pump object and fetch its data
+    hp = HeatPump(api_url=api_url, uuid=my_heat_pump_id)
+    await hp.async_get_status(token_response['access_token'])
 
-        if response.status_code == 200:
-            print(f'My user: {response.data}')
+    # Print some of the information, look in the files for all available properties
+    print(f'Heat pump status: {hp.heat_pump_state}')
+    print(f'Heat pump RPM: {hp.compressor_percentage}%')
+    print(f'Total produced central heating energy: {hp.energy_out_heating} kWh')
 
-        response = await HeatPumpApi(client).api_v1_heat_pumps_get_with_http_info()
-
-        if response.status_code == 200:
-            print(f'My heat pump: {response.data}')
-
-        response = await HeatPumpLogApi(client).api_v1_heat_pumps_heat_pump_id_logs_latest_get_with_http_info(
-            heat_pump_id=my_heat_pump_id)
-
-        if response.status_code == 200:
-            print(f'My heat pump logs: {response.data}')
-
-        response = await EnergyLogApi(client).api_v1_energy_logs_heat_pump_id_get_with_http_info(heat_pump_id=my_heat_pump_id,
-                                                                                     start_time=datetime.datetime(2024, 6,
-                                                                                                                  22, 0, 0,
-                                                                                                                  0),
-                                                                                     end_time=datetime.datetime(2024, 6, 22,
-                                                                                                                15, 0, 0),
-                                                                                     interval='Hour')
-
-        if response.status_code == 200:
-            print(f'My energy logs: {response.data}')
-
-asyncio.get_event_loop().run_until_complete(demo())
+asyncio.run(demo())
 
 ```
 
