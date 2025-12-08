@@ -87,8 +87,15 @@ async def test_hp_log(api_fixture, uuid):
     assert heatpump.power_output >= 0
     assert heatpump.compressor_rpm >= 0
     assert heatpump.heat_pump_state in HeatPump.State
-    assert heatpump.energy_total >= 0
-    assert heatpump.energy_output >= 0
+    assert heatpump.energy_in_heating >= 0
+    assert heatpump.energy_in_dhw >= 0
+    assert heatpump.energy_in_defrost >= 0
+    assert heatpump.energy_in_cooling >= 0
+    assert heatpump.energy_out_heating >= 0
+    assert heatpump.energy_out_dhw >= 0
+    assert heatpump.energy_out_defrost <= 0
+    assert heatpump.energy_out_cooling <= 0
+
 
 
 
