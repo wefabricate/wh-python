@@ -33,6 +33,7 @@ from typing import List, Optional
 
 from weheat.models.heat_pump_log_view_dto import HeatPumpLogViewDto
 from weheat.models.raw_heat_pump_log_dto import RawHeatPumpLogDto
+from weheat.models.raw_heatpump_log_and_is_online_dto import RawHeatpumpLogAndIsOnlineDto
 
 from weheat.api_client import ApiClient
 from weheat.api_response import ApiResponse
@@ -60,6 +61,7 @@ class HeatPumpLogApi:
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         interval: Annotated[Optional[StrictStr], Field(description="Interval granularity of the log data, allowed intervals:                                      \"Minute\", \"FiveMinute\", \"FifteenMinute\", \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\"")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -73,7 +75,7 @@ class HeatPumpLogApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[HeatPumpLogViewDto]:
-        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include: Minute, FiveMinute, FifteenMinute, Hour, Day, Week, Month, Year  Limits for these intervals are: 2 days, 1 week, 1 month, 1 month, 1 year, 2 years, 5 years, 100 years
+        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include:      Minute, FiveMinute, FifteenMinute, Hour,    Day,    Week,    Month,   Year  Limits for these intervals are: 2 days, 1 week,     1 month,       1 month, 1 year, 2 years, 5 years, 100 years  Totals max logs per interval:   2880    2016        2688           672,     365,    104,     60,      100
 
 
         :param heat_pump_id: The id of the heat pump (required)
@@ -86,6 +88,8 @@ class HeatPumpLogApi:
         :type interval: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -114,6 +118,7 @@ class HeatPumpLogApi:
             end_time=end_time,
             interval=interval,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -147,6 +152,7 @@ class HeatPumpLogApi:
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         interval: Annotated[Optional[StrictStr], Field(description="Interval granularity of the log data, allowed intervals:                                      \"Minute\", \"FiveMinute\", \"FifteenMinute\", \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\"")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -160,7 +166,7 @@ class HeatPumpLogApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[HeatPumpLogViewDto]]:
-        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include: Minute, FiveMinute, FifteenMinute, Hour, Day, Week, Month, Year  Limits for these intervals are: 2 days, 1 week, 1 month, 1 month, 1 year, 2 years, 5 years, 100 years
+        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include:      Minute, FiveMinute, FifteenMinute, Hour,    Day,    Week,    Month,   Year  Limits for these intervals are: 2 days, 1 week,     1 month,       1 month, 1 year, 2 years, 5 years, 100 years  Totals max logs per interval:   2880    2016        2688           672,     365,    104,     60,      100
 
 
         :param heat_pump_id: The id of the heat pump (required)
@@ -173,6 +179,8 @@ class HeatPumpLogApi:
         :type interval: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -201,6 +209,7 @@ class HeatPumpLogApi:
             end_time=end_time,
             interval=interval,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -234,6 +243,7 @@ class HeatPumpLogApi:
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         interval: Annotated[Optional[StrictStr], Field(description="Interval granularity of the log data, allowed intervals:                                      \"Minute\", \"FiveMinute\", \"FifteenMinute\", \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\"")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -247,7 +257,7 @@ class HeatPumpLogApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include: Minute, FiveMinute, FifteenMinute, Hour, Day, Week, Month, Year  Limits for these intervals are: 2 days, 1 week, 1 month, 1 month, 1 year, 2 years, 5 years, 100 years
+        """Gets the heat pump logs of the heat pump in a from start time to end time for a given interval  Correct Intervals include:      Minute, FiveMinute, FifteenMinute, Hour,    Day,    Week,    Month,   Year  Limits for these intervals are: 2 days, 1 week,     1 month,       1 month, 1 year, 2 years, 5 years, 100 years  Totals max logs per interval:   2880    2016        2688           672,     365,    104,     60,      100
 
 
         :param heat_pump_id: The id of the heat pump (required)
@@ -260,6 +270,8 @@ class HeatPumpLogApi:
         :type interval: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -288,6 +300,7 @@ class HeatPumpLogApi:
             end_time=end_time,
             interval=interval,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -316,6 +329,7 @@ class HeatPumpLogApi:
         end_time,
         interval,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -371,6 +385,8 @@ class HeatPumpLogApi:
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 
@@ -413,6 +429,7 @@ class HeatPumpLogApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The id of the heat pump")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,14 +442,16 @@ class HeatPumpLogApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RawHeatPumpLogDto:
-        """Gets the latest raw heat pump log of the heat pump
+    ) -> RawHeatpumpLogAndIsOnlineDto:
+        """Gets the latest raw heat pump log of the heat pump and a boolean indicating whether the heat pump is online.
 
 
         :param heat_pump_id: The id of the heat pump (required)
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -458,6 +477,7 @@ class HeatPumpLogApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_logs_latest_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -468,7 +488,7 @@ class HeatPumpLogApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "RawHeatPumpLogDto",
+            '200': "RawHeatpumpLogAndIsOnlineDto",
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -487,6 +507,7 @@ class HeatPumpLogApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The id of the heat pump")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -499,14 +520,16 @@ class HeatPumpLogApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RawHeatPumpLogDto]:
-        """Gets the latest raw heat pump log of the heat pump
+    ) -> ApiResponse[RawHeatpumpLogAndIsOnlineDto]:
+        """Gets the latest raw heat pump log of the heat pump and a boolean indicating whether the heat pump is online.
 
 
         :param heat_pump_id: The id of the heat pump (required)
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -532,6 +555,7 @@ class HeatPumpLogApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_logs_latest_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -542,7 +566,7 @@ class HeatPumpLogApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "RawHeatPumpLogDto",
+            '200': "RawHeatpumpLogAndIsOnlineDto",
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -561,6 +585,7 @@ class HeatPumpLogApi:
         self,
         heat_pump_id: Annotated[StrictStr, Field(description="The id of the heat pump")],
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -574,13 +599,15 @@ class HeatPumpLogApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Gets the latest raw heat pump log of the heat pump
+        """Gets the latest raw heat pump log of the heat pump and a boolean indicating whether the heat pump is online.
 
 
         :param heat_pump_id: The id of the heat pump (required)
         :type heat_pump_id: str
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -606,6 +633,7 @@ class HeatPumpLogApi:
         _param = self._api_v1_heat_pumps_heat_pump_id_logs_latest_get_serialize(
             heat_pump_id=heat_pump_id,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -616,7 +644,7 @@ class HeatPumpLogApi:
             '403': "str",
             '500': None,
             '505': None,
-            '200': "RawHeatPumpLogDto",
+            '200': "RawHeatpumpLogAndIsOnlineDto",
             '404': None,
         }
         response_data = await self.api_client.call_api(
@@ -630,6 +658,7 @@ class HeatPumpLogApi:
         self,
         heat_pump_id,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -655,6 +684,8 @@ class HeatPumpLogApi:
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 
@@ -699,6 +730,7 @@ class HeatPumpLogApi:
         start_time: Annotated[Optional[datetime], Field(description="Start time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -723,6 +755,8 @@ class HeatPumpLogApi:
         :type end_time: datetime
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -750,6 +784,7 @@ class HeatPumpLogApi:
             start_time=start_time,
             end_time=end_time,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -782,6 +817,7 @@ class HeatPumpLogApi:
         start_time: Annotated[Optional[datetime], Field(description="Start time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -806,6 +842,8 @@ class HeatPumpLogApi:
         :type end_time: datetime
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -833,6 +871,7 @@ class HeatPumpLogApi:
             start_time=start_time,
             end_time=end_time,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -865,6 +904,7 @@ class HeatPumpLogApi:
         start_time: Annotated[Optional[datetime], Field(description="Start time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         end_time: Annotated[Optional[datetime], Field(description="End time of the interval as a DateTime object in UTC (format: yyyy-MM-dd HH:mm:ss)")] = None,
         x_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter for frontend applications to check if an update / refresh is needed")] = None,
+        x_backend_version: Annotated[Optional[StrictStr], Field(description="Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -889,6 +929,8 @@ class HeatPumpLogApi:
         :type end_time: datetime
         :param x_version: Optional version parameter for frontend applications to check if an update / refresh is needed
         :type x_version: str
+        :param x_backend_version: Optional version parameter that the frontend can use to know whether this specific endpoint got a backwards incompatible change.
+        :type x_backend_version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -916,6 +958,7 @@ class HeatPumpLogApi:
             start_time=start_time,
             end_time=end_time,
             x_version=x_version,
+            x_backend_version=x_backend_version,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -943,6 +986,7 @@ class HeatPumpLogApi:
         start_time,
         end_time,
         x_version,
+        x_backend_version,
         _request_auth,
         _content_type,
         _headers,
@@ -994,6 +1038,8 @@ class HeatPumpLogApi:
         # process the header parameters
         if x_version is not None:
             _header_params['x-version'] = x_version
+        if x_backend_version is not None:
+            _header_params['x-backend-version'] = x_backend_version
         # process the form parameters
         # process the body parameter
 

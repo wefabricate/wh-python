@@ -26,9 +26,9 @@ try:
 except ImportError:
     from typing_extensions import Self
 
-class RawHeatPumpLogDto(BaseModel):
+class RawHeatpumpLogAndIsOnlineDto(BaseModel):
     """
-    Raw heat pump log as given by a heat pump for staff members
+    RawHeatpumpLogAndIsOnlineDto
     """ # noqa: E501
     heat_pump_id: StrictStr = Field(description="Identifier of the Heat Pump", alias="heatPumpId")
     timestamp: datetime = Field(description="Timestamp of when this was logged to the server")
@@ -98,11 +98,12 @@ class RawHeatPumpLogDto(BaseModel):
     cm_mass_power_in: Optional[StrictInt] = Field(default=None, description="Power going into the heat pump", alias="cmMassPowerIn")
     cm_mass_power_out: Optional[StrictInt] = Field(default=None, description="Power going out of the heat pump (in the form of usable heat)", alias="cmMassPowerOut")
     debug_variable1: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable1")
-    debug_variable2: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional? debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable2")
+    debug_variable2: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable2")
     debug_variable3: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable3")
     debug_variable4: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable4")
     debug_variable5: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Optional debug variable that can be set to anything in firmware and will be logged as a float  float - 4 bytes", alias="debugVariable5")
-    __properties: ClassVar[List[str]] = ["heatPumpId", "timestamp", "state", "controlBridgeStatus", "controlBridgeStatusDecodedWaterPump", "controlBridgeStatusDecodedGasBoiler", "controlBridgeStatusDecodedElectricHeater", "controlBridgeStatusDecodedWaterPump2", "t1", "t2", "tAirIn", "tAirOut", "tWaterIn", "tWaterOut", "tWaterHouseIn", "rpm", "onOffThermostatState", "tRoom", "tRoomTarget", "tThermostatSetpoint", "otBoilerFeedTemperature", "otBoilerReturnTemperature", "centralHeatingFlow", "dhwFlow", "interval", "inputStatus", "currentControlMethod", "signalStrength", "rpmLimiter", "rpmLimiterType", "pCompressorIn", "pCompressorOut", "pCompressorInTarget", "tCompressorIn", "tCompressorOut", "tCompressorInTransient", "tCompressorOutTransient", "deltaTCompressorInSuperheat", "fan", "fanPower", "temperatureErrorIntegral", "thermostatStatus", "otBoilerStatus", "centralHeatingPwmRequestedDutyCycle", "dhwPwmRequestedDutyCycle", "sinr", "error", "errorDecodedDtcNone", "errorDecodedDtcContinue", "errorDecodedDtcCompressorOff", "errorDecodedDtcDefrostForbidden", "errorDecodedDtcRequestService", "errorDecodedDtcUseHeatingCurve", "errorDecodedDtcDhwForbidden", "errorDecodedDtcError", "errorDecodedDtcInactive", "controlBridgeStatusDecodedDhwValve", "tBoard", "tInverter", "compressorPowerLowAccuracy", "valve", "inverterInputVoltage", "indoorUnitHeaterTemperature", "indoorUnitInputCurrent", "coolingStatus", "cmMassPowerIn", "cmMassPowerOut", "debugVariable1", "debugVariable2", "debugVariable3", "debugVariable4", "debugVariable5"]
+    is_online: StrictBool = Field(description="A boolean indicating if the heat pump is currently online", alias="isOnline")
+    __properties: ClassVar[List[str]] = ["heatPumpId", "timestamp", "state", "controlBridgeStatus", "controlBridgeStatusDecodedWaterPump", "controlBridgeStatusDecodedGasBoiler", "controlBridgeStatusDecodedElectricHeater", "controlBridgeStatusDecodedWaterPump2", "t1", "t2", "tAirIn", "tAirOut", "tWaterIn", "tWaterOut", "tWaterHouseIn", "rpm", "onOffThermostatState", "tRoom", "tRoomTarget", "tThermostatSetpoint", "otBoilerFeedTemperature", "otBoilerReturnTemperature", "centralHeatingFlow", "dhwFlow", "interval", "inputStatus", "currentControlMethod", "signalStrength", "rpmLimiter", "rpmLimiterType", "pCompressorIn", "pCompressorOut", "pCompressorInTarget", "tCompressorIn", "tCompressorOut", "tCompressorInTransient", "tCompressorOutTransient", "deltaTCompressorInSuperheat", "fan", "fanPower", "temperatureErrorIntegral", "thermostatStatus", "otBoilerStatus", "centralHeatingPwmRequestedDutyCycle", "dhwPwmRequestedDutyCycle", "sinr", "error", "errorDecodedDtcNone", "errorDecodedDtcContinue", "errorDecodedDtcCompressorOff", "errorDecodedDtcDefrostForbidden", "errorDecodedDtcRequestService", "errorDecodedDtcUseHeatingCurve", "errorDecodedDtcDhwForbidden", "errorDecodedDtcError", "errorDecodedDtcInactive", "controlBridgeStatusDecodedDhwValve", "tBoard", "tInverter", "compressorPowerLowAccuracy", "valve", "inverterInputVoltage", "indoorUnitHeaterTemperature", "indoorUnitInputCurrent", "coolingStatus", "cmMassPowerIn", "cmMassPowerOut", "debugVariable1", "debugVariable2", "debugVariable3", "debugVariable4", "debugVariable5", "isOnline"]
 
     model_config = {
         "populate_by_name": True,
@@ -122,7 +123,7 @@ class RawHeatPumpLogDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of RawHeatPumpLogDto from a JSON string"""
+        """Create an instance of RawHeatpumpLogAndIsOnlineDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -490,7 +491,7 @@ class RawHeatPumpLogDto(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Dict) -> Self:
-        """Create an instance of RawHeatPumpLogDto from a dict"""
+        """Create an instance of RawHeatpumpLogAndIsOnlineDto from a dict"""
         if obj is None:
             return None
 
@@ -569,7 +570,8 @@ class RawHeatPumpLogDto(BaseModel):
             "debugVariable2": obj.get("debugVariable2"),
             "debugVariable3": obj.get("debugVariable3"),
             "debugVariable4": obj.get("debugVariable4"),
-            "debugVariable5": obj.get("debugVariable5")
+            "debugVariable5": obj.get("debugVariable5"),
+            "isOnline": obj.get("isOnline")
         })
         return _obj
 

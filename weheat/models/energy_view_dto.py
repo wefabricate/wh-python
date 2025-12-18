@@ -33,6 +33,7 @@ class EnergyViewDto(BaseModel):
     interval: Optional[StrictStr] = Field(default=None, description="Interval of this EnergyViewDto (Correct intervals include: \"Hour\", \"Day\", \"Week\", \"Month\", \"Year\")")
     time_bucket: Optional[datetime] = Field(default=None, alias="timeBucket")
     total_ein_heating: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for heating for this interval (in kwh)", alias="totalEInHeating")
+    total_ein_standby: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for standby for this interval (in kwh)", alias="totalEInStandby")
     total_ein_dhw: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for doing DHW for this interval (in kwh)", alias="totalEInDhw")
     total_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for defrosting whilst heating for this interval (in kwh)", alias="totalEInHeatingDefrost")
     total_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kwh)", alias="totalEInDhwDefrost")
@@ -43,6 +44,7 @@ class EnergyViewDto(BaseModel):
     total_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kwh)", alias="totalEOutDhwDefrost")
     total_e_out_cooling: Union[StrictFloat, StrictInt] = Field(description="Total energy from electricity going out of the heat pump for cooling for this interval (in kwh)", alias="totalEOutCooling")
     average_power_ein_heating: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for heating for this interval (in kW)", alias="averagePowerEInHeating")
+    average_power_ein_standby: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for standby for this interval (in kW)", alias="averagePowerEInStandby")
     average_power_ein_dhw: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for doing DHW for this interval (in kW)", alias="averagePowerEInDhw")
     average_power_ein_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for defrosting whilst heating for this interval (in kW)", alias="averagePowerEInHeatingDefrost")
     average_power_ein_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going into the heat pump for defrosting whilst doing DHW for this interval (in kW)", alias="averagePowerEInDhwDefrost")
@@ -52,7 +54,7 @@ class EnergyViewDto(BaseModel):
     average_power_e_out_heating_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for defrosting whilst heating for this interval (in kW)", alias="averagePowerEOutHeatingDefrost")
     average_power_e_out_dhw_defrost: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for defrosting whilst doing DHW for this interval (in kW)", alias="averagePowerEOutDhwDefrost")
     average_power_e_out_cooling: Union[StrictFloat, StrictInt] = Field(description="Average power from electricity going out of the heat pump for cooling for this interval (in kW)", alias="averagePowerEOutCooling")
-    __properties: ClassVar[List[str]] = ["interval", "timeBucket", "totalEInHeating", "totalEInDhw", "totalEInHeatingDefrost", "totalEInDhwDefrost", "totalEInCooling", "totalEOutHeating", "totalEOutDhw", "totalEOutHeatingDefrost", "totalEOutDhwDefrost", "totalEOutCooling", "averagePowerEInHeating", "averagePowerEInDhw", "averagePowerEInHeatingDefrost", "averagePowerEInDhwDefrost", "averagePowerEInCooling", "averagePowerEOutHeating", "averagePowerEOutDhw", "averagePowerEOutHeatingDefrost", "averagePowerEOutDhwDefrost", "averagePowerEOutCooling"]
+    __properties: ClassVar[List[str]] = ["interval", "timeBucket", "totalEInHeating", "totalEInStandby", "totalEInDhw", "totalEInHeatingDefrost", "totalEInDhwDefrost", "totalEInCooling", "totalEOutHeating", "totalEOutDhw", "totalEOutHeatingDefrost", "totalEOutDhwDefrost", "totalEOutCooling", "averagePowerEInHeating", "averagePowerEInStandby", "averagePowerEInDhw", "averagePowerEInHeatingDefrost", "averagePowerEInDhwDefrost", "averagePowerEInCooling", "averagePowerEOutHeating", "averagePowerEOutDhw", "averagePowerEOutHeatingDefrost", "averagePowerEOutDhwDefrost", "averagePowerEOutCooling"]
 
     model_config = {
         "populate_by_name": True,
@@ -111,6 +113,7 @@ class EnergyViewDto(BaseModel):
             "interval": obj.get("interval"),
             "timeBucket": obj.get("timeBucket"),
             "totalEInHeating": obj.get("totalEInHeating"),
+            "totalEInStandby": obj.get("totalEInStandby"),
             "totalEInDhw": obj.get("totalEInDhw"),
             "totalEInHeatingDefrost": obj.get("totalEInHeatingDefrost"),
             "totalEInDhwDefrost": obj.get("totalEInDhwDefrost"),
@@ -121,6 +124,7 @@ class EnergyViewDto(BaseModel):
             "totalEOutDhwDefrost": obj.get("totalEOutDhwDefrost"),
             "totalEOutCooling": obj.get("totalEOutCooling"),
             "averagePowerEInHeating": obj.get("averagePowerEInHeating"),
+            "averagePowerEInStandby": obj.get("averagePowerEInStandby"),
             "averagePowerEInDhw": obj.get("averagePowerEInDhw"),
             "averagePowerEInHeatingDefrost": obj.get("averagePowerEInHeatingDefrost"),
             "averagePowerEInDhwDefrost": obj.get("averagePowerEInDhwDefrost"),

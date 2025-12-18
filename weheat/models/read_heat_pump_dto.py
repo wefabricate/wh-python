@@ -27,7 +27,6 @@ from weheat.models.device_state import DeviceState
 from weheat.models.dhw_type import DhwType
 from weheat.models.heat_pump_model import HeatPumpModel
 from weheat.models.heat_pump_status_enum import HeatPumpStatusEnum
-from weheat.models.heat_pump_type import HeatPumpType
 try:
     from typing import Self
 except ImportError:
@@ -37,19 +36,18 @@ class ReadHeatPumpDto(BaseModel):
     """
     ReadHeatPumpDto
     """ # noqa: E501
-    id: StrictStr = Field(description="Identifier of the heat pump")
     control_board_id: StrictStr = Field(description="Identifier of the control board that is connected to the heat pump", alias="controlBoardId")
-    serial_number: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Serial Number of this heat pump", alias="serialNumber")
-    part_number: Optional[StrictStr] = Field(default=None, description="Part Number of this heat pump", alias="partNumber")
-    state: DeviceState
     name: Optional[StrictStr] = Field(default=None, description="Internal nickname of this heat pump")
     model: Optional[HeatPumpModel] = None
     dhw_type: Optional[DhwType] = Field(default=None, alias="dhwType")
     boiler_type: Optional[BoilerType] = Field(default=None, alias="boilerType")
     status: Optional[HeatPumpStatusEnum] = None
-    type: Optional[HeatPumpType] = None
     commissioned_at: Optional[datetime] = Field(default=None, description="Date when the heat pump was last commissioned (decommissioning sets this to null)", alias="commissionedAt")
-    __properties: ClassVar[List[str]] = ["id", "controlBoardId", "serialNumber", "partNumber", "state", "name", "model", "dhwType", "boilerType", "status", "type", "commissionedAt"]
+    serial_number: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Serial Number of this heat pump", alias="serialNumber")
+    part_number: Optional[StrictStr] = Field(default=None, description="Part Number of this heat pump", alias="partNumber")
+    state: DeviceState
+    id: StrictStr = Field(description="Identifier of the heat pump")
+    __properties: ClassVar[List[str]] = ["controlBoardId", "name", "model", "dhwType", "boilerType", "status", "commissionedAt", "serialNumber", "partNumber", "state", "id"]
 
     model_config = {
         "populate_by_name": True,
@@ -88,11 +86,6 @@ class ReadHeatPumpDto(BaseModel):
             },
             exclude_none=True,
         )
-        # set to None if part_number (nullable) is None
-        # and model_fields_set contains the field
-        if self.part_number is None and "part_number" in self.model_fields_set:
-            _dict['partNumber'] = None
-
         # set to None if name (nullable) is None
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
@@ -102,6 +95,11 @@ class ReadHeatPumpDto(BaseModel):
         # and model_fields_set contains the field
         if self.commissioned_at is None and "commissioned_at" in self.model_fields_set:
             _dict['commissionedAt'] = None
+
+        # set to None if part_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.part_number is None and "part_number" in self.model_fields_set:
+            _dict['partNumber'] = None
 
         return _dict
 
@@ -115,18 +113,17 @@ class ReadHeatPumpDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
             "controlBoardId": obj.get("controlBoardId"),
-            "serialNumber": obj.get("serialNumber"),
-            "partNumber": obj.get("partNumber"),
-            "state": obj.get("state"),
             "name": obj.get("name"),
             "model": obj.get("model"),
             "dhwType": obj.get("dhwType"),
             "boilerType": obj.get("boilerType"),
             "status": obj.get("status"),
-            "type": obj.get("type"),
-            "commissionedAt": obj.get("commissionedAt")
+            "commissionedAt": obj.get("commissionedAt"),
+            "serialNumber": obj.get("serialNumber"),
+            "partNumber": obj.get("partNumber"),
+            "state": obj.get("state"),
+            "id": obj.get("id")
         })
         return _obj
 

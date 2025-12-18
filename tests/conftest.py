@@ -2,8 +2,6 @@ import pytest
 from dataclasses import dataclass
 from keycloak import KeycloakOpenID
 
-asyncio_default_fixture_loop_scope = "function"
-
 def pytest_addoption(parser):
     # These are used by the STK500 interface
 

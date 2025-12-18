@@ -35,46 +35,25 @@ class HeatPumpLogViewDto(BaseModel):
     time_covered_in_interval: Optional[StrictInt] = Field(default=None, description="Amount of time covered by this interval in seconds out of a maximum of the Interval (Granularity) in seconds", alias="timeCoveredInInterval")
     heat_pump_state_standby: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the standby state for this interval", alias="heatPumpStateStandby")
     heat_pump_state_heating: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the heating state for this interval", alias="heatPumpStateHeating")
-    heat_pump_state_defrost: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the defrost required active state for this interval", alias="heatPumpStateDefrost")
     heat_pump_state_cooling: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the cooling state for this interval", alias="heatPumpStateCooling")
-    heat_pump_state_dhw: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the (heating) Domestic Hot Water stae for this interval", alias="heatPumpStateDHW")
+    heat_pump_state_dhw: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the (heating) Domestic Hot Water stae for this interval", alias="heatPumpStateDhw")
     heat_pump_state_legionella: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Legionnaires' Disease Prevention state for this interval", alias="heatPumpStateLegionella")
-    rpm_control_startup: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in one of the RPM Control Startup states for this interval", alias="rpmControlStartup")
-    rpm_control_running: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in one of the RPM Control Running state for this interval", alias="rpmControlRunning")
-    rpm_control_running_abnormally: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the RPM Control Running Abnormally states for this interval", alias="rpmControlRunningAbnormally")
-    rpm_control_shutdown: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in one of the RPM Control Shutdown states for this interval", alias="rpmControlShutdown")
+    heat_pump_state_manual_control: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in Manual Control state for this interval", alias="heatPumpStateManualControl")
+    heat_pump_state_dhw_defrost: Optional[StrictInt] = Field(default=None, alias="heatPumpStateDhwDefrost")
+    heat_pump_state_heating_defrost: Optional[StrictInt] = Field(default=None, alias="heatPumpStateHeatingDefrost")
     control_bridge_status_water_pump: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status Water Pump state to true for this interval", alias="controlBridgeStatusWaterPump")
-    control_bridge_status_dhw_valve: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status DHW Valve state to true for this interval", alias="controlBridgeStatusDhwValve")
     control_bridge_status_gas_boiler: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status Gas Boiler state to true for this interval", alias="controlBridgeStatusGasBoiler")
     control_bridge_status_electric_heater: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status Electric Heater state to true for this interval", alias="controlBridgeStatusElectricHeater")
     control_bridge_status_water_pump2: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status Water Pump 2 state to true for this interval", alias="controlBridgeStatusWaterPump2")
-    dtc_none: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the No DTC codes Error state for this interval (staff only)", alias="dtcNone")
-    dtc_continue: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC but can Continue Error state for this interval (staff only)", alias="dtcContinue")
-    dtc_compressor_off: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Compressor Off Error state for this interval (staff only)", alias="dtcCompressorOff")
-    dtc_defrost_forbidden: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Defrost Forbidden Error state for this interval (staff only)", alias="dtcDefrostForbidden")
-    dtc_request_service: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Request Service Error state for this interval (staff only)", alias="dtcRequestService")
-    dtc_use_heating_curve: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Use Heating Curve (only) Error state for this interval (staff only)", alias="dtcUseHeatingCurve")
-    dtc_dhw_forbidden: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC HW Forbidden Error state for this interval (staff only)", alias="dtcDhwForbidden")
-    dtc_error: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC DTC Error state for this interval (staff only)", alias="dtcError")
-    dtc_inactive: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Inactive Error state for this interval (staff only)", alias="dtcInactive")
-    signal_strength_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average of the Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthAverage")
-    signal_strength_min: Optional[StrictInt] = Field(default=None, description="Minimal Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthMin")
-    signal_strength_max: Optional[StrictInt] = Field(default=None, description="Maximum Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthMax")
     t1_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the top DHW sensor (T1) of the heat pump for this interval", alias="t1Average")
     t1_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the top DHW sensor (T1) of the heat pump for this interval", alias="t1Min")
     t1_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the top DHW sensor (T1) of the heat pump for this interval", alias="t1Max")
     t2_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the bottom DHW sensor (T2) of the heat pump for this interval", alias="t2Average")
     t2_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the bottom DHW sensor (T2) of the heat pump for this interval", alias="t2Min")
     t2_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the bottom DHW sensor (T2) of the heat pump for this interval", alias="t2Max")
-    t_spare_ntc_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the spare DHW sensor (TSpareNTC) of the heat pump for this interval (staff only)", alias="tSpareNtcAverage")
-    t_spare_ntc_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the spare DHW sensor (TSpareNTC) of the heat pump for this interval (staff only)", alias="tSpareNtcMin")
-    t_spare_ntc_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the spare DHW sensor (TSpareNTC) of the heat pump for this interval (staff only)", alias="tSpareNtcMax")
-    t_board_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardAverage")
-    t_board_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardMin")
-    t_board_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardMax")
     t_air_in_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of air going into the heat pump for this interval", alias="tAirInAverage")
-    t_air_in_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="tAirInMin")
-    t_air_in_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="tAirInMax")
+    t_air_in_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of air going into the heat pump for this interval", alias="tAirInMin")
+    t_air_in_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of air going into the heat pump for this interval", alias="tAirInMax")
     t_air_out_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of air going out of the heat pump for this interval", alias="tAirOutAverage")
     t_air_out_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of air going out of the heat pump for this interval", alias="tAirOutMin")
     t_air_out_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of air going out of the heat pump for this interval", alias="tAirOutMax")
@@ -87,9 +66,51 @@ class HeatPumpLogViewDto(BaseModel):
     t_water_house_in_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the water going into the house for this interval", alias="tWaterHouseInAverage")
     t_water_house_in_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the water going into the house for this interval", alias="tWaterHouseInMin")
     t_water_house_in_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the water going into the house for this interval", alias="tWaterHouseInMax")
+    t_room_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the room for this interval", alias="tRoomAverage")
+    t_room_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the room for this interval", alias="tRoomMin")
+    t_room_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the room for this interval", alias="tRoomMax")
+    t_room_target_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average target room temperature of the thermostat for this interval", alias="tRoomTargetAverage")
+    t_room_target_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum target room temperature of the thermostat for this interval", alias="tRoomTargetMin")
+    t_room_target_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum target room temperature of the thermostat for this interval", alias="tRoomTargetMax")
+    t_thermostat_setpoint_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointAverage")
+    t_thermostat_setpoint_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointMin")
+    t_thermostat_setpoint_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointMax")
+    ot_boiler_feed_temperature_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureAverage")
+    ot_boiler_feed_temperature_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureMin")
+    ot_boiler_feed_temperature_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureMax")
+    ot_boiler_return_temperature_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureAverage")
+    ot_boiler_return_temperature_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureMin")
+    ot_boiler_return_temperature_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureMax")
+    thermostat_state_off: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Thermostat State Off state for this interval", alias="thermostatStateOff")
+    thermostat_state_on: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Thermostat State On state for this interval", alias="thermostatStateOn")
     rpm_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average RPM of the compressor for this interval (not for consumers)", alias="rpmAverage")
     rpm_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum RPM of the compressor for this interval (not for consumers)", alias="rpmMin")
     rpm_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum RPM of the compressor for this interval (not for consumers)", alias="rpmMax")
+    central_heating_flow_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average flow rate for central heating circuit for this interval (staff only)", alias="centralHeatingFlowAverage")
+    central_heating_flow_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum flow rate for central heating circuit for this interval (staff only)", alias="centralHeatingFlowMin")
+    central_heating_flow_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum flow rate for central heating circuit for this interval (staff only)", alias="centralHeatingFlowMax")
+    central_heating_flow_state_standby: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in standby state for this interval (staff only)", alias="centralHeatingFlowStateStandby")
+    central_heating_flow_state_standby_no_pwm: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in standby (no PWM) state for this interval (staff only)", alias="centralHeatingFlowStateStandbyNoPwm")
+    central_heating_flow_state_motor_blocked: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in motor blocked state for this interval (staff only)", alias="centralHeatingFlowStateMotorBlocked")
+    central_heating_flow_state_pumping: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in pumping state for this interval (staff only)", alias="centralHeatingFlowStatePumping")
+    central_heating_flow_state_pumping_no_pwm: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in pumping (no PWM) state for this interval (staff only)", alias="centralHeatingFlowStatePumpingNoPwm")
+    central_heating_flow_state_suboptimal_running: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in suboptimal running state for this interval (staff only)", alias="centralHeatingFlowStateSuboptimalRunning")
+    central_heating_flow_state_stopped_momentarily: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in stopped momentarily state for this interval (staff only)", alias="centralHeatingFlowStateStoppedMomentarily")
+    central_heating_flow_state_stopped_permanent_damage: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating flow was in stopped permanent damage state for this interval (staff only)", alias="centralHeatingFlowStateStoppedPermanentDamage")
+    dhw_flow_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average flow rate for DHW circuit for this interval (staff only)", alias="dhwFlowAverage")
+    dhw_flow_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum flow rate for DHW circuit for this interval (staff only)", alias="dhwFlowMin")
+    dhw_flow_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum flow rate for DHW circuit for this interval (staff only)", alias="dhwFlowMax")
+    dhw_flow_state_standby: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in standby state for this interval (staff only)", alias="dhwFlowStateStandby")
+    dhw_flow_state_standby_no_pwm: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in standby (no PWM) state for this interval (staff only)", alias="dhwFlowStateStandbyNoPwm")
+    dhw_flow_state_motor_blocked: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in motor blocked state for this interval (staff only)", alias="dhwFlowStateMotorBlocked")
+    dhw_flow_state_pumping: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in pumping state for this interval (staff only)", alias="dhwFlowStatePumping")
+    dhw_flow_state_pumping_no_pwm: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in pumping (no PWM) state for this interval (staff only)", alias="dhwFlowStatePumpingNoPwm")
+    dhw_flow_state_suboptimal_running: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in suboptimal running state for this interval (staff only)", alias="dhwFlowStateSuboptimalRunning")
+    dhw_flow_state_stopped_momentarily: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in stopped momentarily state for this interval (staff only)", alias="dhwFlowStateStoppedMomentarily")
+    dhw_flow_state_stopped_permanent_damage: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW flow was in stopped permanent damage state for this interval (staff only)", alias="dhwFlowStateStoppedPermanentDamage")
+    signal_strength_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average of the Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthAverage")
+    signal_strength_min: Optional[StrictInt] = Field(default=None, description="Minimal Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthMin")
+    signal_strength_max: Optional[StrictInt] = Field(default=None, description="Maximum Signal Strength (integer out of 20) of the heat pump for this interval (staff only)", alias="signalStrengthMax")
     rpm_limiter_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average RPM value the heat pump was limited to for this interval (staff only)", alias="rpmLimiterAverage")
     rpm_limiter_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum RPM value the heat pump was limited to for this interval (staff only)", alias="rpmLimiterMin")
     rpm_limiter_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum RPM value the heat pump was limited to for this interval (staff only)", alias="rpmLimiterMax")
@@ -111,9 +132,6 @@ class HeatPumpLogViewDto(BaseModel):
     p_compressor_in_target_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average target pressure (on the intake side) of the compressor for this interval (not for consumers)", alias="pCompressorInTargetAverage")
     p_compressor_in_target_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum target pressure (on the intake side) of the compressor for this interval (not for consumers)", alias="pCompressorInTargetMin")
     p_compressor_in_target_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum target pressure (on the intake side) of the compressor for this interval (not for consumers)", alias="pCompressorInTargetMax")
-    t_inverter_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the inverter for this interval (staff only)", alias="tInverterAverage")
-    t_inverter_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the inverter for this interval (staff only)", alias="tInverterMin")
-    t_inverter_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the inverter for this interval (staff only)", alias="tInverterMax")
     t_compressor_in_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of intake side of the compressor for this interval (not for consumers)", alias="tCompressorInAverage")
     t_compressor_in_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of intake side of the compressor for this interval (not for consumers)", alias="tCompressorInMin")
     t_compressor_in_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of intake side of the compressor for this interval (not for consumers)", alias="tCompressorInMax")
@@ -129,38 +147,108 @@ class HeatPumpLogViewDto(BaseModel):
     delta_t_compressor_in_superheat_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature difference in the compressor for Superheat for this interval (staff only)", alias="deltaTCompressorInSuperheatAverage")
     delta_t_compressor_in_superheat_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature difference in the compressor for Superheat for this interval (staff only)", alias="deltaTCompressorInSuperheatMin")
     delta_t_compressor_in_superheat_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature difference in the compressor for Superheat for this interval (staff only)", alias="deltaTCompressorInSuperheatMax")
-    compressor_power_low_accuracy_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyAverage")
-    compressor_power_low_accuracy_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyMin")
-    compressor_power_low_accuracy_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyMax")
     fan_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average percentage of the fan used for this interval (staff only)", alias="fanAverage")
     fan_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum percentage of the fan used for this interval (staff only)", alias="fanMin")
     fan_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum percentage of the fan used for this interval (staff only)", alias="fanMax")
     fan_power_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power used by the fan for this interval (staff only)", alias="fanPowerAverage")
     fan_power_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power used by the fan for this interval (staff only)", alias="fanPowerMin")
     fan_power_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power used by the fan for this interval (staff only)", alias="fanPowerMax")
-    cm_mass_power_in_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average of the total amount of energy produced by the heat pump for this interval (staff only)", alias="cmMassPowerInAverage")
-    cm_mass_power_out_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average of the total amount of energy produced by the heat pump for this interval (staff only)", alias="cmMassPowerOutAverage")
     temperature_error_integral_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average value of the TemperatureErrorIntegral for this interval (staff only)", alias="temperatureErrorIntegralAverage")
     temperature_error_integral_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum value of the TemperatureErrorIntegral for this interval (staff only)", alias="temperatureErrorIntegralMin")
     temperature_error_integral_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum value of the TemperatureErrorIntegral for this interval (staff only)", alias="temperatureErrorIntegralMax")
-    thermostat_state_off: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Thermostat State Off state for this interval", alias="thermostatStateOff")
-    thermostat_state_on: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Thermostat State On state for this interval", alias="thermostatStateOn")
-    t_room_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the room for this interval", alias="tRoomAverage")
-    t_room_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the room for this interval", alias="tRoomMin")
-    t_room_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the room for this interval", alias="tRoomMax")
-    t_room_target_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average target room temperature of the thermostat for this interval", alias="tRoomTargetAverage")
-    t_room_target_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum target room temperature of the thermostat for this interval", alias="tRoomTargetMin")
-    t_room_target_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum target room temperature of the thermostat for this interval", alias="tRoomTargetMax")
-    t_thermostat_setpoint_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointAverage")
-    t_thermostat_setpoint_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointMin")
-    t_thermostat_setpoint_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature setpoint of the thermostat for this interval OR the water setpoint of the heat pump", alias="tThermostatSetpointMax")
-    ot_boiler_feed_temperature_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureAverage")
-    ot_boiler_feed_temperature_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureMin")
-    ot_boiler_feed_temperature_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum OpenTherm boiler water feed temperature for this interval", alias="otBoilerFeedTemperatureMax")
-    ot_boiler_return_temperature_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureAverage")
-    ot_boiler_return_temperature_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureMin")
-    ot_boiler_return_temperature_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum OpenTherm boiler water return temperature for this interval", alias="otBoilerReturnTemperatureMax")
-    __properties: ClassVar[List[str]] = ["timeBucket", "interval", "timeCoveredInInterval", "heatPumpStateStandby", "heatPumpStateHeating", "heatPumpStateDefrost", "heatPumpStateCooling", "heatPumpStateDHW", "heatPumpStateLegionella", "rpmControlStartup", "rpmControlRunning", "rpmControlRunningAbnormally", "rpmControlShutdown", "controlBridgeStatusWaterPump", "controlBridgeStatusDhwValve", "controlBridgeStatusGasBoiler", "controlBridgeStatusElectricHeater", "controlBridgeStatusWaterPump2", "dtcNone", "dtcContinue", "dtcCompressorOff", "dtcDefrostForbidden", "dtcRequestService", "dtcUseHeatingCurve", "dtcDhwForbidden", "dtcError", "dtcInactive", "signalStrengthAverage", "signalStrengthMin", "signalStrengthMax", "t1Average", "t1Min", "t1Max", "t2Average", "t2Min", "t2Max", "tSpareNtcAverage", "tSpareNtcMin", "tSpareNtcMax", "tBoardAverage", "tBoardMin", "tBoardMax", "tAirInAverage", "tAirInMin", "tAirInMax", "tAirOutAverage", "tAirOutMin", "tAirOutMax", "tWaterInAverage", "tWaterInMin", "tWaterInMax", "tWaterOutAverage", "tWaterOutMin", "tWaterOutMax", "tWaterHouseInAverage", "tWaterHouseInMin", "tWaterHouseInMax", "rpmAverage", "rpmMin", "rpmMax", "rpmLimiterAverage", "rpmLimiterMin", "rpmLimiterMax", "rpmLimiterNoLimit", "rpmLimiterPowerLimit", "rpmLimiterDefrost", "rpmLimiterSilentHours", "rpmLimiterHPControl", "rpmLimiterPressure", "rpmLimiterWaterOut", "rpmLimiterEnvelope", "rpmLimiterHouseIn", "pCompressorInAverage", "pCompressorInMin", "pCompressorInMax", "pCompressorOutAverage", "pCompressorOutMin", "pCompressorOutMax", "pCompressorInTargetAverage", "pCompressorInTargetMin", "pCompressorInTargetMax", "tInverterAverage", "tInverterMin", "tInverterMax", "tCompressorInAverage", "tCompressorInMin", "tCompressorInMax", "tCompressorOutAverage", "tCompressorOutMin", "tCompressorOutMax", "tCompressorInTransientAverage", "tCompressorInTransientMin", "tCompressorInTransientMax", "tCompressorOutTransientAverage", "tCompressorOutTransientMin", "tCompressorOutTransientMax", "deltaTCompressorInSuperheatAverage", "deltaTCompressorInSuperheatMin", "deltaTCompressorInSuperheatMax", "compressorPowerLowAccuracyAverage", "compressorPowerLowAccuracyMin", "compressorPowerLowAccuracyMax", "fanAverage", "fanMin", "fanMax", "fanPowerAverage", "fanPowerMin", "fanPowerMax", "cmMassPowerInAverage", "cmMassPowerOutAverage", "temperatureErrorIntegralAverage", "temperatureErrorIntegralMin", "temperatureErrorIntegralMax", "thermostatStateOff", "thermostatStateOn", "tRoomAverage", "tRoomMin", "tRoomMax", "tRoomTargetAverage", "tRoomTargetMin", "tRoomTargetMax", "tThermostatSetpointAverage", "tThermostatSetpointMin", "tThermostatSetpointMax", "otBoilerFeedTemperatureAverage", "otBoilerFeedTemperatureMin", "otBoilerFeedTemperatureMax", "otBoilerReturnTemperatureAverage", "otBoilerReturnTemperatureMin", "otBoilerReturnTemperatureMax"]
+    dtc_none: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the No DTC codes Error state for this interval (staff only)", alias="dtcNone")
+    dtc_continue: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC but can Continue Error state for this interval (staff only)", alias="dtcContinue")
+    dtc_compressor_off: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Compressor Off Error state for this interval (staff only)", alias="dtcCompressorOff")
+    dtc_defrost_forbidden: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Defrost Forbidden Error state for this interval (staff only)", alias="dtcDefrostForbidden")
+    dtc_request_service: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Request Service Error state for this interval (staff only)", alias="dtcRequestService")
+    dtc_use_heating_curve: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Use Heating Curve (only) Error state for this interval (staff only)", alias="dtcUseHeatingCurve")
+    dtc_dhw_forbidden: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC HW Forbidden Error state for this interval (staff only)", alias="dtcDhwForbidden")
+    dtc_error: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC DTC Error state for this interval (staff only)", alias="dtcError")
+    dtc_inactive: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the DTC Inactive Error state for this interval (staff only)", alias="dtcInactive")
+    control_bridge_status_dhw_valve: Optional[StrictInt] = Field(default=None, description="Amount of seconds the heat pump spend in the Control Bridge Status DHW Valve state to true for this interval", alias="controlBridgeStatusDhwValve")
+    valve_average: Optional[StrictInt] = Field(default=None, description="Average valve position for this interval.", alias="valveAverage")
+    valve_min: Optional[StrictInt] = Field(default=None, description="Minimum valve position for this interval.", alias="valveMin")
+    valve_max: Optional[StrictInt] = Field(default=None, description="Maximum valve position for this interval.", alias="valveMax")
+    t_board_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardAverage")
+    t_board_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardMin")
+    t_board_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the control board of the heat pump for this interval (staff only)", alias="tBoardMax")
+    t_inverter_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the inverter for this interval (staff only)", alias="tInverterAverage")
+    t_inverter_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the inverter for this interval (staff only)", alias="tInverterMin")
+    t_inverter_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the inverter for this interval (staff only)", alias="tInverterMax")
+    compressor_power_low_accuracy_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyAverage")
+    compressor_power_low_accuracy_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyMin")
+    compressor_power_low_accuracy_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power used by the compressor (low accuracy) for this interval (staff only)", alias="compressorPowerLowAccuracyMax")
+    cm_mass_power_in_standby_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during standby state for this interval (staff only)", alias="cmMassPowerInStandbyAverage")
+    cm_mass_power_in_standby_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during standby state for this interval (staff only)", alias="cmMassPowerInStandbyMin")
+    cm_mass_power_in_standby_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during standby state for this interval (staff only)", alias="cmMassPowerInStandbyMax")
+    cm_mass_power_in_heating_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during heating state for this interval (staff only)", alias="cmMassPowerInHeatingAverage")
+    cm_mass_power_in_heating_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during heating state for this interval (staff only)", alias="cmMassPowerInHeatingMin")
+    cm_mass_power_in_heating_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during heating state for this interval (staff only)", alias="cmMassPowerInHeatingMax")
+    cm_mass_power_in_cooling_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during cooling state for this interval (staff only)", alias="cmMassPowerInCoolingAverage")
+    cm_mass_power_in_cooling_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during cooling state for this interval (staff only)", alias="cmMassPowerInCoolingMin")
+    cm_mass_power_in_cooling_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during cooling state for this interval (staff only)", alias="cmMassPowerInCoolingMax")
+    cm_mass_power_in_heating_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during heating with defrost state for this interval (staff only)", alias="cmMassPowerInHeatingDefrostAverage")
+    cm_mass_power_in_heating_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during heating with defrost state for this interval (staff only)", alias="cmMassPowerInHeatingDefrostMin")
+    cm_mass_power_in_heating_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during heating with defrost state for this interval (staff only)", alias="cmMassPowerInHeatingDefrostMax")
+    cm_mass_power_in_dhw_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during DHW with defrost state for this interval (staff only)", alias="cmMassPowerInDhwDefrostAverage")
+    cm_mass_power_in_dhw_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during DHW with defrost state for this interval (staff only)", alias="cmMassPowerInDhwDefrostMin")
+    cm_mass_power_in_dhw_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during DHW with defrost state for this interval (staff only)", alias="cmMassPowerInDhwDefrostMax")
+    cm_mass_power_in_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during defrost state for this interval (staff only)", alias="cmMassPowerInDefrostAverage")
+    cm_mass_power_in_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during defrost state for this interval (staff only)", alias="cmMassPowerInDefrostMin")
+    cm_mass_power_in_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during defrost state for this interval (staff only)", alias="cmMassPowerInDefrostMax")
+    cm_mass_power_in_dhw_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during DHW state for this interval (staff only)", alias="cmMassPowerInDhwAverage")
+    cm_mass_power_in_dhw_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during DHW state for this interval (staff only)", alias="cmMassPowerInDhwMin")
+    cm_mass_power_in_dhw_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during DHW state for this interval (staff only)", alias="cmMassPowerInDhwMax")
+    cm_mass_power_in_manual_control_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power input during manual control state for this interval (staff only)", alias="cmMassPowerInManualControlAverage")
+    cm_mass_power_in_manual_control_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power input during manual control state for this interval (staff only)", alias="cmMassPowerInManualControlMin")
+    cm_mass_power_out_heating_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power input during manual control state for this interval (staff only)", alias="cmMassPowerOutHeatingDefrostAverage")
+    cm_mass_power_out_heating_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during heating with defrost state for this interval (staff only)", alias="cmMassPowerOutHeatingDefrostMin")
+    cm_mass_power_out_heating_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during heating with defrost state for this interval (staff only)", alias="cmMassPowerOutHeatingDefrostMax")
+    cm_mass_power_out_dhw_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during DHW with defrost state for this interval (staff only)", alias="cmMassPowerOutDhwDefrostAverage")
+    cm_mass_power_out_dhw_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during DHW with defrost state for this interval (staff only)", alias="cmMassPowerOutDhwDefrostMin")
+    cm_mass_power_out_dhw_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during DHW with defrost state for this interval (staff only)", alias="cmMassPowerOutDhwDefrostMax")
+    cm_mass_power_in_manual_control_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="cmMassPowerInManualControlMax")
+    cm_mass_power_out_standby_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during standby state for this interval (staff only)", alias="cmMassPowerOutStandbyAverage")
+    cm_mass_power_out_standby_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during standby state for this interval (staff only)", alias="cmMassPowerOutStandbyMin")
+    cm_mass_power_out_standby_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during standby state for this interval (staff only)", alias="cmMassPowerOutStandbyMax")
+    cm_mass_power_out_heating_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during heating state for this interval (staff only)", alias="cmMassPowerOutHeatingAverage")
+    cm_mass_power_out_heating_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during heating state for this interval (staff only)", alias="cmMassPowerOutHeatingMin")
+    cm_mass_power_out_heating_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during heating state for this interval (staff only)", alias="cmMassPowerOutHeatingMax")
+    cm_mass_power_out_cooling_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during cooling state for this interval (staff only)", alias="cmMassPowerOutCoolingAverage")
+    cm_mass_power_out_cooling_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during cooling state for this interval (staff only)", alias="cmMassPowerOutCoolingMin")
+    cm_mass_power_out_cooling_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during cooling state for this interval (staff only)", alias="cmMassPowerOutCoolingMax")
+    cm_mass_power_out_defrost_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during defrost state for this interval (staff only)", alias="cmMassPowerOutDefrostAverage")
+    cm_mass_power_out_defrost_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during defrost state for this interval (staff only)", alias="cmMassPowerOutDefrostMin")
+    cm_mass_power_out_defrost_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during defrost state for this interval (staff only)", alias="cmMassPowerOutDefrostMax")
+    cm_mass_power_out_dhw_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during DHW state for this interval (staff only)", alias="cmMassPowerOutDhwAverage")
+    cm_mass_power_out_dhw_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during DHW state for this interval (staff only)", alias="cmMassPowerOutDhwMin")
+    cm_mass_power_out_dhw_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during DHW state for this interval (staff only)", alias="cmMassPowerOutDhwMax")
+    cm_mass_power_out_manual_control_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average power output during manual control state for this interval (staff only)", alias="cmMassPowerOutManualControlAverage")
+    cm_mass_power_out_manual_control_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum power output during manual control state for this interval (staff only)", alias="cmMassPowerOutManualControlMin")
+    cm_mass_power_out_manual_control_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum power output during manual control state for this interval (staff only)", alias="cmMassPowerOutManualControlMax")
+    inverter_input_voltage_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average input voltage measured by the compressor inverter for this interval (staff only)", alias="inverterInputVoltageAverage")
+    inverter_input_voltage_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum input voltage measured by the compressor inverter for this interval (staff only)", alias="inverterInputVoltageMin")
+    inverter_input_voltage_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum input voltage measured by the compressor inverter for this interval (staff only)", alias="inverterInputVoltageMax")
+    central_heating_pwm_requested_duty_cycle_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average requested duty cycle to pwm pump for central heating circuit for this interval (staff only)", alias="centralHeatingPwmRequestedDutyCycleAverage")
+    central_heating_pwm_requested_duty_cycle_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum requested duty cycle to pwm pump for central heating circuit for this interval (staff only)", alias="centralHeatingPwmRequestedDutyCycleMin")
+    central_heating_pwm_requested_duty_cycle_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum requested duty cycle to pwm pump for central heating circuit for this interval (staff only)", alias="centralHeatingPwmRequestedDutyCycleMax")
+    central_heating_pwm_requested_duty_cycle_state_standby: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating PWM was in standby state (2%) for this interval (staff only)", alias="centralHeatingPwmRequestedDutyCycleStateStandby")
+    central_heating_pwm_requested_duty_cycle_state_pumping: Optional[StrictInt] = Field(default=None, description="Amount of seconds the central heating PWM was in pumping state (6%-75%) for this interval (staff only)", alias="centralHeatingPwmRequestedDutyCycleStatePumping")
+    dhw_pwm_requested_duty_cycle_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average requested duty cycle to pwm pump for DHW circuit for this interval (staff only)", alias="dhwPwmRequestedDutyCycleAverage")
+    dhw_pwm_requested_duty_cycle_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum requested duty cycle to pwm pump for DHW circuit for this interval (staff only)", alias="dhwPwmRequestedDutyCycleMin")
+    dhw_pwm_requested_duty_cycle_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum requested duty cycle to pwm pump for DHW circuit for this interval (staff only)", alias="dhwPwmRequestedDutyCycleMax")
+    dhw_pwm_requested_duty_cycle_state_standby: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW PWM was in standby state (2%) for this interval (staff only)", alias="dhwPwmRequestedDutyCycleStateStandby")
+    dhw_pwm_requested_duty_cycle_state_pumping: Optional[StrictInt] = Field(default=None, description="Amount of seconds the DHW PWM was in pumping state (6%-75%) for this interval (staff only)", alias="dhwPwmRequestedDutyCycleStatePumping")
+    indoor_unit_heater_temperature_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average temperature of the indoor unit heater for this interval (staff only)", alias="indoorUnitHeaterTemperatureAverage")
+    indoor_unit_heater_temperature_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum temperature of the indoor unit heater for this interval (staff only)", alias="indoorUnitHeaterTemperatureMin")
+    indoor_unit_heater_temperature_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum temperature of the indoor unit heater for this interval (staff only)", alias="indoorUnitHeaterTemperatureMax")
+    indoor_unit_input_current_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average current of the indoor unit heater for this interval (staff only)", alias="indoorUnitInputCurrentAverage")
+    indoor_unit_input_current_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum current of the indoor unit heater for this interval (staff only)", alias="indoorUnitInputCurrentMin")
+    indoor_unit_input_current_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum current of the indoor unit heater for this interval (staff only)", alias="indoorUnitInputCurrentMax")
+    signal_sinr_average: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Average Signal-to-Interference-plus-Noise Ratio (SINR) for this interval (staff only)", alias="signalSinrAverage")
+    signal_sinr_min: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Minimum Signal-to-Interference-plus-Noise Ratio (SINR) for this interval (staff only)", alias="signalSinrMin")
+    signal_sinr_max: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum Signal-to-Interference-plus-Noise Ratio (SINR) for this interval (staff only)", alias="signalSinrMax")
+    __properties: ClassVar[List[str]] = ["timeBucket", "interval", "timeCoveredInInterval", "heatPumpStateStandby", "heatPumpStateHeating", "heatPumpStateCooling", "heatPumpStateDhw", "heatPumpStateLegionella", "heatPumpStateManualControl", "heatPumpStateDhwDefrost", "heatPumpStateHeatingDefrost", "controlBridgeStatusWaterPump", "controlBridgeStatusGasBoiler", "controlBridgeStatusElectricHeater", "controlBridgeStatusWaterPump2", "t1Average", "t1Min", "t1Max", "t2Average", "t2Min", "t2Max", "tAirInAverage", "tAirInMin", "tAirInMax", "tAirOutAverage", "tAirOutMin", "tAirOutMax", "tWaterInAverage", "tWaterInMin", "tWaterInMax", "tWaterOutAverage", "tWaterOutMin", "tWaterOutMax", "tWaterHouseInAverage", "tWaterHouseInMin", "tWaterHouseInMax", "tRoomAverage", "tRoomMin", "tRoomMax", "tRoomTargetAverage", "tRoomTargetMin", "tRoomTargetMax", "tThermostatSetpointAverage", "tThermostatSetpointMin", "tThermostatSetpointMax", "otBoilerFeedTemperatureAverage", "otBoilerFeedTemperatureMin", "otBoilerFeedTemperatureMax", "otBoilerReturnTemperatureAverage", "otBoilerReturnTemperatureMin", "otBoilerReturnTemperatureMax", "thermostatStateOff", "thermostatStateOn", "rpmAverage", "rpmMin", "rpmMax", "centralHeatingFlowAverage", "centralHeatingFlowMin", "centralHeatingFlowMax", "centralHeatingFlowStateStandby", "centralHeatingFlowStateStandbyNoPwm", "centralHeatingFlowStateMotorBlocked", "centralHeatingFlowStatePumping", "centralHeatingFlowStatePumpingNoPwm", "centralHeatingFlowStateSuboptimalRunning", "centralHeatingFlowStateStoppedMomentarily", "centralHeatingFlowStateStoppedPermanentDamage", "dhwFlowAverage", "dhwFlowMin", "dhwFlowMax", "dhwFlowStateStandby", "dhwFlowStateStandbyNoPwm", "dhwFlowStateMotorBlocked", "dhwFlowStatePumping", "dhwFlowStatePumpingNoPwm", "dhwFlowStateSuboptimalRunning", "dhwFlowStateStoppedMomentarily", "dhwFlowStateStoppedPermanentDamage", "signalStrengthAverage", "signalStrengthMin", "signalStrengthMax", "rpmLimiterAverage", "rpmLimiterMin", "rpmLimiterMax", "rpmLimiterNoLimit", "rpmLimiterPowerLimit", "rpmLimiterDefrost", "rpmLimiterSilentHours", "rpmLimiterHPControl", "rpmLimiterPressure", "rpmLimiterWaterOut", "rpmLimiterEnvelope", "rpmLimiterHouseIn", "pCompressorInAverage", "pCompressorInMin", "pCompressorInMax", "pCompressorOutAverage", "pCompressorOutMin", "pCompressorOutMax", "pCompressorInTargetAverage", "pCompressorInTargetMin", "pCompressorInTargetMax", "tCompressorInAverage", "tCompressorInMin", "tCompressorInMax", "tCompressorOutAverage", "tCompressorOutMin", "tCompressorOutMax", "tCompressorInTransientAverage", "tCompressorInTransientMin", "tCompressorInTransientMax", "tCompressorOutTransientAverage", "tCompressorOutTransientMin", "tCompressorOutTransientMax", "deltaTCompressorInSuperheatAverage", "deltaTCompressorInSuperheatMin", "deltaTCompressorInSuperheatMax", "fanAverage", "fanMin", "fanMax", "fanPowerAverage", "fanPowerMin", "fanPowerMax", "temperatureErrorIntegralAverage", "temperatureErrorIntegralMin", "temperatureErrorIntegralMax", "dtcNone", "dtcContinue", "dtcCompressorOff", "dtcDefrostForbidden", "dtcRequestService", "dtcUseHeatingCurve", "dtcDhwForbidden", "dtcError", "dtcInactive", "controlBridgeStatusDhwValve", "valveAverage", "valveMin", "valveMax", "tBoardAverage", "tBoardMin", "tBoardMax", "tInverterAverage", "tInverterMin", "tInverterMax", "compressorPowerLowAccuracyAverage", "compressorPowerLowAccuracyMin", "compressorPowerLowAccuracyMax", "cmMassPowerInStandbyAverage", "cmMassPowerInStandbyMin", "cmMassPowerInStandbyMax", "cmMassPowerInHeatingAverage", "cmMassPowerInHeatingMin", "cmMassPowerInHeatingMax", "cmMassPowerInCoolingAverage", "cmMassPowerInCoolingMin", "cmMassPowerInCoolingMax", "cmMassPowerInHeatingDefrostAverage", "cmMassPowerInHeatingDefrostMin", "cmMassPowerInHeatingDefrostMax", "cmMassPowerInDhwDefrostAverage", "cmMassPowerInDhwDefrostMin", "cmMassPowerInDhwDefrostMax", "cmMassPowerInDefrostAverage", "cmMassPowerInDefrostMin", "cmMassPowerInDefrostMax", "cmMassPowerInDhwAverage", "cmMassPowerInDhwMin", "cmMassPowerInDhwMax", "cmMassPowerInManualControlAverage", "cmMassPowerInManualControlMin", "cmMassPowerOutHeatingDefrostAverage", "cmMassPowerOutHeatingDefrostMin", "cmMassPowerOutHeatingDefrostMax", "cmMassPowerOutDhwDefrostAverage", "cmMassPowerOutDhwDefrostMin", "cmMassPowerOutDhwDefrostMax", "cmMassPowerInManualControlMax", "cmMassPowerOutStandbyAverage", "cmMassPowerOutStandbyMin", "cmMassPowerOutStandbyMax", "cmMassPowerOutHeatingAverage", "cmMassPowerOutHeatingMin", "cmMassPowerOutHeatingMax", "cmMassPowerOutCoolingAverage", "cmMassPowerOutCoolingMin", "cmMassPowerOutCoolingMax", "cmMassPowerOutDefrostAverage", "cmMassPowerOutDefrostMin", "cmMassPowerOutDefrostMax", "cmMassPowerOutDhwAverage", "cmMassPowerOutDhwMin", "cmMassPowerOutDhwMax", "cmMassPowerOutManualControlAverage", "cmMassPowerOutManualControlMin", "cmMassPowerOutManualControlMax", "inverterInputVoltageAverage", "inverterInputVoltageMin", "inverterInputVoltageMax", "centralHeatingPwmRequestedDutyCycleAverage", "centralHeatingPwmRequestedDutyCycleMin", "centralHeatingPwmRequestedDutyCycleMax", "centralHeatingPwmRequestedDutyCycleStateStandby", "centralHeatingPwmRequestedDutyCycleStatePumping", "dhwPwmRequestedDutyCycleAverage", "dhwPwmRequestedDutyCycleMin", "dhwPwmRequestedDutyCycleMax", "dhwPwmRequestedDutyCycleStateStandby", "dhwPwmRequestedDutyCycleStatePumping", "indoorUnitHeaterTemperatureAverage", "indoorUnitHeaterTemperatureMin", "indoorUnitHeaterTemperatureMax", "indoorUnitInputCurrentAverage", "indoorUnitInputCurrentMin", "indoorUnitInputCurrentMax", "signalSinrAverage", "signalSinrMin", "signalSinrMax"]
 
     model_config = {
         "populate_by_name": True,
@@ -204,85 +292,65 @@ class HeatPumpLogViewDto(BaseModel):
         if self.interval is None and "interval" in self.model_fields_set:
             _dict['interval'] = None
 
-        # set to None if rpm_control_startup (nullable) is None
+        # set to None if heat_pump_state_standby (nullable) is None
         # and model_fields_set contains the field
-        if self.rpm_control_startup is None and "rpm_control_startup" in self.model_fields_set:
-            _dict['rpmControlStartup'] = None
+        if self.heat_pump_state_standby is None and "heat_pump_state_standby" in self.model_fields_set:
+            _dict['heatPumpStateStandby'] = None
 
-        # set to None if rpm_control_running (nullable) is None
+        # set to None if heat_pump_state_heating (nullable) is None
         # and model_fields_set contains the field
-        if self.rpm_control_running is None and "rpm_control_running" in self.model_fields_set:
-            _dict['rpmControlRunning'] = None
+        if self.heat_pump_state_heating is None and "heat_pump_state_heating" in self.model_fields_set:
+            _dict['heatPumpStateHeating'] = None
 
-        # set to None if rpm_control_shutdown (nullable) is None
+        # set to None if heat_pump_state_cooling (nullable) is None
         # and model_fields_set contains the field
-        if self.rpm_control_shutdown is None and "rpm_control_shutdown" in self.model_fields_set:
-            _dict['rpmControlShutdown'] = None
+        if self.heat_pump_state_cooling is None and "heat_pump_state_cooling" in self.model_fields_set:
+            _dict['heatPumpStateCooling'] = None
 
-        # set to None if control_bridge_status_dhw_valve (nullable) is None
+        # set to None if heat_pump_state_dhw (nullable) is None
         # and model_fields_set contains the field
-        if self.control_bridge_status_dhw_valve is None and "control_bridge_status_dhw_valve" in self.model_fields_set:
-            _dict['controlBridgeStatusDhwValve'] = None
+        if self.heat_pump_state_dhw is None and "heat_pump_state_dhw" in self.model_fields_set:
+            _dict['heatPumpStateDhw'] = None
 
-        # set to None if dtc_none (nullable) is None
+        # set to None if heat_pump_state_legionella (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_none is None and "dtc_none" in self.model_fields_set:
-            _dict['dtcNone'] = None
+        if self.heat_pump_state_legionella is None and "heat_pump_state_legionella" in self.model_fields_set:
+            _dict['heatPumpStateLegionella'] = None
 
-        # set to None if dtc_continue (nullable) is None
+        # set to None if heat_pump_state_manual_control (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_continue is None and "dtc_continue" in self.model_fields_set:
-            _dict['dtcContinue'] = None
+        if self.heat_pump_state_manual_control is None and "heat_pump_state_manual_control" in self.model_fields_set:
+            _dict['heatPumpStateManualControl'] = None
 
-        # set to None if dtc_compressor_off (nullable) is None
+        # set to None if heat_pump_state_dhw_defrost (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_compressor_off is None and "dtc_compressor_off" in self.model_fields_set:
-            _dict['dtcCompressorOff'] = None
+        if self.heat_pump_state_dhw_defrost is None and "heat_pump_state_dhw_defrost" in self.model_fields_set:
+            _dict['heatPumpStateDhwDefrost'] = None
 
-        # set to None if dtc_defrost_forbidden (nullable) is None
+        # set to None if heat_pump_state_heating_defrost (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_defrost_forbidden is None and "dtc_defrost_forbidden" in self.model_fields_set:
-            _dict['dtcDefrostForbidden'] = None
+        if self.heat_pump_state_heating_defrost is None and "heat_pump_state_heating_defrost" in self.model_fields_set:
+            _dict['heatPumpStateHeatingDefrost'] = None
 
-        # set to None if dtc_request_service (nullable) is None
+        # set to None if control_bridge_status_water_pump (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_request_service is None and "dtc_request_service" in self.model_fields_set:
-            _dict['dtcRequestService'] = None
+        if self.control_bridge_status_water_pump is None and "control_bridge_status_water_pump" in self.model_fields_set:
+            _dict['controlBridgeStatusWaterPump'] = None
 
-        # set to None if dtc_use_heating_curve (nullable) is None
+        # set to None if control_bridge_status_gas_boiler (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_use_heating_curve is None and "dtc_use_heating_curve" in self.model_fields_set:
-            _dict['dtcUseHeatingCurve'] = None
+        if self.control_bridge_status_gas_boiler is None and "control_bridge_status_gas_boiler" in self.model_fields_set:
+            _dict['controlBridgeStatusGasBoiler'] = None
 
-        # set to None if dtc_dhw_forbidden (nullable) is None
+        # set to None if control_bridge_status_electric_heater (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_dhw_forbidden is None and "dtc_dhw_forbidden" in self.model_fields_set:
-            _dict['dtcDhwForbidden'] = None
+        if self.control_bridge_status_electric_heater is None and "control_bridge_status_electric_heater" in self.model_fields_set:
+            _dict['controlBridgeStatusElectricHeater'] = None
 
-        # set to None if dtc_error (nullable) is None
+        # set to None if control_bridge_status_water_pump2 (nullable) is None
         # and model_fields_set contains the field
-        if self.dtc_error is None and "dtc_error" in self.model_fields_set:
-            _dict['dtcError'] = None
-
-        # set to None if dtc_inactive (nullable) is None
-        # and model_fields_set contains the field
-        if self.dtc_inactive is None and "dtc_inactive" in self.model_fields_set:
-            _dict['dtcInactive'] = None
-
-        # set to None if signal_strength_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.signal_strength_average is None and "signal_strength_average" in self.model_fields_set:
-            _dict['signalStrengthAverage'] = None
-
-        # set to None if signal_strength_min (nullable) is None
-        # and model_fields_set contains the field
-        if self.signal_strength_min is None and "signal_strength_min" in self.model_fields_set:
-            _dict['signalStrengthMin'] = None
-
-        # set to None if signal_strength_max (nullable) is None
-        # and model_fields_set contains the field
-        if self.signal_strength_max is None and "signal_strength_max" in self.model_fields_set:
-            _dict['signalStrengthMax'] = None
+        if self.control_bridge_status_water_pump2 is None and "control_bridge_status_water_pump2" in self.model_fields_set:
+            _dict['controlBridgeStatusWaterPump2'] = None
 
         # set to None if t1_average (nullable) is None
         # and model_fields_set contains the field
@@ -314,35 +382,20 @@ class HeatPumpLogViewDto(BaseModel):
         if self.t2_max is None and "t2_max" in self.model_fields_set:
             _dict['t2Max'] = None
 
-        # set to None if t_spare_ntc_average (nullable) is None
+        # set to None if t_air_in_average (nullable) is None
         # and model_fields_set contains the field
-        if self.t_spare_ntc_average is None and "t_spare_ntc_average" in self.model_fields_set:
-            _dict['tSpareNtcAverage'] = None
+        if self.t_air_in_average is None and "t_air_in_average" in self.model_fields_set:
+            _dict['tAirInAverage'] = None
 
-        # set to None if t_spare_ntc_min (nullable) is None
+        # set to None if t_air_in_min (nullable) is None
         # and model_fields_set contains the field
-        if self.t_spare_ntc_min is None and "t_spare_ntc_min" in self.model_fields_set:
-            _dict['tSpareNtcMin'] = None
+        if self.t_air_in_min is None and "t_air_in_min" in self.model_fields_set:
+            _dict['tAirInMin'] = None
 
-        # set to None if t_spare_ntc_max (nullable) is None
+        # set to None if t_air_in_max (nullable) is None
         # and model_fields_set contains the field
-        if self.t_spare_ntc_max is None and "t_spare_ntc_max" in self.model_fields_set:
-            _dict['tSpareNtcMax'] = None
-
-        # set to None if t_board_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_board_average is None and "t_board_average" in self.model_fields_set:
-            _dict['tBoardAverage'] = None
-
-        # set to None if t_board_min (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_board_min is None and "t_board_min" in self.model_fields_set:
-            _dict['tBoardMin'] = None
-
-        # set to None if t_board_max (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_board_max is None and "t_board_max" in self.model_fields_set:
-            _dict['tBoardMax'] = None
+        if self.t_air_in_max is None and "t_air_in_max" in self.model_fields_set:
+            _dict['tAirInMax'] = None
 
         # set to None if t_air_out_average (nullable) is None
         # and model_fields_set contains the field
@@ -359,6 +412,136 @@ class HeatPumpLogViewDto(BaseModel):
         if self.t_air_out_max is None and "t_air_out_max" in self.model_fields_set:
             _dict['tAirOutMax'] = None
 
+        # set to None if t_water_in_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_in_average is None and "t_water_in_average" in self.model_fields_set:
+            _dict['tWaterInAverage'] = None
+
+        # set to None if t_water_in_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_in_min is None and "t_water_in_min" in self.model_fields_set:
+            _dict['tWaterInMin'] = None
+
+        # set to None if t_water_in_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_in_max is None and "t_water_in_max" in self.model_fields_set:
+            _dict['tWaterInMax'] = None
+
+        # set to None if t_water_out_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_out_average is None and "t_water_out_average" in self.model_fields_set:
+            _dict['tWaterOutAverage'] = None
+
+        # set to None if t_water_out_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_out_min is None and "t_water_out_min" in self.model_fields_set:
+            _dict['tWaterOutMin'] = None
+
+        # set to None if t_water_out_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_out_max is None and "t_water_out_max" in self.model_fields_set:
+            _dict['tWaterOutMax'] = None
+
+        # set to None if t_water_house_in_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_house_in_average is None and "t_water_house_in_average" in self.model_fields_set:
+            _dict['tWaterHouseInAverage'] = None
+
+        # set to None if t_water_house_in_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_house_in_min is None and "t_water_house_in_min" in self.model_fields_set:
+            _dict['tWaterHouseInMin'] = None
+
+        # set to None if t_water_house_in_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_water_house_in_max is None and "t_water_house_in_max" in self.model_fields_set:
+            _dict['tWaterHouseInMax'] = None
+
+        # set to None if t_room_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_average is None and "t_room_average" in self.model_fields_set:
+            _dict['tRoomAverage'] = None
+
+        # set to None if t_room_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_min is None and "t_room_min" in self.model_fields_set:
+            _dict['tRoomMin'] = None
+
+        # set to None if t_room_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_max is None and "t_room_max" in self.model_fields_set:
+            _dict['tRoomMax'] = None
+
+        # set to None if t_room_target_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_target_average is None and "t_room_target_average" in self.model_fields_set:
+            _dict['tRoomTargetAverage'] = None
+
+        # set to None if t_room_target_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_target_min is None and "t_room_target_min" in self.model_fields_set:
+            _dict['tRoomTargetMin'] = None
+
+        # set to None if t_room_target_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_room_target_max is None and "t_room_target_max" in self.model_fields_set:
+            _dict['tRoomTargetMax'] = None
+
+        # set to None if t_thermostat_setpoint_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_thermostat_setpoint_average is None and "t_thermostat_setpoint_average" in self.model_fields_set:
+            _dict['tThermostatSetpointAverage'] = None
+
+        # set to None if t_thermostat_setpoint_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_thermostat_setpoint_min is None and "t_thermostat_setpoint_min" in self.model_fields_set:
+            _dict['tThermostatSetpointMin'] = None
+
+        # set to None if t_thermostat_setpoint_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_thermostat_setpoint_max is None and "t_thermostat_setpoint_max" in self.model_fields_set:
+            _dict['tThermostatSetpointMax'] = None
+
+        # set to None if ot_boiler_feed_temperature_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_feed_temperature_average is None and "ot_boiler_feed_temperature_average" in self.model_fields_set:
+            _dict['otBoilerFeedTemperatureAverage'] = None
+
+        # set to None if ot_boiler_feed_temperature_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_feed_temperature_min is None and "ot_boiler_feed_temperature_min" in self.model_fields_set:
+            _dict['otBoilerFeedTemperatureMin'] = None
+
+        # set to None if ot_boiler_feed_temperature_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_feed_temperature_max is None and "ot_boiler_feed_temperature_max" in self.model_fields_set:
+            _dict['otBoilerFeedTemperatureMax'] = None
+
+        # set to None if ot_boiler_return_temperature_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_return_temperature_average is None and "ot_boiler_return_temperature_average" in self.model_fields_set:
+            _dict['otBoilerReturnTemperatureAverage'] = None
+
+        # set to None if ot_boiler_return_temperature_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_return_temperature_min is None and "ot_boiler_return_temperature_min" in self.model_fields_set:
+            _dict['otBoilerReturnTemperatureMin'] = None
+
+        # set to None if ot_boiler_return_temperature_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.ot_boiler_return_temperature_max is None and "ot_boiler_return_temperature_max" in self.model_fields_set:
+            _dict['otBoilerReturnTemperatureMax'] = None
+
+        # set to None if thermostat_state_off (nullable) is None
+        # and model_fields_set contains the field
+        if self.thermostat_state_off is None and "thermostat_state_off" in self.model_fields_set:
+            _dict['thermostatStateOff'] = None
+
+        # set to None if thermostat_state_on (nullable) is None
+        # and model_fields_set contains the field
+        if self.thermostat_state_on is None and "thermostat_state_on" in self.model_fields_set:
+            _dict['thermostatStateOn'] = None
+
         # set to None if rpm_average (nullable) is None
         # and model_fields_set contains the field
         if self.rpm_average is None and "rpm_average" in self.model_fields_set:
@@ -373,6 +556,131 @@ class HeatPumpLogViewDto(BaseModel):
         # and model_fields_set contains the field
         if self.rpm_max is None and "rpm_max" in self.model_fields_set:
             _dict['rpmMax'] = None
+
+        # set to None if central_heating_flow_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_average is None and "central_heating_flow_average" in self.model_fields_set:
+            _dict['centralHeatingFlowAverage'] = None
+
+        # set to None if central_heating_flow_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_min is None and "central_heating_flow_min" in self.model_fields_set:
+            _dict['centralHeatingFlowMin'] = None
+
+        # set to None if central_heating_flow_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_max is None and "central_heating_flow_max" in self.model_fields_set:
+            _dict['centralHeatingFlowMax'] = None
+
+        # set to None if central_heating_flow_state_standby (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_standby is None and "central_heating_flow_state_standby" in self.model_fields_set:
+            _dict['centralHeatingFlowStateStandby'] = None
+
+        # set to None if central_heating_flow_state_standby_no_pwm (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_standby_no_pwm is None and "central_heating_flow_state_standby_no_pwm" in self.model_fields_set:
+            _dict['centralHeatingFlowStateStandbyNoPwm'] = None
+
+        # set to None if central_heating_flow_state_motor_blocked (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_motor_blocked is None and "central_heating_flow_state_motor_blocked" in self.model_fields_set:
+            _dict['centralHeatingFlowStateMotorBlocked'] = None
+
+        # set to None if central_heating_flow_state_pumping (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_pumping is None and "central_heating_flow_state_pumping" in self.model_fields_set:
+            _dict['centralHeatingFlowStatePumping'] = None
+
+        # set to None if central_heating_flow_state_pumping_no_pwm (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_pumping_no_pwm is None and "central_heating_flow_state_pumping_no_pwm" in self.model_fields_set:
+            _dict['centralHeatingFlowStatePumpingNoPwm'] = None
+
+        # set to None if central_heating_flow_state_suboptimal_running (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_suboptimal_running is None and "central_heating_flow_state_suboptimal_running" in self.model_fields_set:
+            _dict['centralHeatingFlowStateSuboptimalRunning'] = None
+
+        # set to None if central_heating_flow_state_stopped_momentarily (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_stopped_momentarily is None and "central_heating_flow_state_stopped_momentarily" in self.model_fields_set:
+            _dict['centralHeatingFlowStateStoppedMomentarily'] = None
+
+        # set to None if central_heating_flow_state_stopped_permanent_damage (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_flow_state_stopped_permanent_damage is None and "central_heating_flow_state_stopped_permanent_damage" in self.model_fields_set:
+            _dict['centralHeatingFlowStateStoppedPermanentDamage'] = None
+
+        # set to None if dhw_flow_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_average is None and "dhw_flow_average" in self.model_fields_set:
+            _dict['dhwFlowAverage'] = None
+
+        # set to None if dhw_flow_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_min is None and "dhw_flow_min" in self.model_fields_set:
+            _dict['dhwFlowMin'] = None
+
+        # set to None if dhw_flow_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_max is None and "dhw_flow_max" in self.model_fields_set:
+            _dict['dhwFlowMax'] = None
+
+        # set to None if dhw_flow_state_standby (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_standby is None and "dhw_flow_state_standby" in self.model_fields_set:
+            _dict['dhwFlowStateStandby'] = None
+
+        # set to None if dhw_flow_state_standby_no_pwm (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_standby_no_pwm is None and "dhw_flow_state_standby_no_pwm" in self.model_fields_set:
+            _dict['dhwFlowStateStandbyNoPwm'] = None
+
+        # set to None if dhw_flow_state_motor_blocked (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_motor_blocked is None and "dhw_flow_state_motor_blocked" in self.model_fields_set:
+            _dict['dhwFlowStateMotorBlocked'] = None
+
+        # set to None if dhw_flow_state_pumping (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_pumping is None and "dhw_flow_state_pumping" in self.model_fields_set:
+            _dict['dhwFlowStatePumping'] = None
+
+        # set to None if dhw_flow_state_pumping_no_pwm (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_pumping_no_pwm is None and "dhw_flow_state_pumping_no_pwm" in self.model_fields_set:
+            _dict['dhwFlowStatePumpingNoPwm'] = None
+
+        # set to None if dhw_flow_state_suboptimal_running (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_suboptimal_running is None and "dhw_flow_state_suboptimal_running" in self.model_fields_set:
+            _dict['dhwFlowStateSuboptimalRunning'] = None
+
+        # set to None if dhw_flow_state_stopped_momentarily (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_stopped_momentarily is None and "dhw_flow_state_stopped_momentarily" in self.model_fields_set:
+            _dict['dhwFlowStateStoppedMomentarily'] = None
+
+        # set to None if dhw_flow_state_stopped_permanent_damage (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_flow_state_stopped_permanent_damage is None and "dhw_flow_state_stopped_permanent_damage" in self.model_fields_set:
+            _dict['dhwFlowStateStoppedPermanentDamage'] = None
+
+        # set to None if signal_strength_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_strength_average is None and "signal_strength_average" in self.model_fields_set:
+            _dict['signalStrengthAverage'] = None
+
+        # set to None if signal_strength_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_strength_min is None and "signal_strength_min" in self.model_fields_set:
+            _dict['signalStrengthMin'] = None
+
+        # set to None if signal_strength_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_strength_max is None and "signal_strength_max" in self.model_fields_set:
+            _dict['signalStrengthMax'] = None
 
         # set to None if rpm_limiter_average (nullable) is None
         # and model_fields_set contains the field
@@ -479,21 +787,6 @@ class HeatPumpLogViewDto(BaseModel):
         if self.p_compressor_in_target_max is None and "p_compressor_in_target_max" in self.model_fields_set:
             _dict['pCompressorInTargetMax'] = None
 
-        # set to None if t_inverter_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_inverter_average is None and "t_inverter_average" in self.model_fields_set:
-            _dict['tInverterAverage'] = None
-
-        # set to None if t_inverter_min (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_inverter_min is None and "t_inverter_min" in self.model_fields_set:
-            _dict['tInverterMin'] = None
-
-        # set to None if t_inverter_max (nullable) is None
-        # and model_fields_set contains the field
-        if self.t_inverter_max is None and "t_inverter_max" in self.model_fields_set:
-            _dict['tInverterMax'] = None
-
         # set to None if t_compressor_in_average (nullable) is None
         # and model_fields_set contains the field
         if self.t_compressor_in_average is None and "t_compressor_in_average" in self.model_fields_set:
@@ -569,21 +862,6 @@ class HeatPumpLogViewDto(BaseModel):
         if self.delta_t_compressor_in_superheat_max is None and "delta_t_compressor_in_superheat_max" in self.model_fields_set:
             _dict['deltaTCompressorInSuperheatMax'] = None
 
-        # set to None if compressor_power_low_accuracy_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.compressor_power_low_accuracy_average is None and "compressor_power_low_accuracy_average" in self.model_fields_set:
-            _dict['compressorPowerLowAccuracyAverage'] = None
-
-        # set to None if compressor_power_low_accuracy_min (nullable) is None
-        # and model_fields_set contains the field
-        if self.compressor_power_low_accuracy_min is None and "compressor_power_low_accuracy_min" in self.model_fields_set:
-            _dict['compressorPowerLowAccuracyMin'] = None
-
-        # set to None if compressor_power_low_accuracy_max (nullable) is None
-        # and model_fields_set contains the field
-        if self.compressor_power_low_accuracy_max is None and "compressor_power_low_accuracy_max" in self.model_fields_set:
-            _dict['compressorPowerLowAccuracyMax'] = None
-
         # set to None if fan_average (nullable) is None
         # and model_fields_set contains the field
         if self.fan_average is None and "fan_average" in self.model_fields_set:
@@ -614,16 +892,6 @@ class HeatPumpLogViewDto(BaseModel):
         if self.fan_power_max is None and "fan_power_max" in self.model_fields_set:
             _dict['fanPowerMax'] = None
 
-        # set to None if cm_mass_power_in_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.cm_mass_power_in_average is None and "cm_mass_power_in_average" in self.model_fields_set:
-            _dict['cmMassPowerInAverage'] = None
-
-        # set to None if cm_mass_power_out_average (nullable) is None
-        # and model_fields_set contains the field
-        if self.cm_mass_power_out_average is None and "cm_mass_power_out_average" in self.model_fields_set:
-            _dict['cmMassPowerOutAverage'] = None
-
         # set to None if temperature_error_integral_average (nullable) is None
         # and model_fields_set contains the field
         if self.temperature_error_integral_average is None and "temperature_error_integral_average" in self.model_fields_set:
@@ -639,35 +907,465 @@ class HeatPumpLogViewDto(BaseModel):
         if self.temperature_error_integral_max is None and "temperature_error_integral_max" in self.model_fields_set:
             _dict['temperatureErrorIntegralMax'] = None
 
-        # set to None if ot_boiler_feed_temperature_average (nullable) is None
+        # set to None if dtc_none (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_feed_temperature_average is None and "ot_boiler_feed_temperature_average" in self.model_fields_set:
-            _dict['otBoilerFeedTemperatureAverage'] = None
+        if self.dtc_none is None and "dtc_none" in self.model_fields_set:
+            _dict['dtcNone'] = None
 
-        # set to None if ot_boiler_feed_temperature_min (nullable) is None
+        # set to None if dtc_continue (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_feed_temperature_min is None and "ot_boiler_feed_temperature_min" in self.model_fields_set:
-            _dict['otBoilerFeedTemperatureMin'] = None
+        if self.dtc_continue is None and "dtc_continue" in self.model_fields_set:
+            _dict['dtcContinue'] = None
 
-        # set to None if ot_boiler_feed_temperature_max (nullable) is None
+        # set to None if dtc_compressor_off (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_feed_temperature_max is None and "ot_boiler_feed_temperature_max" in self.model_fields_set:
-            _dict['otBoilerFeedTemperatureMax'] = None
+        if self.dtc_compressor_off is None and "dtc_compressor_off" in self.model_fields_set:
+            _dict['dtcCompressorOff'] = None
 
-        # set to None if ot_boiler_return_temperature_average (nullable) is None
+        # set to None if dtc_defrost_forbidden (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_return_temperature_average is None and "ot_boiler_return_temperature_average" in self.model_fields_set:
-            _dict['otBoilerReturnTemperatureAverage'] = None
+        if self.dtc_defrost_forbidden is None and "dtc_defrost_forbidden" in self.model_fields_set:
+            _dict['dtcDefrostForbidden'] = None
 
-        # set to None if ot_boiler_return_temperature_min (nullable) is None
+        # set to None if dtc_request_service (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_return_temperature_min is None and "ot_boiler_return_temperature_min" in self.model_fields_set:
-            _dict['otBoilerReturnTemperatureMin'] = None
+        if self.dtc_request_service is None and "dtc_request_service" in self.model_fields_set:
+            _dict['dtcRequestService'] = None
 
-        # set to None if ot_boiler_return_temperature_max (nullable) is None
+        # set to None if dtc_use_heating_curve (nullable) is None
         # and model_fields_set contains the field
-        if self.ot_boiler_return_temperature_max is None and "ot_boiler_return_temperature_max" in self.model_fields_set:
-            _dict['otBoilerReturnTemperatureMax'] = None
+        if self.dtc_use_heating_curve is None and "dtc_use_heating_curve" in self.model_fields_set:
+            _dict['dtcUseHeatingCurve'] = None
+
+        # set to None if dtc_dhw_forbidden (nullable) is None
+        # and model_fields_set contains the field
+        if self.dtc_dhw_forbidden is None and "dtc_dhw_forbidden" in self.model_fields_set:
+            _dict['dtcDhwForbidden'] = None
+
+        # set to None if dtc_error (nullable) is None
+        # and model_fields_set contains the field
+        if self.dtc_error is None and "dtc_error" in self.model_fields_set:
+            _dict['dtcError'] = None
+
+        # set to None if dtc_inactive (nullable) is None
+        # and model_fields_set contains the field
+        if self.dtc_inactive is None and "dtc_inactive" in self.model_fields_set:
+            _dict['dtcInactive'] = None
+
+        # set to None if control_bridge_status_dhw_valve (nullable) is None
+        # and model_fields_set contains the field
+        if self.control_bridge_status_dhw_valve is None and "control_bridge_status_dhw_valve" in self.model_fields_set:
+            _dict['controlBridgeStatusDhwValve'] = None
+
+        # set to None if valve_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.valve_average is None and "valve_average" in self.model_fields_set:
+            _dict['valveAverage'] = None
+
+        # set to None if valve_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.valve_min is None and "valve_min" in self.model_fields_set:
+            _dict['valveMin'] = None
+
+        # set to None if valve_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.valve_max is None and "valve_max" in self.model_fields_set:
+            _dict['valveMax'] = None
+
+        # set to None if t_board_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_board_average is None and "t_board_average" in self.model_fields_set:
+            _dict['tBoardAverage'] = None
+
+        # set to None if t_board_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_board_min is None and "t_board_min" in self.model_fields_set:
+            _dict['tBoardMin'] = None
+
+        # set to None if t_board_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_board_max is None and "t_board_max" in self.model_fields_set:
+            _dict['tBoardMax'] = None
+
+        # set to None if t_inverter_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_inverter_average is None and "t_inverter_average" in self.model_fields_set:
+            _dict['tInverterAverage'] = None
+
+        # set to None if t_inverter_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_inverter_min is None and "t_inverter_min" in self.model_fields_set:
+            _dict['tInverterMin'] = None
+
+        # set to None if t_inverter_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.t_inverter_max is None and "t_inverter_max" in self.model_fields_set:
+            _dict['tInverterMax'] = None
+
+        # set to None if compressor_power_low_accuracy_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.compressor_power_low_accuracy_average is None and "compressor_power_low_accuracy_average" in self.model_fields_set:
+            _dict['compressorPowerLowAccuracyAverage'] = None
+
+        # set to None if compressor_power_low_accuracy_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.compressor_power_low_accuracy_min is None and "compressor_power_low_accuracy_min" in self.model_fields_set:
+            _dict['compressorPowerLowAccuracyMin'] = None
+
+        # set to None if compressor_power_low_accuracy_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.compressor_power_low_accuracy_max is None and "compressor_power_low_accuracy_max" in self.model_fields_set:
+            _dict['compressorPowerLowAccuracyMax'] = None
+
+        # set to None if cm_mass_power_in_standby_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_standby_average is None and "cm_mass_power_in_standby_average" in self.model_fields_set:
+            _dict['cmMassPowerInStandbyAverage'] = None
+
+        # set to None if cm_mass_power_in_standby_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_standby_min is None and "cm_mass_power_in_standby_min" in self.model_fields_set:
+            _dict['cmMassPowerInStandbyMin'] = None
+
+        # set to None if cm_mass_power_in_standby_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_standby_max is None and "cm_mass_power_in_standby_max" in self.model_fields_set:
+            _dict['cmMassPowerInStandbyMax'] = None
+
+        # set to None if cm_mass_power_in_heating_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_average is None and "cm_mass_power_in_heating_average" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingAverage'] = None
+
+        # set to None if cm_mass_power_in_heating_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_min is None and "cm_mass_power_in_heating_min" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingMin'] = None
+
+        # set to None if cm_mass_power_in_heating_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_max is None and "cm_mass_power_in_heating_max" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingMax'] = None
+
+        # set to None if cm_mass_power_in_cooling_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_cooling_average is None and "cm_mass_power_in_cooling_average" in self.model_fields_set:
+            _dict['cmMassPowerInCoolingAverage'] = None
+
+        # set to None if cm_mass_power_in_cooling_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_cooling_min is None and "cm_mass_power_in_cooling_min" in self.model_fields_set:
+            _dict['cmMassPowerInCoolingMin'] = None
+
+        # set to None if cm_mass_power_in_cooling_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_cooling_max is None and "cm_mass_power_in_cooling_max" in self.model_fields_set:
+            _dict['cmMassPowerInCoolingMax'] = None
+
+        # set to None if cm_mass_power_in_heating_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_defrost_average is None and "cm_mass_power_in_heating_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingDefrostAverage'] = None
+
+        # set to None if cm_mass_power_in_heating_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_defrost_min is None and "cm_mass_power_in_heating_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingDefrostMin'] = None
+
+        # set to None if cm_mass_power_in_heating_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_heating_defrost_max is None and "cm_mass_power_in_heating_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerInHeatingDefrostMax'] = None
+
+        # set to None if cm_mass_power_in_dhw_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_defrost_average is None and "cm_mass_power_in_dhw_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerInDhwDefrostAverage'] = None
+
+        # set to None if cm_mass_power_in_dhw_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_defrost_min is None and "cm_mass_power_in_dhw_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerInDhwDefrostMin'] = None
+
+        # set to None if cm_mass_power_in_dhw_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_defrost_max is None and "cm_mass_power_in_dhw_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerInDhwDefrostMax'] = None
+
+        # set to None if cm_mass_power_in_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_defrost_average is None and "cm_mass_power_in_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerInDefrostAverage'] = None
+
+        # set to None if cm_mass_power_in_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_defrost_min is None and "cm_mass_power_in_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerInDefrostMin'] = None
+
+        # set to None if cm_mass_power_in_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_defrost_max is None and "cm_mass_power_in_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerInDefrostMax'] = None
+
+        # set to None if cm_mass_power_in_dhw_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_average is None and "cm_mass_power_in_dhw_average" in self.model_fields_set:
+            _dict['cmMassPowerInDhwAverage'] = None
+
+        # set to None if cm_mass_power_in_dhw_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_min is None and "cm_mass_power_in_dhw_min" in self.model_fields_set:
+            _dict['cmMassPowerInDhwMin'] = None
+
+        # set to None if cm_mass_power_in_dhw_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_dhw_max is None and "cm_mass_power_in_dhw_max" in self.model_fields_set:
+            _dict['cmMassPowerInDhwMax'] = None
+
+        # set to None if cm_mass_power_in_manual_control_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_manual_control_average is None and "cm_mass_power_in_manual_control_average" in self.model_fields_set:
+            _dict['cmMassPowerInManualControlAverage'] = None
+
+        # set to None if cm_mass_power_in_manual_control_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_manual_control_min is None and "cm_mass_power_in_manual_control_min" in self.model_fields_set:
+            _dict['cmMassPowerInManualControlMin'] = None
+
+        # set to None if cm_mass_power_out_heating_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_defrost_average is None and "cm_mass_power_out_heating_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingDefrostAverage'] = None
+
+        # set to None if cm_mass_power_out_heating_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_defrost_min is None and "cm_mass_power_out_heating_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingDefrostMin'] = None
+
+        # set to None if cm_mass_power_out_heating_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_defrost_max is None and "cm_mass_power_out_heating_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingDefrostMax'] = None
+
+        # set to None if cm_mass_power_out_dhw_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_defrost_average is None and "cm_mass_power_out_dhw_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwDefrostAverage'] = None
+
+        # set to None if cm_mass_power_out_dhw_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_defrost_min is None and "cm_mass_power_out_dhw_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwDefrostMin'] = None
+
+        # set to None if cm_mass_power_out_dhw_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_defrost_max is None and "cm_mass_power_out_dhw_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwDefrostMax'] = None
+
+        # set to None if cm_mass_power_in_manual_control_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_in_manual_control_max is None and "cm_mass_power_in_manual_control_max" in self.model_fields_set:
+            _dict['cmMassPowerInManualControlMax'] = None
+
+        # set to None if cm_mass_power_out_standby_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_standby_average is None and "cm_mass_power_out_standby_average" in self.model_fields_set:
+            _dict['cmMassPowerOutStandbyAverage'] = None
+
+        # set to None if cm_mass_power_out_standby_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_standby_min is None and "cm_mass_power_out_standby_min" in self.model_fields_set:
+            _dict['cmMassPowerOutStandbyMin'] = None
+
+        # set to None if cm_mass_power_out_standby_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_standby_max is None and "cm_mass_power_out_standby_max" in self.model_fields_set:
+            _dict['cmMassPowerOutStandbyMax'] = None
+
+        # set to None if cm_mass_power_out_heating_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_average is None and "cm_mass_power_out_heating_average" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingAverage'] = None
+
+        # set to None if cm_mass_power_out_heating_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_min is None and "cm_mass_power_out_heating_min" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingMin'] = None
+
+        # set to None if cm_mass_power_out_heating_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_heating_max is None and "cm_mass_power_out_heating_max" in self.model_fields_set:
+            _dict['cmMassPowerOutHeatingMax'] = None
+
+        # set to None if cm_mass_power_out_cooling_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_cooling_average is None and "cm_mass_power_out_cooling_average" in self.model_fields_set:
+            _dict['cmMassPowerOutCoolingAverage'] = None
+
+        # set to None if cm_mass_power_out_cooling_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_cooling_min is None and "cm_mass_power_out_cooling_min" in self.model_fields_set:
+            _dict['cmMassPowerOutCoolingMin'] = None
+
+        # set to None if cm_mass_power_out_cooling_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_cooling_max is None and "cm_mass_power_out_cooling_max" in self.model_fields_set:
+            _dict['cmMassPowerOutCoolingMax'] = None
+
+        # set to None if cm_mass_power_out_defrost_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_defrost_average is None and "cm_mass_power_out_defrost_average" in self.model_fields_set:
+            _dict['cmMassPowerOutDefrostAverage'] = None
+
+        # set to None if cm_mass_power_out_defrost_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_defrost_min is None and "cm_mass_power_out_defrost_min" in self.model_fields_set:
+            _dict['cmMassPowerOutDefrostMin'] = None
+
+        # set to None if cm_mass_power_out_defrost_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_defrost_max is None and "cm_mass_power_out_defrost_max" in self.model_fields_set:
+            _dict['cmMassPowerOutDefrostMax'] = None
+
+        # set to None if cm_mass_power_out_dhw_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_average is None and "cm_mass_power_out_dhw_average" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwAverage'] = None
+
+        # set to None if cm_mass_power_out_dhw_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_min is None and "cm_mass_power_out_dhw_min" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwMin'] = None
+
+        # set to None if cm_mass_power_out_dhw_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_dhw_max is None and "cm_mass_power_out_dhw_max" in self.model_fields_set:
+            _dict['cmMassPowerOutDhwMax'] = None
+
+        # set to None if cm_mass_power_out_manual_control_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_manual_control_average is None and "cm_mass_power_out_manual_control_average" in self.model_fields_set:
+            _dict['cmMassPowerOutManualControlAverage'] = None
+
+        # set to None if cm_mass_power_out_manual_control_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_manual_control_min is None and "cm_mass_power_out_manual_control_min" in self.model_fields_set:
+            _dict['cmMassPowerOutManualControlMin'] = None
+
+        # set to None if cm_mass_power_out_manual_control_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.cm_mass_power_out_manual_control_max is None and "cm_mass_power_out_manual_control_max" in self.model_fields_set:
+            _dict['cmMassPowerOutManualControlMax'] = None
+
+        # set to None if inverter_input_voltage_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.inverter_input_voltage_average is None and "inverter_input_voltage_average" in self.model_fields_set:
+            _dict['inverterInputVoltageAverage'] = None
+
+        # set to None if inverter_input_voltage_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.inverter_input_voltage_min is None and "inverter_input_voltage_min" in self.model_fields_set:
+            _dict['inverterInputVoltageMin'] = None
+
+        # set to None if inverter_input_voltage_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.inverter_input_voltage_max is None and "inverter_input_voltage_max" in self.model_fields_set:
+            _dict['inverterInputVoltageMax'] = None
+
+        # set to None if central_heating_pwm_requested_duty_cycle_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_pwm_requested_duty_cycle_average is None and "central_heating_pwm_requested_duty_cycle_average" in self.model_fields_set:
+            _dict['centralHeatingPwmRequestedDutyCycleAverage'] = None
+
+        # set to None if central_heating_pwm_requested_duty_cycle_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_pwm_requested_duty_cycle_min is None and "central_heating_pwm_requested_duty_cycle_min" in self.model_fields_set:
+            _dict['centralHeatingPwmRequestedDutyCycleMin'] = None
+
+        # set to None if central_heating_pwm_requested_duty_cycle_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_pwm_requested_duty_cycle_max is None and "central_heating_pwm_requested_duty_cycle_max" in self.model_fields_set:
+            _dict['centralHeatingPwmRequestedDutyCycleMax'] = None
+
+        # set to None if central_heating_pwm_requested_duty_cycle_state_standby (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_pwm_requested_duty_cycle_state_standby is None and "central_heating_pwm_requested_duty_cycle_state_standby" in self.model_fields_set:
+            _dict['centralHeatingPwmRequestedDutyCycleStateStandby'] = None
+
+        # set to None if central_heating_pwm_requested_duty_cycle_state_pumping (nullable) is None
+        # and model_fields_set contains the field
+        if self.central_heating_pwm_requested_duty_cycle_state_pumping is None and "central_heating_pwm_requested_duty_cycle_state_pumping" in self.model_fields_set:
+            _dict['centralHeatingPwmRequestedDutyCycleStatePumping'] = None
+
+        # set to None if dhw_pwm_requested_duty_cycle_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_pwm_requested_duty_cycle_average is None and "dhw_pwm_requested_duty_cycle_average" in self.model_fields_set:
+            _dict['dhwPwmRequestedDutyCycleAverage'] = None
+
+        # set to None if dhw_pwm_requested_duty_cycle_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_pwm_requested_duty_cycle_min is None and "dhw_pwm_requested_duty_cycle_min" in self.model_fields_set:
+            _dict['dhwPwmRequestedDutyCycleMin'] = None
+
+        # set to None if dhw_pwm_requested_duty_cycle_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_pwm_requested_duty_cycle_max is None and "dhw_pwm_requested_duty_cycle_max" in self.model_fields_set:
+            _dict['dhwPwmRequestedDutyCycleMax'] = None
+
+        # set to None if dhw_pwm_requested_duty_cycle_state_standby (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_pwm_requested_duty_cycle_state_standby is None and "dhw_pwm_requested_duty_cycle_state_standby" in self.model_fields_set:
+            _dict['dhwPwmRequestedDutyCycleStateStandby'] = None
+
+        # set to None if dhw_pwm_requested_duty_cycle_state_pumping (nullable) is None
+        # and model_fields_set contains the field
+        if self.dhw_pwm_requested_duty_cycle_state_pumping is None and "dhw_pwm_requested_duty_cycle_state_pumping" in self.model_fields_set:
+            _dict['dhwPwmRequestedDutyCycleStatePumping'] = None
+
+        # set to None if indoor_unit_heater_temperature_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_heater_temperature_average is None and "indoor_unit_heater_temperature_average" in self.model_fields_set:
+            _dict['indoorUnitHeaterTemperatureAverage'] = None
+
+        # set to None if indoor_unit_heater_temperature_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_heater_temperature_min is None and "indoor_unit_heater_temperature_min" in self.model_fields_set:
+            _dict['indoorUnitHeaterTemperatureMin'] = None
+
+        # set to None if indoor_unit_heater_temperature_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_heater_temperature_max is None and "indoor_unit_heater_temperature_max" in self.model_fields_set:
+            _dict['indoorUnitHeaterTemperatureMax'] = None
+
+        # set to None if indoor_unit_input_current_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_input_current_average is None and "indoor_unit_input_current_average" in self.model_fields_set:
+            _dict['indoorUnitInputCurrentAverage'] = None
+
+        # set to None if indoor_unit_input_current_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_input_current_min is None and "indoor_unit_input_current_min" in self.model_fields_set:
+            _dict['indoorUnitInputCurrentMin'] = None
+
+        # set to None if indoor_unit_input_current_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.indoor_unit_input_current_max is None and "indoor_unit_input_current_max" in self.model_fields_set:
+            _dict['indoorUnitInputCurrentMax'] = None
+
+        # set to None if signal_sinr_average (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_sinr_average is None and "signal_sinr_average" in self.model_fields_set:
+            _dict['signalSinrAverage'] = None
+
+        # set to None if signal_sinr_min (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_sinr_min is None and "signal_sinr_min" in self.model_fields_set:
+            _dict['signalSinrMin'] = None
+
+        # set to None if signal_sinr_max (nullable) is None
+        # and model_fields_set contains the field
+        if self.signal_sinr_max is None and "signal_sinr_max" in self.model_fields_set:
+            _dict['signalSinrMax'] = None
 
         return _dict
 
@@ -686,43 +1384,22 @@ class HeatPumpLogViewDto(BaseModel):
             "timeCoveredInInterval": obj.get("timeCoveredInInterval"),
             "heatPumpStateStandby": obj.get("heatPumpStateStandby"),
             "heatPumpStateHeating": obj.get("heatPumpStateHeating"),
-            "heatPumpStateDefrost": obj.get("heatPumpStateDefrost"),
             "heatPumpStateCooling": obj.get("heatPumpStateCooling"),
-            "heatPumpStateDHW": obj.get("heatPumpStateDHW"),
+            "heatPumpStateDhw": obj.get("heatPumpStateDhw"),
             "heatPumpStateLegionella": obj.get("heatPumpStateLegionella"),
-            "rpmControlStartup": obj.get("rpmControlStartup"),
-            "rpmControlRunning": obj.get("rpmControlRunning"),
-            "rpmControlRunningAbnormally": obj.get("rpmControlRunningAbnormally"),
-            "rpmControlShutdown": obj.get("rpmControlShutdown"),
+            "heatPumpStateManualControl": obj.get("heatPumpStateManualControl"),
+            "heatPumpStateDhwDefrost": obj.get("heatPumpStateDhwDefrost"),
+            "heatPumpStateHeatingDefrost": obj.get("heatPumpStateHeatingDefrost"),
             "controlBridgeStatusWaterPump": obj.get("controlBridgeStatusWaterPump"),
-            "controlBridgeStatusDhwValve": obj.get("controlBridgeStatusDhwValve"),
             "controlBridgeStatusGasBoiler": obj.get("controlBridgeStatusGasBoiler"),
             "controlBridgeStatusElectricHeater": obj.get("controlBridgeStatusElectricHeater"),
             "controlBridgeStatusWaterPump2": obj.get("controlBridgeStatusWaterPump2"),
-            "dtcNone": obj.get("dtcNone"),
-            "dtcContinue": obj.get("dtcContinue"),
-            "dtcCompressorOff": obj.get("dtcCompressorOff"),
-            "dtcDefrostForbidden": obj.get("dtcDefrostForbidden"),
-            "dtcRequestService": obj.get("dtcRequestService"),
-            "dtcUseHeatingCurve": obj.get("dtcUseHeatingCurve"),
-            "dtcDhwForbidden": obj.get("dtcDhwForbidden"),
-            "dtcError": obj.get("dtcError"),
-            "dtcInactive": obj.get("dtcInactive"),
-            "signalStrengthAverage": obj.get("signalStrengthAverage"),
-            "signalStrengthMin": obj.get("signalStrengthMin"),
-            "signalStrengthMax": obj.get("signalStrengthMax"),
             "t1Average": obj.get("t1Average"),
             "t1Min": obj.get("t1Min"),
             "t1Max": obj.get("t1Max"),
             "t2Average": obj.get("t2Average"),
             "t2Min": obj.get("t2Min"),
             "t2Max": obj.get("t2Max"),
-            "tSpareNtcAverage": obj.get("tSpareNtcAverage"),
-            "tSpareNtcMin": obj.get("tSpareNtcMin"),
-            "tSpareNtcMax": obj.get("tSpareNtcMax"),
-            "tBoardAverage": obj.get("tBoardAverage"),
-            "tBoardMin": obj.get("tBoardMin"),
-            "tBoardMax": obj.get("tBoardMax"),
             "tAirInAverage": obj.get("tAirInAverage"),
             "tAirInMin": obj.get("tAirInMin"),
             "tAirInMax": obj.get("tAirInMax"),
@@ -738,9 +1415,51 @@ class HeatPumpLogViewDto(BaseModel):
             "tWaterHouseInAverage": obj.get("tWaterHouseInAverage"),
             "tWaterHouseInMin": obj.get("tWaterHouseInMin"),
             "tWaterHouseInMax": obj.get("tWaterHouseInMax"),
+            "tRoomAverage": obj.get("tRoomAverage"),
+            "tRoomMin": obj.get("tRoomMin"),
+            "tRoomMax": obj.get("tRoomMax"),
+            "tRoomTargetAverage": obj.get("tRoomTargetAverage"),
+            "tRoomTargetMin": obj.get("tRoomTargetMin"),
+            "tRoomTargetMax": obj.get("tRoomTargetMax"),
+            "tThermostatSetpointAverage": obj.get("tThermostatSetpointAverage"),
+            "tThermostatSetpointMin": obj.get("tThermostatSetpointMin"),
+            "tThermostatSetpointMax": obj.get("tThermostatSetpointMax"),
+            "otBoilerFeedTemperatureAverage": obj.get("otBoilerFeedTemperatureAverage"),
+            "otBoilerFeedTemperatureMin": obj.get("otBoilerFeedTemperatureMin"),
+            "otBoilerFeedTemperatureMax": obj.get("otBoilerFeedTemperatureMax"),
+            "otBoilerReturnTemperatureAverage": obj.get("otBoilerReturnTemperatureAverage"),
+            "otBoilerReturnTemperatureMin": obj.get("otBoilerReturnTemperatureMin"),
+            "otBoilerReturnTemperatureMax": obj.get("otBoilerReturnTemperatureMax"),
+            "thermostatStateOff": obj.get("thermostatStateOff"),
+            "thermostatStateOn": obj.get("thermostatStateOn"),
             "rpmAverage": obj.get("rpmAverage"),
             "rpmMin": obj.get("rpmMin"),
             "rpmMax": obj.get("rpmMax"),
+            "centralHeatingFlowAverage": obj.get("centralHeatingFlowAverage"),
+            "centralHeatingFlowMin": obj.get("centralHeatingFlowMin"),
+            "centralHeatingFlowMax": obj.get("centralHeatingFlowMax"),
+            "centralHeatingFlowStateStandby": obj.get("centralHeatingFlowStateStandby"),
+            "centralHeatingFlowStateStandbyNoPwm": obj.get("centralHeatingFlowStateStandbyNoPwm"),
+            "centralHeatingFlowStateMotorBlocked": obj.get("centralHeatingFlowStateMotorBlocked"),
+            "centralHeatingFlowStatePumping": obj.get("centralHeatingFlowStatePumping"),
+            "centralHeatingFlowStatePumpingNoPwm": obj.get("centralHeatingFlowStatePumpingNoPwm"),
+            "centralHeatingFlowStateSuboptimalRunning": obj.get("centralHeatingFlowStateSuboptimalRunning"),
+            "centralHeatingFlowStateStoppedMomentarily": obj.get("centralHeatingFlowStateStoppedMomentarily"),
+            "centralHeatingFlowStateStoppedPermanentDamage": obj.get("centralHeatingFlowStateStoppedPermanentDamage"),
+            "dhwFlowAverage": obj.get("dhwFlowAverage"),
+            "dhwFlowMin": obj.get("dhwFlowMin"),
+            "dhwFlowMax": obj.get("dhwFlowMax"),
+            "dhwFlowStateStandby": obj.get("dhwFlowStateStandby"),
+            "dhwFlowStateStandbyNoPwm": obj.get("dhwFlowStateStandbyNoPwm"),
+            "dhwFlowStateMotorBlocked": obj.get("dhwFlowStateMotorBlocked"),
+            "dhwFlowStatePumping": obj.get("dhwFlowStatePumping"),
+            "dhwFlowStatePumpingNoPwm": obj.get("dhwFlowStatePumpingNoPwm"),
+            "dhwFlowStateSuboptimalRunning": obj.get("dhwFlowStateSuboptimalRunning"),
+            "dhwFlowStateStoppedMomentarily": obj.get("dhwFlowStateStoppedMomentarily"),
+            "dhwFlowStateStoppedPermanentDamage": obj.get("dhwFlowStateStoppedPermanentDamage"),
+            "signalStrengthAverage": obj.get("signalStrengthAverage"),
+            "signalStrengthMin": obj.get("signalStrengthMin"),
+            "signalStrengthMax": obj.get("signalStrengthMax"),
             "rpmLimiterAverage": obj.get("rpmLimiterAverage"),
             "rpmLimiterMin": obj.get("rpmLimiterMin"),
             "rpmLimiterMax": obj.get("rpmLimiterMax"),
@@ -762,9 +1481,6 @@ class HeatPumpLogViewDto(BaseModel):
             "pCompressorInTargetAverage": obj.get("pCompressorInTargetAverage"),
             "pCompressorInTargetMin": obj.get("pCompressorInTargetMin"),
             "pCompressorInTargetMax": obj.get("pCompressorInTargetMax"),
-            "tInverterAverage": obj.get("tInverterAverage"),
-            "tInverterMin": obj.get("tInverterMin"),
-            "tInverterMax": obj.get("tInverterMax"),
             "tCompressorInAverage": obj.get("tCompressorInAverage"),
             "tCompressorInMin": obj.get("tCompressorInMin"),
             "tCompressorInMax": obj.get("tCompressorInMax"),
@@ -780,37 +1496,107 @@ class HeatPumpLogViewDto(BaseModel):
             "deltaTCompressorInSuperheatAverage": obj.get("deltaTCompressorInSuperheatAverage"),
             "deltaTCompressorInSuperheatMin": obj.get("deltaTCompressorInSuperheatMin"),
             "deltaTCompressorInSuperheatMax": obj.get("deltaTCompressorInSuperheatMax"),
-            "compressorPowerLowAccuracyAverage": obj.get("compressorPowerLowAccuracyAverage"),
-            "compressorPowerLowAccuracyMin": obj.get("compressorPowerLowAccuracyMin"),
-            "compressorPowerLowAccuracyMax": obj.get("compressorPowerLowAccuracyMax"),
             "fanAverage": obj.get("fanAverage"),
             "fanMin": obj.get("fanMin"),
             "fanMax": obj.get("fanMax"),
             "fanPowerAverage": obj.get("fanPowerAverage"),
             "fanPowerMin": obj.get("fanPowerMin"),
             "fanPowerMax": obj.get("fanPowerMax"),
-            "cmMassPowerInAverage": obj.get("cmMassPowerInAverage"),
-            "cmMassPowerOutAverage": obj.get("cmMassPowerOutAverage"),
             "temperatureErrorIntegralAverage": obj.get("temperatureErrorIntegralAverage"),
             "temperatureErrorIntegralMin": obj.get("temperatureErrorIntegralMin"),
             "temperatureErrorIntegralMax": obj.get("temperatureErrorIntegralMax"),
-            "thermostatStateOff": obj.get("thermostatStateOff"),
-            "thermostatStateOn": obj.get("thermostatStateOn"),
-            "tRoomAverage": obj.get("tRoomAverage"),
-            "tRoomMin": obj.get("tRoomMin"),
-            "tRoomMax": obj.get("tRoomMax"),
-            "tRoomTargetAverage": obj.get("tRoomTargetAverage"),
-            "tRoomTargetMin": obj.get("tRoomTargetMin"),
-            "tRoomTargetMax": obj.get("tRoomTargetMax"),
-            "tThermostatSetpointAverage": obj.get("tThermostatSetpointAverage"),
-            "tThermostatSetpointMin": obj.get("tThermostatSetpointMin"),
-            "tThermostatSetpointMax": obj.get("tThermostatSetpointMax"),
-            "otBoilerFeedTemperatureAverage": obj.get("otBoilerFeedTemperatureAverage"),
-            "otBoilerFeedTemperatureMin": obj.get("otBoilerFeedTemperatureMin"),
-            "otBoilerFeedTemperatureMax": obj.get("otBoilerFeedTemperatureMax"),
-            "otBoilerReturnTemperatureAverage": obj.get("otBoilerReturnTemperatureAverage"),
-            "otBoilerReturnTemperatureMin": obj.get("otBoilerReturnTemperatureMin"),
-            "otBoilerReturnTemperatureMax": obj.get("otBoilerReturnTemperatureMax")
+            "dtcNone": obj.get("dtcNone"),
+            "dtcContinue": obj.get("dtcContinue"),
+            "dtcCompressorOff": obj.get("dtcCompressorOff"),
+            "dtcDefrostForbidden": obj.get("dtcDefrostForbidden"),
+            "dtcRequestService": obj.get("dtcRequestService"),
+            "dtcUseHeatingCurve": obj.get("dtcUseHeatingCurve"),
+            "dtcDhwForbidden": obj.get("dtcDhwForbidden"),
+            "dtcError": obj.get("dtcError"),
+            "dtcInactive": obj.get("dtcInactive"),
+            "controlBridgeStatusDhwValve": obj.get("controlBridgeStatusDhwValve"),
+            "valveAverage": obj.get("valveAverage"),
+            "valveMin": obj.get("valveMin"),
+            "valveMax": obj.get("valveMax"),
+            "tBoardAverage": obj.get("tBoardAverage"),
+            "tBoardMin": obj.get("tBoardMin"),
+            "tBoardMax": obj.get("tBoardMax"),
+            "tInverterAverage": obj.get("tInverterAverage"),
+            "tInverterMin": obj.get("tInverterMin"),
+            "tInverterMax": obj.get("tInverterMax"),
+            "compressorPowerLowAccuracyAverage": obj.get("compressorPowerLowAccuracyAverage"),
+            "compressorPowerLowAccuracyMin": obj.get("compressorPowerLowAccuracyMin"),
+            "compressorPowerLowAccuracyMax": obj.get("compressorPowerLowAccuracyMax"),
+            "cmMassPowerInStandbyAverage": obj.get("cmMassPowerInStandbyAverage"),
+            "cmMassPowerInStandbyMin": obj.get("cmMassPowerInStandbyMin"),
+            "cmMassPowerInStandbyMax": obj.get("cmMassPowerInStandbyMax"),
+            "cmMassPowerInHeatingAverage": obj.get("cmMassPowerInHeatingAverage"),
+            "cmMassPowerInHeatingMin": obj.get("cmMassPowerInHeatingMin"),
+            "cmMassPowerInHeatingMax": obj.get("cmMassPowerInHeatingMax"),
+            "cmMassPowerInCoolingAverage": obj.get("cmMassPowerInCoolingAverage"),
+            "cmMassPowerInCoolingMin": obj.get("cmMassPowerInCoolingMin"),
+            "cmMassPowerInCoolingMax": obj.get("cmMassPowerInCoolingMax"),
+            "cmMassPowerInHeatingDefrostAverage": obj.get("cmMassPowerInHeatingDefrostAverage"),
+            "cmMassPowerInHeatingDefrostMin": obj.get("cmMassPowerInHeatingDefrostMin"),
+            "cmMassPowerInHeatingDefrostMax": obj.get("cmMassPowerInHeatingDefrostMax"),
+            "cmMassPowerInDhwDefrostAverage": obj.get("cmMassPowerInDhwDefrostAverage"),
+            "cmMassPowerInDhwDefrostMin": obj.get("cmMassPowerInDhwDefrostMin"),
+            "cmMassPowerInDhwDefrostMax": obj.get("cmMassPowerInDhwDefrostMax"),
+            "cmMassPowerInDefrostAverage": obj.get("cmMassPowerInDefrostAverage"),
+            "cmMassPowerInDefrostMin": obj.get("cmMassPowerInDefrostMin"),
+            "cmMassPowerInDefrostMax": obj.get("cmMassPowerInDefrostMax"),
+            "cmMassPowerInDhwAverage": obj.get("cmMassPowerInDhwAverage"),
+            "cmMassPowerInDhwMin": obj.get("cmMassPowerInDhwMin"),
+            "cmMassPowerInDhwMax": obj.get("cmMassPowerInDhwMax"),
+            "cmMassPowerInManualControlAverage": obj.get("cmMassPowerInManualControlAverage"),
+            "cmMassPowerInManualControlMin": obj.get("cmMassPowerInManualControlMin"),
+            "cmMassPowerOutHeatingDefrostAverage": obj.get("cmMassPowerOutHeatingDefrostAverage"),
+            "cmMassPowerOutHeatingDefrostMin": obj.get("cmMassPowerOutHeatingDefrostMin"),
+            "cmMassPowerOutHeatingDefrostMax": obj.get("cmMassPowerOutHeatingDefrostMax"),
+            "cmMassPowerOutDhwDefrostAverage": obj.get("cmMassPowerOutDhwDefrostAverage"),
+            "cmMassPowerOutDhwDefrostMin": obj.get("cmMassPowerOutDhwDefrostMin"),
+            "cmMassPowerOutDhwDefrostMax": obj.get("cmMassPowerOutDhwDefrostMax"),
+            "cmMassPowerInManualControlMax": obj.get("cmMassPowerInManualControlMax"),
+            "cmMassPowerOutStandbyAverage": obj.get("cmMassPowerOutStandbyAverage"),
+            "cmMassPowerOutStandbyMin": obj.get("cmMassPowerOutStandbyMin"),
+            "cmMassPowerOutStandbyMax": obj.get("cmMassPowerOutStandbyMax"),
+            "cmMassPowerOutHeatingAverage": obj.get("cmMassPowerOutHeatingAverage"),
+            "cmMassPowerOutHeatingMin": obj.get("cmMassPowerOutHeatingMin"),
+            "cmMassPowerOutHeatingMax": obj.get("cmMassPowerOutHeatingMax"),
+            "cmMassPowerOutCoolingAverage": obj.get("cmMassPowerOutCoolingAverage"),
+            "cmMassPowerOutCoolingMin": obj.get("cmMassPowerOutCoolingMin"),
+            "cmMassPowerOutCoolingMax": obj.get("cmMassPowerOutCoolingMax"),
+            "cmMassPowerOutDefrostAverage": obj.get("cmMassPowerOutDefrostAverage"),
+            "cmMassPowerOutDefrostMin": obj.get("cmMassPowerOutDefrostMin"),
+            "cmMassPowerOutDefrostMax": obj.get("cmMassPowerOutDefrostMax"),
+            "cmMassPowerOutDhwAverage": obj.get("cmMassPowerOutDhwAverage"),
+            "cmMassPowerOutDhwMin": obj.get("cmMassPowerOutDhwMin"),
+            "cmMassPowerOutDhwMax": obj.get("cmMassPowerOutDhwMax"),
+            "cmMassPowerOutManualControlAverage": obj.get("cmMassPowerOutManualControlAverage"),
+            "cmMassPowerOutManualControlMin": obj.get("cmMassPowerOutManualControlMin"),
+            "cmMassPowerOutManualControlMax": obj.get("cmMassPowerOutManualControlMax"),
+            "inverterInputVoltageAverage": obj.get("inverterInputVoltageAverage"),
+            "inverterInputVoltageMin": obj.get("inverterInputVoltageMin"),
+            "inverterInputVoltageMax": obj.get("inverterInputVoltageMax"),
+            "centralHeatingPwmRequestedDutyCycleAverage": obj.get("centralHeatingPwmRequestedDutyCycleAverage"),
+            "centralHeatingPwmRequestedDutyCycleMin": obj.get("centralHeatingPwmRequestedDutyCycleMin"),
+            "centralHeatingPwmRequestedDutyCycleMax": obj.get("centralHeatingPwmRequestedDutyCycleMax"),
+            "centralHeatingPwmRequestedDutyCycleStateStandby": obj.get("centralHeatingPwmRequestedDutyCycleStateStandby"),
+            "centralHeatingPwmRequestedDutyCycleStatePumping": obj.get("centralHeatingPwmRequestedDutyCycleStatePumping"),
+            "dhwPwmRequestedDutyCycleAverage": obj.get("dhwPwmRequestedDutyCycleAverage"),
+            "dhwPwmRequestedDutyCycleMin": obj.get("dhwPwmRequestedDutyCycleMin"),
+            "dhwPwmRequestedDutyCycleMax": obj.get("dhwPwmRequestedDutyCycleMax"),
+            "dhwPwmRequestedDutyCycleStateStandby": obj.get("dhwPwmRequestedDutyCycleStateStandby"),
+            "dhwPwmRequestedDutyCycleStatePumping": obj.get("dhwPwmRequestedDutyCycleStatePumping"),
+            "indoorUnitHeaterTemperatureAverage": obj.get("indoorUnitHeaterTemperatureAverage"),
+            "indoorUnitHeaterTemperatureMin": obj.get("indoorUnitHeaterTemperatureMin"),
+            "indoorUnitHeaterTemperatureMax": obj.get("indoorUnitHeaterTemperatureMax"),
+            "indoorUnitInputCurrentAverage": obj.get("indoorUnitInputCurrentAverage"),
+            "indoorUnitInputCurrentMin": obj.get("indoorUnitInputCurrentMin"),
+            "indoorUnitInputCurrentMax": obj.get("indoorUnitInputCurrentMax"),
+            "signalSinrAverage": obj.get("signalSinrAverage"),
+            "signalSinrMin": obj.get("signalSinrMin"),
+            "signalSinrMax": obj.get("signalSinrMax")
         })
         return _obj
 
