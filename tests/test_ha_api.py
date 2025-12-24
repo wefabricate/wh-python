@@ -96,7 +96,11 @@ async def test_hp_log(api_fixture, uuid):
     assert heatpump.energy_out_defrost <= 0
     assert heatpump.energy_out_cooling <= 0
 
+    total_energy_in = heatpump.energy_in_heating + heatpump.energy_in_dhw + heatpump.energy_in_defrost + heatpump.energy_in_cooling
+    total_energy_out = abs(heatpump.energy_out_heating) + abs(heatpump.energy_out_dhw) + abs(heatpump.energy_out_defrost) + abs(heatpump.energy_out_cooling)
 
+    assert heatpump.energy_total == total_energy_in
+    assert heatpump.energy_output == total_energy_out
 
 
 
