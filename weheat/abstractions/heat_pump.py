@@ -1,17 +1,15 @@
 """Weheat heat pump abstraction from the API."""
-import asyncio
+from datetime import datetime
 from enum import Enum, auto
+from typing import TypeVar, Union, Optional
 
 import aiohttp
 
 from weheat import HeatPumpApi
-from weheat.configuration import Configuration
-from weheat.api_client import ApiClient
-from weheat.api.heat_pump_log_api import HeatPumpLogApi
 from weheat.api.energy_log_api import EnergyLogApi
-from datetime import datetime, timedelta
-from typing import TypeVar, Union, Optional
-
+from weheat.api.heat_pump_log_api import HeatPumpLogApi
+from weheat.api_client import ApiClient
+from weheat.configuration import Configuration
 from weheat.models import TotalEnergyAggregate
 
 # before this date no energy logs are available, so start from this point onwards
@@ -46,8 +44,7 @@ class HeatPump:
         """Updates the heat pump instance with data from the API."""
         await self.async_get_logs(access_token)
         await self.async_get_energy(access_token)
-        
-        
+
     async def async_get_logs(self, access_token: str) -> None:
         """Updates the heat pump instance with data from the API."""
         try:
@@ -75,7 +72,6 @@ class HeatPump:
             self._last_log = None
             raise e
 
-
     async def async_get_energy(self, access_token: str) -> None:
         """Updates the heat pump instance with data from the API."""
         try:
@@ -91,7 +87,7 @@ class HeatPump:
         except Exception as e:
             self._energy_total = None
 
-    def _if_available_and_valid(self, key:str) -> Optional[T]:
+    def _if_available_and_valid(self, key: str) -> Optional[T]:
         """Return the value from the last logged value if available and not -1. None otherwise."""
         value = self._if_available(key)
         if value is not None and value != -1:
@@ -130,7 +126,7 @@ class HeatPump:
     @property
     def raw_content(self) -> Optional[dict]:
         if self._last_log is not None:
-            return vars(self._last_log) # type: ignore[unreachable]
+            return vars(self._last_log)  # type: ignore[unreachable]
         return None
 
     @property
@@ -293,25 +289,25 @@ class HeatPump:
 
         # 5-75 is linear from 0 to max
         return ((pwm - 5) / 70) * max
-    
+
     @property
     def dhw_flow_volume(self) -> Union[float, None]:
         """The DHW Flow in m3/h."""
-        pwm = pwm=self._if_available("dhw_flow")
+        pwm = pwm = self._if_available("dhw_flow")
         if pwm is None:
             return None
-        
+
         return self._pwm_to_volume(pwm, max=2.1)
 
     @property
     def central_heating_flow_volume(self) -> Union[float, None]:
         """The Central Heating Flow in m3/h."""
-        pwm = pwm=self._if_available("central_heating_flow")
+        pwm = pwm = self._if_available("central_heating_flow")
         if pwm is None:
             return None
-        
+
         return self._pwm_to_volume(pwm, max=2.1)
-    
+
     @property
     def energy_in_heating(self) -> Union[float, None]:
         """The total used energy in heating mode."""
@@ -361,7 +357,6 @@ class HeatPump:
             return None
         return float(self._energy_total.total_e_out_heating)
 
-
     @property
     def energy_out_dhw(self) -> Union[float, None]:
         """The total supplied energy in DHW mode."""
@@ -387,7 +382,6 @@ class HeatPump:
             return None
         return float(self._energy_total.total_e_out_dhw_defrost)
 
-
     @property
     def energy_out_defrost_ch(self) -> Union[float, None]:
         """The total supplied energy in defrost CH mode.
@@ -405,3 +399,20 @@ class HeatPump:
         if self._energy_total is None:
             return None
         return float(self._energy_total.total_e_out_cooling)
+
+    @property
+    def energy_total(self) -> Union[float, None]:
+        """The total used energy in kWh."""
+        if self._energy_total is None:
+            return None
+        return float(
+            self._energy_total.total_ein_heating + self._energy_total.total_ein_dhw + self._energy_total.total_ein_cooling + self._energy_total.total_ein_heating_defrost + self._energy_total.total_ein_dhw_defrost)
+
+    @property
+    def energy_output(self) -> Union[float, None]:
+        """The total energy output in kWh now."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_e_out_heating + self._energy_total.total_e_out_dhw + (
+            -self._energy_total.total_e_out_heating_defrost) + (-self._energy_total.total_e_out_dhw_defrost) + (
+                         -self._energy_total.total_e_out_cooling))
