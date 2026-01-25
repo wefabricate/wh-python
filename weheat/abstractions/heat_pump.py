@@ -12,9 +12,6 @@ from weheat.api_client import ApiClient
 from weheat.configuration import Configuration
 from weheat.models import TotalEnergyAggregate
 
-# before this date no energy logs are available, so start from this point onwards
-START_DATE = datetime(2023, 1, 1, 0, 0, 0)
-
 T = TypeVar("T", bool, int, float)
 
 
@@ -22,6 +19,7 @@ class HeatPump:
     """Heat pump class representing a heat pump."""
 
     class State(Enum):
+        OFFLINE = auto()
         STANDBY = auto()
         WATER_CHECK = auto()
         HEATING = auto()
@@ -257,6 +255,8 @@ class HeatPump:
         if numeric_state is None:
             return None
 
+        if numeric_state == 1:
+            return self.State.OFFLINE
         if numeric_state == 40:
             return self.State.STANDBY
         elif numeric_state == 70:
