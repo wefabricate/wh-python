@@ -34,6 +34,7 @@ class HeatPumpStatusEnum(int, Enum):
     """
     allowed enum values
     """
+    NUMBER_1 = 1
     NUMBER_40 = 40
     NUMBER_70 = 70
     NUMBER_90 = 90
