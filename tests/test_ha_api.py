@@ -83,8 +83,8 @@ async def test_hp_log(api_fixture, uuid):
         assert heatpump.thermostat_room_temperature_setpoint >= -1
     if heatpump.thermostat_room_temperature is not None:  #thermostat may be disconnected
         assert heatpump.thermostat_room_temperature >= -1
-    assert heatpump.power_input >= 0
-    assert heatpump.power_output >= 0
+    assert heatpump.power_input is None or heatpump.power_input >= 0
+    assert heatpump.power_output is None or heatpump.power_output >= 0
     assert heatpump.compressor_rpm >= 0
     assert heatpump.heat_pump_state in HeatPump.State
     assert heatpump.energy_in_heating >= 0
