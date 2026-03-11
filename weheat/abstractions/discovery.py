@@ -17,7 +17,7 @@ class HeatPumpDiscovery:
         model: str
         sn : str
         has_dhw: bool = False
-        has_boiler: bool = False
+        has_ch_boiler: bool = False
 
     @staticmethod
     async def async_discover_active(api_url: str, access_token: str, client_session:aiohttp.ClientSession|None = None) -> list[HeatPumpInfo]:
@@ -46,14 +46,8 @@ class HeatPumpDiscovery:
                     elif pump.model == 5:
                         model_string = "Flint P40 heat pump"
 
-
-                    dhw = False
-                    if pump.dhw_type is not None and pump.dhw_type == 1:
-                        dhw = True
-
-                    boiler = False
-                    if pump.boiler_type is not None and pump.boiler_type > 1:
-                        boiler = True
+                    dhw = pump.dhw_type is not None and pump.dhw_type == 1
+                    ch_boiler = pump.boiler_type is not None and pump.boiler_type > 1
 
                     discovered_pumps.append(
                         HeatPumpDiscovery.HeatPumpInfo(
@@ -62,7 +56,7 @@ class HeatPumpDiscovery:
                             model=model_string,
                             sn=pump.serial_number,
                             has_dhw=dhw,
-                            has_boiler=boiler,
+                            has_ch_boiler=ch_boiler,
                         )
                     )
         return discovered_pumps
