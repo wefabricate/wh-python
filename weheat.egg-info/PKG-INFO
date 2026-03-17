@@ -1,3 +1,31 @@
+Metadata-Version: 2.4
+Name: weheat
+Version: 2026.2.28
+Summary: Weheat Backend client
+Home-page: https://github.com/wefabricate/wh-python
+Author: Jesper Raemaekers
+Author-email: jesper.raemaekers@wefabricate.com
+License: MIT
+Keywords: OpenAPI,OpenAPI-Generator,Weheat Backend
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: urllib3<3.0.0,>=1.25.3
+Requires-Dist: python-dateutil
+Requires-Dist: aiohttp>=3.0.0
+Requires-Dist: aiohttp-retry>=2.8.3
+Requires-Dist: pydantic>=2
+Requires-Dist: typing-extensions>=4.7.1
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: summary
+
 # Weheat backend client
 
 This is a client for the Weheat backend. It is automatically generated from the OpenAPI specification.
