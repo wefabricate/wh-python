@@ -351,6 +351,13 @@ class HeatPump:
         return float(self._energy_total.total_ein_cooling)
 
     @property
+    def energy_in_standby(self) -> Union[float, None]:
+        """The total used energy in standby mode."""
+        if self._energy_total is None:
+            return None
+        return float(self._energy_total.total_ein_standby)
+        
+    @property
     def energy_out_heating(self) -> Union[float, None]:
         """The total supplied energy in heating mode."""
         if self._energy_total is None:
@@ -406,7 +413,10 @@ class HeatPump:
         if self._energy_total is None:
             return None
         return float(
-            self._energy_total.total_ein_heating + self._energy_total.total_ein_dhw + self._energy_total.total_ein_cooling + self._energy_total.total_ein_heating_defrost + self._energy_total.total_ein_dhw_defrost)
+            self._energy_total.total_ein_heating + self._energy_total.total_ein_dhw + 
+            self._energy_total.total_ein_cooling + self._energy_total.total_ein_standby +
+            self._energy_total.total_ein_heating_defrost + self._energy_total.total_ein_dhw_defrost
+        )
 
     @property
     def energy_output(self) -> Union[float, None]:
