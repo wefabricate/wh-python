@@ -423,6 +423,7 @@ class HeatPump:
         """The total energy output in kWh now."""
         if self._energy_total is None:
             return None
-        return float(self._energy_total.total_e_out_heating + self._energy_total.total_e_out_dhw + (
-            -self._energy_total.total_e_out_heating_defrost) + (-self._energy_total.total_e_out_dhw_defrost) + (
-                         -self._energy_total.total_e_out_cooling))
+        return float(
+            self._energy_total.total_e_out_heating + self._energy_total.total_e_out_dhw +
+            self._energy_total.total_e_out_heating_defrost + self._energy_total.total_e_out_dhw_defrost +
+            self._energy_total.total_e_out_cooling)
