@@ -123,9 +123,12 @@ class HeatPump:
 
     @property
     def raw_content(self) -> Optional[dict]:
-        if self._last_log is not None:
-            return vars(self._last_log)  # type: ignore[unreachable]
-        return None
+        raw = {}
+        if self._last_log:
+            raw.update(vars(self._last_log))
+        if self._energy_total:
+            raw.update(vars(self._energy_total))
+        return raw or None
 
     @property
     def water_inlet_temperature(self) -> Union[float, None]:
