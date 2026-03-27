@@ -1,11 +1,7 @@
 import asyncio
 from keycloak import KeycloakOpenID  # install with pip install python-keycloak
 from weheat.abstractions.heat_pump import HeatPump
-
-# connection information
-auth_url = 'https://auth.weheat.nl/auth/'
-api_url = 'https://api.weheat.nl/third_party'
-realm_name = 'Weheat'
+from weheat.abstractions.auth import WEHEAT_AUTH_URL, WEHEAT_API_URL, WEHEAT_REALM_NAME
 
 # client ID and secret provided by Weheat
 client_id = ''
@@ -21,9 +17,9 @@ my_heat_pump_id = ''
 
 async def demo():
     # login into keycloak and get an access token
-    keycloak_open_id = KeycloakOpenID(server_url=auth_url,
+    keycloak_open_id = KeycloakOpenID(server_url=WEHEAT_AUTH_URL,
                                       client_id=client_id,
-                                      realm_name=realm_name,
+                                      realm_name=WEHEAT_REALM_NAME,
                                       client_secret_key=client_secret)
 
     token_response = keycloak_open_id.token(username, password)
@@ -31,7 +27,7 @@ async def demo():
     keycloak_open_id.logout(token_response['refresh_token'])
 
     # construct the heat pump object and fetch its data
-    hp = HeatPump(api_url=api_url, uuid=my_heat_pump_id)
+    hp = HeatPump(api_url=WEHEAT_API_URL, uuid=my_heat_pump_id)
     await hp.async_get_status(token_response['access_token'])
 
     # Print some of the information, look in the files for all available properties
