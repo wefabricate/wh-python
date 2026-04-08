@@ -10,7 +10,7 @@ from weheat.api.energy_log_api import EnergyLogApi
 from weheat.api.heat_pump_log_api import HeatPumpLogApi
 from weheat.api_client import ApiClient
 from weheat.configuration import Configuration
-from weheat.models import TotalEnergyAggregate
+from weheat.models import TotalEnergyAggregate, RawHeatpumpLogAndIsOnlineDto
 
 T = TypeVar("T", bool, int, float)
 
@@ -33,7 +33,7 @@ class HeatPump:
     def __init__(self, api_url: str, uuid: str, client_session: aiohttp.ClientSession | None = None) -> None:
         self._api_url = api_url
         self._uuid = uuid
-        self._last_log = None
+        self._last_log: Union[RawHeatpumpLogAndIsOnlineDto, None] = None
         self._energy_total: Union[TotalEnergyAggregate, None] = None
         self._nominal_max_power: Union[float, None] = None
         self._client = client_session
