@@ -1,7 +1,7 @@
 """Weheat heat pump abstraction from the API."""
 from datetime import datetime
 from enum import Enum, auto
-from typing import TypeVar, Union, Optional
+from typing import TypeVar, Union, Optional, cast
 
 import aiohttp
 
@@ -10,7 +10,7 @@ from weheat.api.energy_log_api import EnergyLogApi
 from weheat.api.heat_pump_log_api import HeatPumpLogApi
 from weheat.api_client import ApiClient
 from weheat.configuration import Configuration
-from weheat.models import TotalEnergyAggregate
+from weheat.models import TotalEnergyAggregate, RawHeatpumpLogAndIsOnlineDto
 
 T = TypeVar("T", bool, int, float)
 
@@ -33,7 +33,7 @@ class HeatPump:
     def __init__(self, api_url: str, uuid: str, client_session: aiohttp.ClientSession | None = None) -> None:
         self._api_url = api_url
         self._uuid = uuid
-        self._last_log = None
+        self._last_log: Union[RawHeatpumpLogAndIsOnlineDto, None] = None
         self._energy_total: Union[TotalEnergyAggregate, None] = None
         self._nominal_max_power: Union[float, None] = None
         self._client = client_session
@@ -95,7 +95,7 @@ class HeatPump:
     def _if_available(self, key: str) -> Optional[T]:
         """Returns the value from the last logged value if available. None otherwise."""
         if self._last_log is not None and hasattr(self._last_log, key):
-            return getattr(self._last_log, key)
+            return cast(T, getattr(self._last_log, key))
         return None
 
     def _set_nominal_max_power_for_model(self, model_id: int) -> None:
