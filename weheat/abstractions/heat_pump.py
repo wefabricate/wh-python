@@ -1,7 +1,7 @@
 """Weheat heat pump abstraction from the API."""
 from datetime import datetime
 from enum import Enum, auto
-from typing import TypeVar, Union, Optional
+from typing import TypeVar, Union, Optional, cast
 
 import aiohttp
 
@@ -95,7 +95,7 @@ class HeatPump:
     def _if_available(self, key: str) -> Optional[T]:
         """Returns the value from the last logged value if available. None otherwise."""
         if self._last_log is not None and hasattr(self._last_log, key):
-            return getattr(self._last_log, key)
+            return cast(T, getattr(self._last_log, key))
         return None
 
     def _set_nominal_max_power_for_model(self, model_id: int) -> None:
