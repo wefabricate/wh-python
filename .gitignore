@@ -1,5 +1,6 @@
 /venv/
 /weheat_backend_client.egg-info/
+/weheat.egg-info/
 /build/
 /.idea/
 *.pyc
